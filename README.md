@@ -76,6 +76,12 @@ newbee-mall 项目是一套电商系统，包括 newbee-mall 商城系统及 new
 - 我的邮箱：2449207463@qq.com
 - QQ技术交流群：719099151 796794009
 
+## 软件著作权
+
+>本系统已申请软件著作权，受国家版权局知识产权以及国家计算机软件著作权保护！
+
+![](https://newbee-mall.oss-cn-beijing.aliyuncs.com/poster/store/newbee-mall-copyright-02.png)
+
 ## 接口文档
 
 ![](static-files/newbee-mall-api-swagger.png)
