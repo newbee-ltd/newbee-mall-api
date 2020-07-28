@@ -109,7 +109,11 @@ public class NewBeeMallUserServiceImpl implements NewBeeMallUserService {
             NewBeeMallException.fail(ServiceResultEnum.DATA_NOT_EXIST.getResult());
         }
         user.setNickName(mallUser.getNickName());
-        user.setPasswordMd5(mallUser.getPasswordMd5());
+        //user.setPasswordMd5(mallUser.getPasswordMd5());
+        //若密码为空字符，则表明用户不打算修改密码，使用原密码保存
+        if (!MD5Util.MD5Encode("", "UTF-8").equals(mallUser.getPasswordMd5())){
+            user.setPasswordMd5(mallUser.getPasswordMd5());
+        }
         user.setIntroduceSign(mallUser.getIntroduceSign());
         if (mallUserMapper.updateByPrimaryKeySelective(user) > 0) {
             return true;
