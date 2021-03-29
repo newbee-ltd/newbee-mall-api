@@ -8,12 +8,12 @@
  */
 package ltd.newbee.mall.service.impl;
 
-import ltd.newbee.mall.api.param.SaveCartItemParam;
-import ltd.newbee.mall.api.param.UpdateCartItemParam;
+import ltd.newbee.mall.api.mall.param.SaveCartItemParam;
+import ltd.newbee.mall.api.mall.param.UpdateCartItemParam;
 import ltd.newbee.mall.common.Constants;
 import ltd.newbee.mall.common.NewBeeMallException;
 import ltd.newbee.mall.common.ServiceResultEnum;
-import ltd.newbee.mall.api.vo.NewBeeMallShoppingCartItemVO;
+import ltd.newbee.mall.api.mall.vo.NewBeeMallShoppingCartItemVO;
 import ltd.newbee.mall.dao.NewBeeMallGoodsMapper;
 import ltd.newbee.mall.dao.NewBeeMallShoppingCartItemMapper;
 import ltd.newbee.mall.entity.NewBeeMallGoods;

@@ -8,6 +8,7 @@
  */
 package ltd.newbee.mall.config;
 
+import ltd.newbee.mall.entity.AdminUserToken;
 import ltd.newbee.mall.entity.MallUser;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -41,7 +42,7 @@ public class Swagger2Config {
 
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
-                .ignoredParameterTypes(MallUser.class)
+                .ignoredParameterTypes(MallUser.class, AdminUserToken.class)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("ltd.newbee.mall.api"))// 修改为自己的 controller 包路径
                 .paths(PathSelectors.any())

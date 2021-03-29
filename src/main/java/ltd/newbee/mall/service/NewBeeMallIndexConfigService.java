@@ -8,7 +8,11 @@
  */
 package ltd.newbee.mall.service;
 
-import ltd.newbee.mall.api.vo.NewBeeMallIndexConfigGoodsVO;
+import ltd.newbee.mall.api.mall.vo.NewBeeMallIndexConfigGoodsVO;
+import ltd.newbee.mall.entity.IndexConfig;
+import ltd.newbee.mall.util.PageQueryUtil;
+import ltd.newbee.mall.util.PageResult;
+
 import java.util.List;
 
 public interface NewBeeMallIndexConfigService {
@@ -20,4 +24,20 @@ public interface NewBeeMallIndexConfigService {
      * @return
      */
     List<NewBeeMallIndexConfigGoodsVO> getConfigGoodsesForIndex(int configType, int number);
+
+    /**
+     * 后台分页
+     *
+     * @param pageUtil
+     * @return
+     */
+    PageResult getConfigsPage(PageQueryUtil pageUtil);
+
+    String saveIndexConfig(IndexConfig indexConfig);
+
+    String updateIndexConfig(IndexConfig indexConfig);
+
+    IndexConfig getIndexConfigById(Long id);
+
+    Boolean deleteBatch(Long[] ids);
 }

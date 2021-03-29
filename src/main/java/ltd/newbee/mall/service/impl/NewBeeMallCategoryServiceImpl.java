@@ -8,9 +8,9 @@
  */
 package ltd.newbee.mall.service.impl;
 
-import ltd.newbee.mall.api.vo.NewBeeMallIndexCategoryVO;
-import ltd.newbee.mall.api.vo.SecondLevelCategoryVO;
-import ltd.newbee.mall.api.vo.ThirdLevelCategoryVO;
+import ltd.newbee.mall.api.mall.vo.NewBeeMallIndexCategoryVO;
+import ltd.newbee.mall.api.mall.vo.SecondLevelCategoryVO;
+import ltd.newbee.mall.api.mall.vo.ThirdLevelCategoryVO;
 import ltd.newbee.mall.common.Constants;
 import ltd.newbee.mall.common.NewBeeMallCategoryLevelEnum;
 import ltd.newbee.mall.common.ServiceResultEnum;
@@ -18,6 +18,8 @@ import ltd.newbee.mall.dao.GoodsCategoryMapper;
 import ltd.newbee.mall.entity.GoodsCategory;
 import ltd.newbee.mall.service.NewBeeMallCategoryService;
 import ltd.newbee.mall.util.BeanUtil;
+import ltd.newbee.mall.util.PageQueryUtil;
+import ltd.newbee.mall.util.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -69,7 +71,7 @@ public class NewBeeMallCategoryServiceImpl implements NewBeeMallCategoryService 
     }
 
     @Override
-    public Boolean deleteBatch(Integer[] ids) {
+    public Boolean deleteBatch(Long[] ids) {
         if (ids.length < 1) {
             return false;
         }
@@ -128,5 +130,18 @@ public class NewBeeMallCategoryServiceImpl implements NewBeeMallCategoryService 
         } else {
             return null;
         }
+    }
+
+    @Override
+    public PageResult getCategorisPage(PageQueryUtil pageUtil) {
+        List<GoodsCategory> goodsCategories = goodsCategoryMapper.findGoodsCategoryList(pageUtil);
+        int total = goodsCategoryMapper.getTotalGoodsCategories(pageUtil);
+        PageResult pageResult = new PageResult(goodsCategories, total, pageUtil.getLimit(), pageUtil.getPage());
+        return pageResult;
+    }
+
+    @Override
+    public List<GoodsCategory> selectByLevelAndParentIdsAndNumber(List<Long> parentIds, int categoryLevel) {
+        return goodsCategoryMapper.selectByLevelAndParentIdsAndNumber(parentIds, categoryLevel, 0);//0代表查询所有
     }
 }

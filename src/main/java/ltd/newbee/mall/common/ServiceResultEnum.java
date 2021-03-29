@@ -15,7 +15,7 @@ public enum ServiceResultEnum {
 
     DATA_NOT_EXIST("未查询到记录！"),
 
-    PARAM_ERROR("未查询到记录！"),
+    PARAM_ERROR("参数错误！"),
 
     SAME_CATEGORY_EXIST("有同级同名的分类！"),
 
@@ -47,7 +47,11 @@ public enum ServiceResultEnum {
 
     NOT_LOGIN_ERROR("未登录！"),
 
+    ADMIN_NOT_LOGIN_ERROR("管理员未登录！"),
+
     TOKEN_EXPIRE_ERROR("无效认证！请重新登录！"),
+
+    ADMIN_TOKEN_EXPIRE_ERROR("管理员登录过期！请重新登录！"),
 
     USER_NULL_ERROR("无效用户！请重新登录！"),
 

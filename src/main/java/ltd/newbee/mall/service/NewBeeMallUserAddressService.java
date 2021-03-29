@@ -8,7 +8,7 @@
  */
 package ltd.newbee.mall.service;
 
-import ltd.newbee.mall.api.vo.NewBeeMallUserAddressVO;
+import ltd.newbee.mall.api.mall.vo.NewBeeMallUserAddressVO;
 import ltd.newbee.mall.entity.MallUserAddress;
 
 import java.util.List;

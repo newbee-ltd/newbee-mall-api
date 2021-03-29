@@ -35,5 +35,5 @@ public interface MallUserMapper {
 
     int getTotalMallUsers(PageQueryUtil pageUtil);
 
-    int lockUserBatch(@Param("ids") Integer[] ids, @Param("lockStatus") int lockStatus);
+    int lockUserBatch(@Param("ids") Long[] ids, @Param("lockStatus") int lockStatus);
 }

@@ -11,7 +11,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `tb_newbee_mall_admin_user`;
 
 CREATE TABLE `tb_newbee_mall_admin_user` (
-  `admin_user_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '管理员id',
+  `admin_user_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '管理员id',
   `login_user_name` varchar(50) NOT NULL COMMENT '管理员登陆名称',
   `login_password` varchar(50) NOT NULL COMMENT '管理员登陆密码',
   `nick_name` varchar(50) NOT NULL COMMENT '管理员显示昵称',
@@ -865,7 +865,6 @@ VALUES
 /*!40000 ALTER TABLE `tb_newbee_mall_index_config` ENABLE KEYS */;
 UNLOCK TABLES;
 
-
 # Dump of table tb_newbee_mall_order
 # ------------------------------------------------------------
 
@@ -997,6 +996,20 @@ CREATE TABLE `tb_newbee_mall_user_token` (
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
   `expire_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'token过期时间',
   PRIMARY KEY (`user_id`),
+  UNIQUE KEY `uq_token` (`token`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+# Dump of table tb_newbee_mall_user_token
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `tb_newbee_mall_admin_user_token`;
+
+CREATE TABLE `tb_newbee_mall_admin_user_token` (
+  `admin_user_id` bigint(20) NOT NULL COMMENT '用户主键id',
+  `token` varchar(32) NOT NULL COMMENT 'token值(32位字符串)',
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
+  `expire_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'token过期时间',
+  PRIMARY KEY (`admin_user_id`),
   UNIQUE KEY `uq_token` (`token`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

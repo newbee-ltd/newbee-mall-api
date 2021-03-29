@@ -8,7 +8,9 @@
  */
 package ltd.newbee.mall.service;
 
-import ltd.newbee.mall.api.param.MallUserUpdateParam;
+import ltd.newbee.mall.api.mall.param.MallUserUpdateParam;
+import ltd.newbee.mall.util.PageQueryUtil;
+import ltd.newbee.mall.util.PageResult;
 
 public interface NewBeeMallUserService {
 
@@ -45,4 +47,21 @@ public interface NewBeeMallUserService {
      * @return
      */
     Boolean logout(Long userId);
+
+    /**
+     * 用户禁用与解除禁用(0-未锁定 1-已锁定)
+     *
+     * @param ids
+     * @param lockStatus
+     * @return
+     */
+    Boolean lockUsers(Long[] ids, int lockStatus);
+
+    /**
+     * 后台分页
+     *
+     * @param pageUtil
+     * @return
+     */
+    PageResult getNewBeeMallUsersPage(PageQueryUtil pageUtil);
 }

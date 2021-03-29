@@ -54,10 +54,12 @@ public class NewBeeMallExceptionHandler {
             result.setMessage(e.getMessage());
             if (e.getMessage().equals(ServiceResultEnum.NOT_LOGIN_ERROR.getResult()) || e.getMessage().equals(ServiceResultEnum.TOKEN_EXPIRE_ERROR.getResult())) {
                 result.setResultCode(416);
+            } else if (e.getMessage().equals(ServiceResultEnum.ADMIN_NOT_LOGIN_ERROR.getResult()) || e.getMessage().equals(ServiceResultEnum.ADMIN_TOKEN_EXPIRE_ERROR.getResult())) {
+                result.setResultCode(419);
             }
         } else {
             e.printStackTrace();
-            result.setMessage("未知异常，请联系管理员");
+            result.setMessage("未知异常，请查看控制台日志并检查配置文件。");
         }
         return result;
 

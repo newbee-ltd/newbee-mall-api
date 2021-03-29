@@ -8,7 +8,7 @@
  */
 package ltd.newbee.mall.service.impl;
 
-import ltd.newbee.mall.api.vo.NewBeeMallUserAddressVO;
+import ltd.newbee.mall.api.mall.vo.NewBeeMallUserAddressVO;
 import ltd.newbee.mall.common.NewBeeMallException;
 import ltd.newbee.mall.common.ServiceResultEnum;
 import ltd.newbee.mall.dao.MallUserAddressMapper;
