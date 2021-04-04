@@ -43,6 +43,7 @@ public class AdminUserServiceImpl implements AdminUserService {
             //过期时间
             Date expireTime = new Date(now.getTime() + 2 * 24 * 3600 * 1000);//过期时间 48 小时
             if (adminUserToken == null) {
+                adminUserToken = new AdminUserToken();
                 adminUserToken.setAdminUserId(loginAdminUser.getAdminUserId());
                 adminUserToken.setToken(token);
                 adminUserToken.setUpdateTime(now);
