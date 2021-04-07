@@ -106,7 +106,7 @@ public class NewBeeAdminManageUserAPI {
     @RequestMapping(value = "/logout", method = RequestMethod.DELETE)
     public Result logout(@TokenToAdminUser AdminUserToken adminUser) {
         logger.info("adminUser:{}", adminUser.toString());
-        //adminUserService.logout(adminUser.getAdminUserId());
+        adminUserService.logout(adminUser.getAdminUserId());
         return ResultGenerator.genSuccessResult();
     }
 
