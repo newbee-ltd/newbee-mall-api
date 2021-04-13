@@ -164,7 +164,7 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
             if (newBeeMallOrder.getOrderStatus().intValue() != NewBeeMallOrderStatusEnum.ORDER_PRE_PAY.getOrderStatus()) {
                 NewBeeMallException.fail("非待支付状态下的订单无法支付");
             }
-            newBeeMallOrder.setOrderStatus((byte) NewBeeMallOrderStatusEnum.OREDER_PAID.getOrderStatus());
+            newBeeMallOrder.setOrderStatus((byte) NewBeeMallOrderStatusEnum.ORDER_PAID.getOrderStatus());
             newBeeMallOrder.setPayType((byte) payType);
             newBeeMallOrder.setPayStatus((byte) PayStatusEnum.PAY_SUCCESS.getPayStatus());
             newBeeMallOrder.setPayTime(new Date());
