@@ -49,7 +49,7 @@ public class NewBeeMallGoodsAPI {
         
         logger.info("goods search api,keyword={},goodsCategoryId={},orderBy={},pageNumber={},userId={}", keyword, goodsCategoryId, orderBy, pageNumber, loginMallUser.getUserId());
 
-        Map params = new HashMap(4);
+        Map params = new HashMap(8);
         //两个搜索参数都为空，直接返回异常
         if (goodsCategoryId == null && StringUtils.isEmpty(keyword)) {
             NewBeeMallException.fail("非法的搜索参数");

@@ -59,7 +59,7 @@ public class NewBeeAdminGoodsCategoryAPI {
         if (pageNumber == null || pageNumber < 1 || pageSize == null || pageSize < 10 || categoryLevel == null || categoryLevel < 0 || categoryLevel > 3 || parentId == null || parentId < 0) {
             return ResultGenerator.genFailResult("参数异常！");
         }
-        Map params = new HashMap(4);
+        Map params = new HashMap(8);
         params.put("page", pageNumber);
         params.put("limit", pageSize);
         params.put("categoryLevel", categoryLevel);
@@ -83,7 +83,7 @@ public class NewBeeAdminGoodsCategoryAPI {
         if (category == null || category.getCategoryLevel() == NewBeeMallCategoryLevelEnum.LEVEL_THREE.getLevel()) {
             return ResultGenerator.genFailResult("参数异常！");
         }
-        Map categoryResult = new HashMap(2);
+        Map categoryResult = new HashMap(4);
         if (category.getCategoryLevel() == NewBeeMallCategoryLevelEnum.LEVEL_ONE.getLevel()) {
             //如果是一级分类则返回当前一级分类下的所有二级分类，以及二级分类列表中第一条数据下的所有三级分类列表
             //查询一级分类列表中第一个实体的所有二级分类

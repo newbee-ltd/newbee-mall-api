@@ -63,7 +63,7 @@ public class NewBeeAdminIndexConfigAPI {
         if (indexConfigTypeEnum.equals(IndexConfigTypeEnum.DEFAULT)) {
             return ResultGenerator.genFailResult("非法参数！");
         }
-        Map params = new HashMap(4);
+        Map params = new HashMap(8);
         params.put("page", pageNumber);
         params.put("limit", pageSize);
         params.put("configType", configType);

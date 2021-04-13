@@ -44,7 +44,7 @@ public class NewBeeMallShoppingCartAPI {
     @GetMapping("/shop-cart/page")
     @ApiOperation(value = "购物车列表(每页默认5条)", notes = "传参为页码")
     public Result<PageResult<List<NewBeeMallShoppingCartItemVO>>> cartItemPageList(Integer pageNumber, @TokenToMallUser MallUser loginMallUser) {
-        Map params = new HashMap(4);
+        Map params = new HashMap(8);
         if (pageNumber == null || pageNumber < 1) {
             pageNumber = 1;
         }

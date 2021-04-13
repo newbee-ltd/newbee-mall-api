@@ -95,7 +95,7 @@ public class NewBeeMallOrderAPI {
     public Result<PageResult<List<NewBeeMallOrderListVO>>> orderList(@ApiParam(value = "页码") @RequestParam(required = false) Integer pageNumber,
                             @ApiParam(value = "订单状态:0.待支付 1.待确认 2.待发货 3:已发货 4.交易成功") @RequestParam(required = false) Integer status,
                             @TokenToMallUser MallUser loginMallUser) {
-        Map params = new HashMap(4);
+        Map params = new HashMap(8);
         if (pageNumber == null || pageNumber < 1) {
             pageNumber = 1;
         }

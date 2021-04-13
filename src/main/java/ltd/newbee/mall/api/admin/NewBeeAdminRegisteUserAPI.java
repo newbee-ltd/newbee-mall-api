@@ -54,7 +54,7 @@ public class NewBeeAdminRegisteUserAPI {
         if (pageNumber == null || pageNumber < 1 || pageSize == null || pageSize < 10) {
             return ResultGenerator.genFailResult("参数异常！");
         }
-        Map params = new HashMap(4);
+        Map params = new HashMap(8);
         params.put("page", pageNumber);
         params.put("limit", pageSize);
         if (lockStatus != null) {
