@@ -42,7 +42,7 @@ Copyright (c) 2020 十三 all rights reserved.
         select
         <include refid="Base_Column_List"/>
         from tb_newbee_mall_carousel
-        where carousel_id = #{carouselId,jdbcType=INTEGER}
+        where carousel_id = #{carouselId,jdbcType=INTEGER} and is_deleted=0
     </select>
     <select id="findCarouselsByNum" parameterType="int" resultMap="BaseResultMap">
         select
