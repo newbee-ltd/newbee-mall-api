@@ -12,6 +12,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import ltd.newbee.mall.api.admin.param.BatchIdParam;
+import ltd.newbee.mall.api.admin.param.GoodsAddParam;
+import ltd.newbee.mall.api.admin.param.GoodsEditParam;
 import ltd.newbee.mall.common.Constants;
 import ltd.newbee.mall.common.ServiceResultEnum;
 import ltd.newbee.mall.config.annotation.TokenToAdminUser;
@@ -20,6 +22,7 @@ import ltd.newbee.mall.entity.GoodsCategory;
 import ltd.newbee.mall.entity.NewBeeMallGoods;
 import ltd.newbee.mall.service.NewBeeMallCategoryService;
 import ltd.newbee.mall.service.NewBeeMallGoodsService;
+import ltd.newbee.mall.util.BeanUtil;
 import ltd.newbee.mall.util.PageQueryUtil;
 import ltd.newbee.mall.util.Result;
 import ltd.newbee.mall.util.ResultGenerator;
@@ -29,9 +32,9 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * @author 13
@@ -62,7 +65,7 @@ public class NewBeeAdminGoodsInfoAPI {
                        @RequestParam(required = false) @ApiParam(value = "上架状态 0-上架 1-下架") Integer goodsSellStatus, @TokenToAdminUser AdminUserToken adminUser) {
         logger.info("adminUser:{}", adminUser.toString());
         if (pageNumber == null || pageNumber < 1 || pageSize == null || pageSize < 10) {
-            return ResultGenerator.genFailResult("参数异常！");
+            return ResultGenerator.genFailResult("分页参数异常！");
         }
         Map params = new HashMap(8);
         params.put("page", pageNumber);
@@ -82,20 +85,10 @@ public class NewBeeAdminGoodsInfoAPI {
      */
     @RequestMapping(value = "/goods", method = RequestMethod.POST)
     @ApiOperation(value = "新增商品信息", notes = "新增商品信息")
-    public Result save(@RequestBody NewBeeMallGoods newBeeMallGoods, @TokenToAdminUser AdminUserToken adminUser) {
+    public Result save(@RequestBody @Valid GoodsAddParam goodsAddParam, @TokenToAdminUser AdminUserToken adminUser) {
         logger.info("adminUser:{}", adminUser.toString());
-        if (StringUtils.isEmpty(newBeeMallGoods.getGoodsName())
-                || StringUtils.isEmpty(newBeeMallGoods.getGoodsIntro())
-                || StringUtils.isEmpty(newBeeMallGoods.getTag())
-                || Objects.isNull(newBeeMallGoods.getOriginalPrice())
-                || Objects.isNull(newBeeMallGoods.getGoodsCategoryId())
-                || Objects.isNull(newBeeMallGoods.getSellingPrice())
-                || Objects.isNull(newBeeMallGoods.getStockNum())
-                || Objects.isNull(newBeeMallGoods.getGoodsSellStatus())
-                || StringUtils.isEmpty(newBeeMallGoods.getGoodsCoverImg())
-                || StringUtils.isEmpty(newBeeMallGoods.getGoodsDetailContent())) {
-            return ResultGenerator.genFailResult("参数异常！");
-        }
+        NewBeeMallGoods newBeeMallGoods = new NewBeeMallGoods();
+        BeanUtil.copyProperties(goodsAddParam, newBeeMallGoods);
         String result = newBeeMallGoodsService.saveNewBeeMallGoods(newBeeMallGoods);
         if (ServiceResultEnum.SUCCESS.getResult().equals(result)) {
             return ResultGenerator.genSuccessResult();
@@ -110,21 +103,10 @@ public class NewBeeAdminGoodsInfoAPI {
      */
     @RequestMapping(value = "/goods", method = RequestMethod.PUT)
     @ApiOperation(value = "修改商品信息", notes = "修改商品信息")
-    public Result update(@RequestBody NewBeeMallGoods newBeeMallGoods, @TokenToAdminUser AdminUserToken adminUser) {
+    public Result update(@RequestBody @Valid GoodsEditParam goodsEditParam, @TokenToAdminUser AdminUserToken adminUser) {
         logger.info("adminUser:{}", adminUser.toString());
-        if (Objects.isNull(newBeeMallGoods.getGoodsId())
-                || StringUtils.isEmpty(newBeeMallGoods.getGoodsName())
-                || StringUtils.isEmpty(newBeeMallGoods.getGoodsIntro())
-                || StringUtils.isEmpty(newBeeMallGoods.getTag())
-                || Objects.isNull(newBeeMallGoods.getOriginalPrice())
-                || Objects.isNull(newBeeMallGoods.getSellingPrice())
-                || Objects.isNull(newBeeMallGoods.getGoodsCategoryId())
-                || Objects.isNull(newBeeMallGoods.getStockNum())
-                || Objects.isNull(newBeeMallGoods.getGoodsSellStatus())
-                || StringUtils.isEmpty(newBeeMallGoods.getGoodsCoverImg())
-                || StringUtils.isEmpty(newBeeMallGoods.getGoodsDetailContent())) {
-            return ResultGenerator.genFailResult("参数异常！");
-        }
+        NewBeeMallGoods newBeeMallGoods = new NewBeeMallGoods();
+        BeanUtil.copyProperties(goodsEditParam, newBeeMallGoods);
         String result = newBeeMallGoodsService.updateNewBeeMallGoods(newBeeMallGoods);
         if (ServiceResultEnum.SUCCESS.getResult().equals(result)) {
             return ResultGenerator.genSuccessResult();

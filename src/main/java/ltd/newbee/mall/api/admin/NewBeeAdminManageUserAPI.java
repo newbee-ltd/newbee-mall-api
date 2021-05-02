@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 
 /**
  * @author 13
@@ -47,10 +48,7 @@ public class NewBeeAdminManageUserAPI {
     private static final Logger logger = LoggerFactory.getLogger(NewBeeAdminManageUserAPI.class);
 
     @RequestMapping(value = "/adminUser/login", method = RequestMethod.POST)
-    public Result<String> login(@RequestBody AdminLoginParam adminLoginParam) {
-        if (adminLoginParam == null || StringUtils.isEmpty(adminLoginParam.getUserName()) || StringUtils.isEmpty(adminLoginParam.getPasswordMd5())) {
-            return ResultGenerator.genFailResult("用户名或密码不能为空");
-        }
+    public Result<String> login(@RequestBody @Valid AdminLoginParam adminLoginParam) {
         String loginResult = adminUserService.login(adminLoginParam.getUserName(), adminLoginParam.getPasswordMd5());
         logger.info("manage login api,adminName={},loginResult={}", adminLoginParam.getUserName(), loginResult);
 
@@ -78,11 +76,8 @@ public class NewBeeAdminManageUserAPI {
     }
 
     @RequestMapping(value = "/adminUser/password", method = RequestMethod.PUT)
-    public Result passwordUpdate(@RequestBody UpdateAdminPasswordParam adminPasswordParam, @TokenToAdminUser AdminUserToken adminUser) {
+    public Result passwordUpdate(@RequestBody @Valid UpdateAdminPasswordParam adminPasswordParam, @TokenToAdminUser AdminUserToken adminUser) {
         logger.info("adminUser:{}", adminUser.toString());
-        if (StringUtils.isEmpty(adminPasswordParam.getNewPassword()) || StringUtils.isEmpty(adminPasswordParam.getOriginalPassword())) {
-            return ResultGenerator.genFailResult(ServiceResultEnum.PARAM_ERROR.getResult());
-        }
         if (adminUserService.updatePassword(adminUser.getAdminUserId(), adminPasswordParam.getOriginalPassword(), adminPasswordParam.getNewPassword())) {
             return ResultGenerator.genSuccessResult();
         } else {
@@ -91,11 +86,8 @@ public class NewBeeAdminManageUserAPI {
     }
 
     @RequestMapping(value = "/adminUser/name", method = RequestMethod.PUT)
-    public Result nameUpdate(@RequestBody UpdateAdminNameParam adminNameParam, @TokenToAdminUser AdminUserToken adminUser) {
+    public Result nameUpdate(@RequestBody @Valid UpdateAdminNameParam adminNameParam, @TokenToAdminUser AdminUserToken adminUser) {
         logger.info("adminUser:{}", adminUser.toString());
-        if (StringUtils.isEmpty(adminNameParam.getLoginUserName()) || StringUtils.isEmpty(adminNameParam.getNickName())) {
-            return ResultGenerator.genFailResult(ServiceResultEnum.PARAM_ERROR.getResult());
-        }
         if (adminUserService.updateName(adminUser.getAdminUserId(), adminNameParam.getLoginUserName(), adminNameParam.getNickName())) {
             return ResultGenerator.genSuccessResult();
         } else {

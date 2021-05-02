@@ -12,24 +12,26 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import ltd.newbee.mall.api.admin.param.BatchIdParam;
+import ltd.newbee.mall.api.admin.param.IndexConfigAddParam;
+import ltd.newbee.mall.api.admin.param.IndexConfigEditParam;
 import ltd.newbee.mall.common.IndexConfigTypeEnum;
 import ltd.newbee.mall.common.ServiceResultEnum;
 import ltd.newbee.mall.config.annotation.TokenToAdminUser;
 import ltd.newbee.mall.entity.AdminUserToken;
 import ltd.newbee.mall.entity.IndexConfig;
 import ltd.newbee.mall.service.NewBeeMallIndexConfigService;
+import ltd.newbee.mall.util.BeanUtil;
 import ltd.newbee.mall.util.PageQueryUtil;
 import ltd.newbee.mall.util.Result;
 import ltd.newbee.mall.util.ResultGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * @author 13
@@ -57,7 +59,7 @@ public class NewBeeAdminIndexConfigAPI {
                        @RequestParam(required = false) @ApiParam(value = "1-搜索框热搜 2-搜索下拉框热搜 3-(首页)热销商品 4-(首页)新品上线 5-(首页)为你推荐") Integer configType, @TokenToAdminUser AdminUserToken adminUser) {
         logger.info("adminUser:{}", adminUser.toString());
         if (pageNumber == null || pageNumber < 1 || pageSize == null || pageSize < 10) {
-            return ResultGenerator.genFailResult("参数异常！");
+            return ResultGenerator.genFailResult("分页参数异常！");
         }
         IndexConfigTypeEnum indexConfigTypeEnum = IndexConfigTypeEnum.getIndexConfigTypeEnumByType(configType);
         if (indexConfigTypeEnum.equals(IndexConfigTypeEnum.DEFAULT)) {
@@ -76,13 +78,10 @@ public class NewBeeAdminIndexConfigAPI {
      */
     @RequestMapping(value = "/indexConfigs", method = RequestMethod.POST)
     @ApiOperation(value = "新增首页配置项", notes = "新增首页配置项")
-    public Result save(@RequestBody IndexConfig indexConfig, @TokenToAdminUser AdminUserToken adminUser) {
+    public Result save(@RequestBody @Valid IndexConfigAddParam indexConfigAddParam, @TokenToAdminUser AdminUserToken adminUser) {
         logger.info("adminUser:{}", adminUser.toString());
-        if (Objects.isNull(indexConfig.getConfigType())
-                || StringUtils.isEmpty(indexConfig.getConfigName())
-                || Objects.isNull(indexConfig.getConfigRank())) {
-            return ResultGenerator.genFailResult("参数异常！");
-        }
+        IndexConfig indexConfig = new IndexConfig();
+        BeanUtil.copyProperties(indexConfigAddParam, indexConfig);
         String result = newBeeMallIndexConfigService.saveIndexConfig(indexConfig);
         if (ServiceResultEnum.SUCCESS.getResult().equals(result)) {
             return ResultGenerator.genSuccessResult();
@@ -97,14 +96,10 @@ public class NewBeeAdminIndexConfigAPI {
      */
     @RequestMapping(value = "/indexConfigs", method = RequestMethod.PUT)
     @ApiOperation(value = "修改首页配置项", notes = "修改首页配置项")
-    public Result update(@RequestBody IndexConfig indexConfig, @TokenToAdminUser AdminUserToken adminUser) {
+    public Result update(@RequestBody @Valid IndexConfigEditParam indexConfigEditParam, @TokenToAdminUser AdminUserToken adminUser) {
         logger.info("adminUser:{}", adminUser.toString());
-        if (Objects.isNull(indexConfig.getConfigType())
-                || Objects.isNull(indexConfig.getConfigId())
-                || StringUtils.isEmpty(indexConfig.getConfigName())
-                || Objects.isNull(indexConfig.getConfigRank())) {
-            return ResultGenerator.genFailResult("参数异常！");
-        }
+        IndexConfig indexConfig = new IndexConfig();
+        BeanUtil.copyProperties(indexConfigEditParam, indexConfig);
         String result = newBeeMallIndexConfigService.updateIndexConfig(indexConfig);
         if (ServiceResultEnum.SUCCESS.getResult().equals(result)) {
             return ResultGenerator.genSuccessResult();
@@ -130,11 +125,11 @@ public class NewBeeAdminIndexConfigAPI {
     /**
      * 删除
      */
-    @RequestMapping(value = "/indexConfigs/delete", method = RequestMethod.POST)
-    @ApiOperation(value = "批量首页配置项信息", notes = "批量首页配置项信息")
+    @RequestMapping(value = "/indexConfigs", method = RequestMethod.DELETE)
+    @ApiOperation(value = "批量删除首页配置项信息", notes = "批量删除首页配置项信息")
     public Result delete(@RequestBody BatchIdParam batchIdParam, @TokenToAdminUser AdminUserToken adminUser) {
         logger.info("adminUser:{}", adminUser.toString());
-        if (batchIdParam==null||batchIdParam.getIds().length < 1) {
+        if (batchIdParam == null || batchIdParam.getIds().length < 1) {
             return ResultGenerator.genFailResult("参数异常！");
         }
         if (newBeeMallIndexConfigService.deleteBatch(batchIdParam.getIds())) {

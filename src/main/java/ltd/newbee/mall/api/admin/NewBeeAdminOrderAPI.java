@@ -13,26 +13,21 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import ltd.newbee.mall.api.admin.param.BatchIdParam;
 import ltd.newbee.mall.api.mall.vo.NewBeeMallOrderDetailVO;
-import ltd.newbee.mall.api.mall.vo.NewBeeMallOrderItemVO;
 import ltd.newbee.mall.common.ServiceResultEnum;
 import ltd.newbee.mall.config.annotation.TokenToAdminUser;
 import ltd.newbee.mall.entity.AdminUserToken;
-import ltd.newbee.mall.entity.NewBeeMallOrder;
 import ltd.newbee.mall.service.NewBeeMallOrderService;
 import ltd.newbee.mall.util.PageQueryUtil;
 import ltd.newbee.mall.util.Result;
 import ltd.newbee.mall.util.ResultGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * @author 13
@@ -61,7 +56,7 @@ public class NewBeeAdminOrderAPI {
                        @RequestParam(required = false) @ApiParam(value = "订单状态") Integer orderStatus, @TokenToAdminUser AdminUserToken adminUser) {
         logger.info("adminUser:{}", adminUser.toString());
         if (pageNumber == null || pageNumber < 1 || pageSize == null || pageSize < 10) {
-            return ResultGenerator.genFailResult("参数异常！");
+            return ResultGenerator.genFailResult("分页参数异常！");
         }
         Map params = new HashMap(8);
         params.put("page", pageNumber);
@@ -74,41 +69,6 @@ public class NewBeeAdminOrderAPI {
         }
         PageQueryUtil pageUtil = new PageQueryUtil(params);
         return ResultGenerator.genSuccessResult(newBeeMallOrderService.getNewBeeMallOrdersPage(pageUtil));
-    }
-
-    /**
-     * 修改
-     */
-    @RequestMapping(value = "/orders", method = RequestMethod.PUT)
-    @ApiOperation(value = "修改订单价格", notes = "修改订单价格")
-    public Result update(@RequestBody NewBeeMallOrder newBeeMallOrder, @TokenToAdminUser AdminUserToken adminUser) {
-        logger.info("adminUser:{}", adminUser.toString());
-        if (Objects.isNull(newBeeMallOrder.getTotalPrice())
-                || Objects.isNull(newBeeMallOrder.getOrderId())
-                || newBeeMallOrder.getOrderId() < 1
-                || newBeeMallOrder.getTotalPrice() < 1) {
-            return ResultGenerator.genFailResult("参数异常！");
-        }
-        String result = newBeeMallOrderService.updateOrderInfo(newBeeMallOrder);
-        if (ServiceResultEnum.SUCCESS.getResult().equals(result)) {
-            return ResultGenerator.genSuccessResult();
-        } else {
-            return ResultGenerator.genFailResult(result);
-        }
-    }
-
-    /**
-     * 详情
-     */
-    @RequestMapping(value = "/orderItems/{orderId}", method = RequestMethod.GET)
-    @ApiOperation(value = "获取订单项数据", notes = "根据id查询")
-    public Result info(@PathVariable("orderId") Long orderId, @TokenToAdminUser AdminUserToken adminUser) {
-        logger.info("adminUser:{}", adminUser.toString());
-        List<NewBeeMallOrderItemVO> orderItems = newBeeMallOrderService.getOrderItems(orderId);
-        if (!CollectionUtils.isEmpty(orderItems)) {
-            return ResultGenerator.genSuccessResult(orderItems);
-        }
-        return ResultGenerator.genFailResult(ServiceResultEnum.DATA_NOT_EXIST.getResult());
     }
 
     @GetMapping("/orders/{orderId}")

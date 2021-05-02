@@ -12,23 +12,29 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import ltd.newbee.mall.api.admin.param.BatchIdParam;
+import ltd.newbee.mall.api.admin.param.GoodsCategoryAddParam;
+import ltd.newbee.mall.api.admin.param.GoodsCategoryEditParam;
 import ltd.newbee.mall.common.NewBeeMallCategoryLevelEnum;
 import ltd.newbee.mall.common.ServiceResultEnum;
 import ltd.newbee.mall.config.annotation.TokenToAdminUser;
 import ltd.newbee.mall.entity.AdminUserToken;
 import ltd.newbee.mall.entity.GoodsCategory;
 import ltd.newbee.mall.service.NewBeeMallCategoryService;
+import ltd.newbee.mall.util.BeanUtil;
 import ltd.newbee.mall.util.PageQueryUtil;
 import ltd.newbee.mall.util.Result;
 import ltd.newbee.mall.util.ResultGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.*;
+import javax.validation.Valid;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author 13
@@ -57,7 +63,7 @@ public class NewBeeAdminGoodsCategoryAPI {
                        @RequestParam(required = false) @ApiParam(value = "上级分类的id") Long parentId, @TokenToAdminUser AdminUserToken adminUser) {
         logger.info("adminUser:{}", adminUser.toString());
         if (pageNumber == null || pageNumber < 1 || pageSize == null || pageSize < 10 || categoryLevel == null || categoryLevel < 0 || categoryLevel > 3 || parentId == null || parentId < 0) {
-            return ResultGenerator.genFailResult("参数异常！");
+            return ResultGenerator.genFailResult("分页参数异常！");
         }
         Map params = new HashMap(8);
         params.put("page", pageNumber);
@@ -108,14 +114,10 @@ public class NewBeeAdminGoodsCategoryAPI {
      */
     @RequestMapping(value = "/categories", method = RequestMethod.POST)
     @ApiOperation(value = "新增分类", notes = "新增分类")
-    public Result save(@RequestBody GoodsCategory goodsCategory, @TokenToAdminUser AdminUserToken adminUser) {
+    public Result save(@RequestBody @Valid GoodsCategoryAddParam goodsCategoryAddParam, @TokenToAdminUser AdminUserToken adminUser) {
         logger.info("adminUser:{}", adminUser.toString());
-        if (Objects.isNull(goodsCategory.getCategoryLevel())
-                || StringUtils.isEmpty(goodsCategory.getCategoryName())
-                || Objects.isNull(goodsCategory.getParentId())
-                || Objects.isNull(goodsCategory.getCategoryRank())) {
-            return ResultGenerator.genFailResult("参数异常！");
-        }
+        GoodsCategory goodsCategory = new GoodsCategory();
+        BeanUtil.copyProperties(goodsCategoryAddParam, goodsCategory);
         String result = newBeeMallCategoryService.saveCategory(goodsCategory);
         if (ServiceResultEnum.SUCCESS.getResult().equals(result)) {
             return ResultGenerator.genSuccessResult();
@@ -130,15 +132,10 @@ public class NewBeeAdminGoodsCategoryAPI {
      */
     @RequestMapping(value = "/categories", method = RequestMethod.PUT)
     @ApiOperation(value = "修改分类信息", notes = "修改分类信息")
-    public Result update(@RequestBody GoodsCategory goodsCategory, @TokenToAdminUser AdminUserToken adminUser) {
+    public Result update(@RequestBody @Valid GoodsCategoryEditParam goodsCategoryEditParam, @TokenToAdminUser AdminUserToken adminUser) {
         logger.info("adminUser:{}", adminUser.toString());
-        if (Objects.isNull(goodsCategory.getCategoryId())
-                || Objects.isNull(goodsCategory.getCategoryLevel())
-                || StringUtils.isEmpty(goodsCategory.getCategoryName())
-                || Objects.isNull(goodsCategory.getParentId())
-                || Objects.isNull(goodsCategory.getCategoryRank())) {
-            return ResultGenerator.genFailResult("参数异常！");
-        }
+        GoodsCategory goodsCategory = new GoodsCategory();
+        BeanUtil.copyProperties(goodsCategoryEditParam, goodsCategory);
         String result = newBeeMallCategoryService.updateGoodsCategory(goodsCategory);
         if (ServiceResultEnum.SUCCESS.getResult().equals(result)) {
             return ResultGenerator.genSuccessResult();
@@ -168,7 +165,7 @@ public class NewBeeAdminGoodsCategoryAPI {
     @ApiOperation(value = "批量删除分类信息", notes = "批量删除分类信息")
     public Result delete(@RequestBody BatchIdParam batchIdParam, @TokenToAdminUser AdminUserToken adminUser) {
         logger.info("adminUser:{}", adminUser.toString());
-        if (batchIdParam==null||batchIdParam.getIds().length < 1) {
+        if (batchIdParam == null || batchIdParam.getIds().length < 1) {
             return ResultGenerator.genFailResult("参数异常！");
         }
         if (newBeeMallCategoryService.deleteBatch(batchIdParam.getIds())) {
