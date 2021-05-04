@@ -55,7 +55,8 @@ public class NewBeeMallShoppingCartServiceImpl implements NewBeeMallShoppingCart
         //超出单个商品的最大数量
         if (saveCartItemParam.getGoodsCount() < 1) {
             return ServiceResultEnum.SHOPPING_CART_ITEM_NUMBER_ERROR.getResult();
-        }        //超出单个商品的最大数量
+        }
+        //超出单个商品的最大数量
         if (saveCartItemParam.getGoodsCount() > Constants.SHOPPING_CART_ITEM_LIMIT_NUMBER) {
             return ServiceResultEnum.SHOPPING_CART_ITEM_LIMIT_NUMBER_ERROR.getResult();
         }
@@ -86,6 +87,14 @@ public class NewBeeMallShoppingCartServiceImpl implements NewBeeMallShoppingCart
         if (updateCartItemParam.getGoodsCount() > Constants.SHOPPING_CART_ITEM_LIMIT_NUMBER) {
             return ServiceResultEnum.SHOPPING_CART_ITEM_LIMIT_NUMBER_ERROR.getResult();
         }
+        //当前登录账号的userId与待修改的cartItem中userId不同，返回错误
+        if (!newBeeMallShoppingCartItemUpdate.getUserId().equals(userId)) {
+            return ServiceResultEnum.NO_PERMISSION_ERROR.getResult();
+        }
+        //数值相同，则不执行数据操作
+        if (updateCartItemParam.getGoodsCount().equals(newBeeMallShoppingCartItemUpdate.getGoodsCount())) {
+            return ServiceResultEnum.SUCCESS.getResult();
+        }
         newBeeMallShoppingCartItemUpdate.setGoodsCount(updateCartItemParam.getGoodsCount());
         newBeeMallShoppingCartItemUpdate.setUpdateTime(new Date());
         //修改记录
@@ -105,8 +114,16 @@ public class NewBeeMallShoppingCartServiceImpl implements NewBeeMallShoppingCart
     }
 
     @Override
-    public Boolean deleteById(Long newBeeMallShoppingCartItemId) {
-        return newBeeMallShoppingCartItemMapper.deleteByPrimaryKey(newBeeMallShoppingCartItemId) > 0;
+    public Boolean deleteById(Long shoppingCartItemId, Long userId) {
+        NewBeeMallShoppingCartItem newBeeMallShoppingCartItem = newBeeMallShoppingCartItemMapper.selectByPrimaryKey(shoppingCartItemId);
+        if (newBeeMallShoppingCartItem == null) {
+            return false;
+        }
+        //userId不同不能删除
+        if (!userId.equals(newBeeMallShoppingCartItem.getUserId())) {
+            return false;
+        }
+        return newBeeMallShoppingCartItemMapper.deleteByPrimaryKey(shoppingCartItemId) > 0;
     }
 
     @Override

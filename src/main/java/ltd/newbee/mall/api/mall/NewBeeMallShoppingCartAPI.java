@@ -96,7 +96,7 @@ public class NewBeeMallShoppingCartAPI {
         if (!loginMallUser.getUserId().equals(newBeeMallCartItemById.getUserId())) {
             return ResultGenerator.genFailResult(ServiceResultEnum.REQUEST_FORBIDEN_ERROR.getResult());
         }
-        Boolean deleteResult = newBeeMallShoppingCartService.deleteById(newBeeMallShoppingCartItemId);
+        Boolean deleteResult = newBeeMallShoppingCartService.deleteById(newBeeMallShoppingCartItemId,loginMallUser.getUserId());
         //删除成功
         if (deleteResult) {
             return ResultGenerator.genSuccessResult();

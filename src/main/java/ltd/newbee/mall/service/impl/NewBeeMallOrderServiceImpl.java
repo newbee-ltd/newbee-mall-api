@@ -129,8 +129,17 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
     public String cancelOrder(String orderNo, Long userId) {
         NewBeeMallOrder newBeeMallOrder = newBeeMallOrderMapper.selectByOrderNo(orderNo);
         if (newBeeMallOrder != null) {
-            //todo 验证是否是当前userId下的订单，否则报错
-            //todo 订单状态判断
+            //验证是否是当前userId下的订单，否则报错
+            if (!userId.equals(newBeeMallOrder.getUserId())) {
+                NewBeeMallException.fail(ServiceResultEnum.NO_PERMISSION_ERROR.getResult());
+            }
+            //订单状态判断
+            if (newBeeMallOrder.getOrderStatus().intValue() == NewBeeMallOrderStatusEnum.ORDER_SUCCESS.getOrderStatus()
+                    || newBeeMallOrder.getOrderStatus().intValue() == NewBeeMallOrderStatusEnum.ORDER_CLOSED_BY_MALLUSER.getOrderStatus()
+                    || newBeeMallOrder.getOrderStatus().intValue() == NewBeeMallOrderStatusEnum.ORDER_CLOSED_BY_EXPIRED.getOrderStatus()
+                    || newBeeMallOrder.getOrderStatus().intValue() == NewBeeMallOrderStatusEnum.ORDER_CLOSED_BY_JUDGE.getOrderStatus()) {
+                return ServiceResultEnum.ORDER_STATUS_ERROR.getResult();
+            }
             if (newBeeMallOrderMapper.closeOrder(Collections.singletonList(newBeeMallOrder.getOrderId()), NewBeeMallOrderStatusEnum.ORDER_CLOSED_BY_MALLUSER.getOrderStatus()) > 0) {
                 return ServiceResultEnum.SUCCESS.getResult();
             } else {
@@ -144,8 +153,14 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
     public String finishOrder(String orderNo, Long userId) {
         NewBeeMallOrder newBeeMallOrder = newBeeMallOrderMapper.selectByOrderNo(orderNo);
         if (newBeeMallOrder != null) {
-            //todo 验证是否是当前userId下的订单，否则报错
-            //todo 订单状态判断
+            //验证是否是当前userId下的订单，否则报错
+            if (!userId.equals(newBeeMallOrder.getUserId())) {
+                return ServiceResultEnum.NO_PERMISSION_ERROR.getResult();
+            }
+            //订单状态判断 非出库状态下不进行修改操作
+            if (newBeeMallOrder.getOrderStatus().intValue() != NewBeeMallOrderStatusEnum.ORDER_EXPRESS.getOrderStatus()) {
+                return ServiceResultEnum.ORDER_STATUS_ERROR.getResult();
+            }
             newBeeMallOrder.setOrderStatus((byte) NewBeeMallOrderStatusEnum.ORDER_SUCCESS.getOrderStatus());
             newBeeMallOrder.setUpdateTime(new Date());
             if (newBeeMallOrderMapper.updateByPrimaryKeySelective(newBeeMallOrder) > 0) {
@@ -161,8 +176,9 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
     public String paySuccess(String orderNo, int payType) {
         NewBeeMallOrder newBeeMallOrder = newBeeMallOrderMapper.selectByOrderNo(orderNo);
         if (newBeeMallOrder != null) {
+            //订单状态判断 非待支付状态下不进行修改操作
             if (newBeeMallOrder.getOrderStatus().intValue() != NewBeeMallOrderStatusEnum.ORDER_PRE_PAY.getOrderStatus()) {
-                NewBeeMallException.fail("非待支付状态下的订单无法支付");
+                return ServiceResultEnum.ORDER_STATUS_ERROR.getResult();
             }
             newBeeMallOrder.setOrderStatus((byte) NewBeeMallOrderStatusEnum.ORDER_PAID.getOrderStatus());
             newBeeMallOrder.setPayType((byte) payType);
