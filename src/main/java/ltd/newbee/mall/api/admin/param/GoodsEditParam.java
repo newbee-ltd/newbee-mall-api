@@ -10,6 +10,7 @@ package ltd.newbee.mall.api.admin.param;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -26,10 +27,12 @@ public class GoodsEditParam {
 
     @ApiModelProperty("商品名称")
     @NotEmpty(message = "商品名称不能为空")
+    @Length(max = 128,message = "商品名称内容过长")
     private String goodsName;
 
     @ApiModelProperty("商品简介")
     @NotEmpty(message = "商品简介不能为空")
+    @Length(max = 200,message = "商品简介内容过长")
     private String goodsIntro;
 
     @ApiModelProperty("分类id")
@@ -61,6 +64,7 @@ public class GoodsEditParam {
 
     @ApiModelProperty("商品标签")
     @NotEmpty(message = "商品标签不能为空")
+    @Length(max = 16,message = "商品标签内容过长")
     private String tag;
 
     private Byte goodsSellStatus;
