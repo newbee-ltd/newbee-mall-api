@@ -10,6 +10,7 @@ package ltd.newbee.mall.service.impl;
 
 import ltd.newbee.mall.api.mall.vo.NewBeeMallSearchGoodsVO;
 import ltd.newbee.mall.common.NewBeeMallCategoryLevelEnum;
+import ltd.newbee.mall.common.NewBeeMallException;
 import ltd.newbee.mall.common.ServiceResultEnum;
 import ltd.newbee.mall.dao.GoodsCategoryMapper;
 import ltd.newbee.mall.dao.NewBeeMallGoodsMapper;
@@ -91,7 +92,11 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
 
     @Override
     public NewBeeMallGoods getNewBeeMallGoodsById(Long id) {
-        return goodsMapper.selectByPrimaryKey(id);
+        NewBeeMallGoods newBeeMallGoods = goodsMapper.selectByPrimaryKey(id);
+        if (newBeeMallGoods == null) {
+            NewBeeMallException.fail(ServiceResultEnum.GOODS_NOT_EXIST.getResult());
+        }
+        return newBeeMallGoods;
     }
 
     @Override

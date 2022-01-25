@@ -82,9 +82,6 @@ public class NewBeeMallGoodsAPI {
             return ResultGenerator.genFailResult("参数异常");
         }
         NewBeeMallGoods goods = newBeeMallGoodsService.getNewBeeMallGoodsById(goodsId);
-        if (goods == null) {
-            return ResultGenerator.genFailResult("参数异常");
-        }
         if (Constants.SELL_STATUS_UP != goods.getGoodsSellStatus()) {
             NewBeeMallException.fail(ServiceResultEnum.GOODS_PUT_DOWN.getResult());
         }
