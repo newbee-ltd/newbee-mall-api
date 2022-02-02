@@ -37,7 +37,8 @@ public class NewBeeMallOrderDetailVO implements Serializable {
     @ApiModelProperty("订单支付方式")
     private String payTypeString;
 
-    @ApiModelProperty("订单支付实践")
+    @ApiModelProperty("订单支付时间")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date payTime;
 
     @ApiModelProperty("订单状态码")
