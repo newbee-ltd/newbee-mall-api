@@ -6,6 +6,8 @@
 
 newbee-mall 项目是一套电商系统，基于 Spring Boot 2.X 和 Vue 以及相关技术栈开发。前台商城系统包含首页门户、商品分类、新品上线、首页轮播、商品推荐、商品搜索、商品展示、购物车、订单结算、订单流程、个人订单管理、会员中心、帮助中心等模块。 后台管理系统包含数据面板、轮播图管理、商品管理、订单管理、会员管理、分类管理、设置等模块。
 
+当前分支的 Spring Boot 版本为2.6.3，如果想学习 Spring Boot 2.3.7.RELEASE 版本的话可以查看[spring-boot-2.3.7分支](https://github.com/newbee-ltd/newbee-mall-api/tree/spring-boot-2.3.7)。
+
 本仓库中的源码为新蜂商城前后端分离版本的后端 API 项目，技术栈为 Spring Boot，主要面向服务端开发人员，前端 Vue 页面源码在另外三个 Vue 仓库。
 
 前后端分离版本包括四个仓库：
