@@ -29,9 +29,9 @@ newbee-mall 项目是一套电商系统，基于 Spring Boot 2.X 和 Vue 以及�
 | newbee-mall-cloud    | [newbee-mall-cloud in GitHub](https://github.com/newbee-ltd/newbee-mall-cloud)<br/>[newbee-mall-cloud in Gitee](https://gitee.com/newbee-ltd/newbee-mall-cloud) | 微服务版本、分布式事务、Spring Cloud Alibaba、Nacos、Sentinel、OpenFeign、Seata |
 | newbee-mall-api      | [newbee-mall-api in GitHub](https://github.com/newbee-ltd/newbee-mall-api)<br/>[newbee-mall-api in Gitee](https://gitee.com/newbee-ltd/newbee-mall-api) | 前后端分离、Spring Boot、MyBatis、Swagger、MySQL             |
 | newbee-mall-api-go   | [newbee-mall-api-go in GitHub](https://github.com/newbee-ltd/newbee-mall-api-go)<br/>[newbee-mall-api-go in Gitee](https://gitee.com/newbee-ltd/newbee-mall-api-go) | 前后端分离、Go、Gin、MySQL                                   |
-| newbee-mall-vue-app  | [newbee-mall-vue-app in GitHub](https://github.com/newbee-ltd/newbee-mall-vue-app)<br/>[newbee-mall-vue-app in Gitee](https://gitee.com/newbee-ltd/newbee-mall-vue-app) | 前后端分离、Vue 2.x、Vant                                    |
-| newbee-mall-vue3-app | [newbee-mall-vue3-app in GitHub](https://github.com/newbee-ltd/newbee-mall-vue3-app)<br/>[newbee-mall-vue3-app in Gitee](https://gitee.com/newbee-ltd/newbee-mall-vue3-app) | 前后端分离、Vue 3.0、Vue-Router 4.0、Vuex 4.0、Vant 3.0      |
-| vue3-admin           | [vue3-admin in GitHub](https://github.com/newbee-ltd/vue3-admin)<br/>[vue3-admin in Gitee](https://gitee.com/newbee-ltd/vue3-admin) | 前后端分离、Vue 3.0、Element-Plus、Vue-Router 4.0、Vite      |
+| newbee-mall-vue-app  | [newbee-mall-vue-app in GitHub](https://github.com/newbee-ltd/newbee-mall-vue-app)<br/>[newbee-mall-vue-app in Gitee](https://gitee.com/newbee-ltd/newbee-mall-vue-app) | 前后端分离、Vue2、Vant                                    |
+| newbee-mall-vue3-app | [newbee-mall-vue3-app in GitHub](https://github.com/newbee-ltd/newbee-mall-vue3-app)<br/>[newbee-mall-vue3-app in Gitee](https://gitee.com/newbee-ltd/newbee-mall-vue3-app) | 前后端分离、Vue3、Vue-Router4、Vuex4、Vant3      |
+| vue3-admin           | [vue3-admin in GitHub](https://github.com/newbee-ltd/vue3-admin)<br/>[vue3-admin in Gitee](https://gitee.com/newbee-ltd/vue3-admin) | 前后端分离、Vue3、Element-Plus、Vue-Router4、Vite      |
 
 > 更多 Spring Boot 实战项目可以关注十三的另一个代码仓库 [spring-boot-projects](https://github.com/ZHENFENG13/spring-boot-projects)，该仓库中主要是 Spring Boot 的入门学习教程以及一些常用的 Spring Boot 实战项目教程，包括 Spring Boot 使用的各种示例代码，同时也包括一些实战项目的项目源码和效果展示，实战项目包括基本的 web 开发以及目前大家普遍使用的前后端分离实践项目等，后续会根据大家的反馈继续增加一些实战项目源码，摆脱各种 hello world 入门案例的束缚，真正的掌握 Spring Boot 开发。
 
@@ -41,19 +41,19 @@ newbee-mall 项目是一套电商系统，基于 Spring Boot 2.X 和 Vue 以及�
 
 ## 开发及部署文档
 
-#### Vue 3.0 + Spring Boot 版本
+#### Vue3 + Spring Boot 版本
 
-- [开篇词：通关Vue3.0 企业级项目开发，升职加薪快人一步](https://juejin.cn/book/6933939264455442444)
+- [开篇词：通关 Vue3 企业级项目开发，升职加薪快人一步](https://juejin.cn/book/6933939264455442444)
 - [项目须知和课程约定](https://juejin.cn/book/6933939264455442444)
 - [大势所趋：“前后端分离”开发模式](https://juejin.cn/book/6933939264455442444)
-- [Vue 3.0 简介及开发环境搭建](https://juejin.cn/book/6933939264455442444)
-- [Vue 3.0 组合 API 入口 Setup 浅析](https://juejin.cn/book/6933939264455442444)
-- [Vue 3.0 之响应式系统 API](https://juejin.cn/book/6933939264455442444)
-- [Vue 3.0 之生命周期钩子函数、提供注入](https://juejin.cn/book/6933939264455442444)
-- [Vue 3.0 性能和业务层面上的提升](https://juejin.cn/book/6933939264455442444)
-- [Vite 2.0 原理分析及简单插件编写](https://juejin.cn/book/6933939264455442444)
-- [Vue-Router 4.x 使用方法及路由原理](https://juejin.cn/book/6933939264455442444)
-- [Vue 3.0 实战项目启动篇](https://juejin.cn/book/6933939264455442444)
+- [Vue3 简介及开发环境搭建](https://juejin.cn/book/6933939264455442444)
+- [Vue3 组合 API 入口 Setup 浅析](https://juejin.cn/book/6933939264455442444)
+- [Vue3 之响应式系统 API](https://juejin.cn/book/6933939264455442444)
+- [Vue3 之生命周期钩子函数、提供注入](https://juejin.cn/book/6933939264455442444)
+- [Vue3 性能和业务层面上的提升](https://juejin.cn/book/6933939264455442444)
+- [Vite2 原理分析及简单插件编写](https://juejin.cn/book/6933939264455442444)
+- [Vue-Router4 使用方法及路由原理](https://juejin.cn/book/6933939264455442444)
+- [Vue3 实战项目启动篇](https://juejin.cn/book/6933939264455442444)
 - [后端 API 开发技术选型之 Spring Boot](https://juejin.cn/book/6933939264455442444)
 - [后端基础运行环境和开发工具准备](https://juejin.cn/book/6933939264455442444)
 - [Spring Boot 项目搭建及快速上手](https://juejin.cn/book/6933939264455442444)
@@ -72,15 +72,15 @@ newbee-mall 项目是一套电商系统，基于 Spring Boot 2.X 和 Vue 以及�
 - [API 接口开发实战之商品配置管理模块接口开发](https://juejin.cn/book/6933939264455442444)
 - [API 接口开发实战之订单管理模块接口开发](https://juejin.cn/book/6933939264455442444)
 - [前后端鉴权的四种方式](https://juejin.cn/book/6933939264455442444)
-- [Vite 2.0 + Vue 3.0 + Element-plus 搭建管理后台项目](https://juejin.cn/book/6933939264455442444)
-- [Vue 3.0 实战之管理后台左右栏目布局](https://juejin.cn/book/6933939264455442444)
-- [Vue 3.0 实战之登录鉴权](https://juejin.cn/book/6933939264455442444)
-- [Vue 3.0 实战之首页大盘数据](https://juejin.cn/book/6933939264455442444)
-- [Vue 3.0 实战之首页配置](https://juejin.cn/book/6933939264455442444)
-- [Vue 3.0 实战之分类管理](https://juejin.cn/book/6933939264455442444)
-- [Vue 3.0 实战之商品管理](https://juejin.cn/book/6933939264455442444)
-- [Vue 3.0 实战之订单管理](https://juejin.cn/book/6933939264455442444)
-- [Vue 3.0 实战之会员管理、账户修改](https://juejin.cn/book/6933939264455442444)
+- [Vite2 + Vue3 + Element-plus 搭建管理后台项目](https://juejin.cn/book/6933939264455442444)
+- [Vue3 实战之管理后台左右栏目布局](https://juejin.cn/book/6933939264455442444)
+- [Vue3 实战之登录鉴权](https://juejin.cn/book/6933939264455442444)
+- [Vue3 实战之首页大盘数据](https://juejin.cn/book/6933939264455442444)
+- [Vue3 实战之首页配置](https://juejin.cn/book/6933939264455442444)
+- [Vue3 实战之分类管理](https://juejin.cn/book/6933939264455442444)
+- [Vue3 实战之商品管理](https://juejin.cn/book/6933939264455442444)
+- [Vue3 实战之订单管理](https://juejin.cn/book/6933939264455442444)
+- [Vue3 实战之会员管理、账户修改](https://juejin.cn/book/6933939264455442444)
 - [pm2 实现一键部署云端服务器](https://juejin.cn/book/6933939264455442444)
 - [常见问题汇总讲解](https://juejin.cn/book/6933939264455442444)
 
