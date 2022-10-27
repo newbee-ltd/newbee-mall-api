@@ -6,13 +6,13 @@
 
 newbee-mall 项目是一套电商系统，基于 Spring Boot 2.X 和 Vue 以及相关技术栈开发。前台商城系统包含首页门户、商品分类、新品上线、首页轮播、商品推荐、商品搜索、商品展示、购物车、订单结算、订单流程、个人订单管理、会员中心、帮助中心等模块。 后台管理系统包含数据面板、轮播图管理、商品管理、订单管理、会员管理、分类管理、设置等模块。
 
-当前分支的 Spring Boot 版本为 2.7.3，想要学习和使用其它版本可以直接点击下方的分支名称跳转至对应的仓库分支中。
+当前分支的 Spring Boot 版本为 2.7.5，想要学习和使用其它版本可以直接点击下方的分支名称跳转至对应的仓库分支中。
 
 | 分支名称                                                    | Spring Boot Version |
 | ------------------------------------------------------------ | ------------------- |
 | [spring-boot-2.3.7](https://github.com/newbee-ltd/newbee-mall-api/tree/spring-boot-2.3.7) | 2.3.7-RELEASE       |
 | [spring-boot-2.6.x](https://github.com/newbee-ltd/newbee-mall-api/tree/spring-boot-2.6.x) | 2.6.3               |
-| [main](https://github.com/newbee-ltd/nnewbee-mall-api)            | 2.7.3               |
+| [main](https://github.com/newbee-ltd/nnewbee-mall-api)            | 2.7.5               |
 
 **坚持不易，如果觉得项目还不错的话可以给项目一个 Star 吧，也是对我一直更新代码的一种鼓励啦，谢谢各位的支持。**
 
