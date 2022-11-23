@@ -26,6 +26,11 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import java.util.List;
 
+/**
+ * 该类为商城首页接口
+ *
+ * @author 十三
+ */
 @RestController
 @Api(value = "v1", tags = "1.新蜂商城首页接口")
 @RequestMapping("/api/v1")
@@ -37,18 +42,34 @@ public class NewBeeMallIndexAPI {
     @Resource
     private NewBeeMallIndexConfigService newBeeMallIndexConfigService;
 
+    /**
+     *
+     *
+     * @return 首页数据
+     */
     @GetMapping("/index-infos")
     @ApiOperation(value = "获取首页数据", notes = "轮播图、新品、推荐等")
     public Result<IndexInfoVO> indexInfo() {
+        //创建商城首页VO
         IndexInfoVO indexInfoVO = new IndexInfoVO();
+
+        /**
+         * 创建轮播图、热销商品、新品上线、推荐商品
+         */
         List<NewBeeMallIndexCarouselVO> carousels = newBeeMallCarouselService.getCarouselsForIndex(Constants.INDEX_CAROUSEL_NUMBER);
         List<NewBeeMallIndexConfigGoodsVO> hotGoodses = newBeeMallIndexConfigService.getConfigGoodsesForIndex(IndexConfigTypeEnum.INDEX_GOODS_HOT.getType(), Constants.INDEX_GOODS_HOT_NUMBER);
         List<NewBeeMallIndexConfigGoodsVO> newGoodses = newBeeMallIndexConfigService.getConfigGoodsesForIndex(IndexConfigTypeEnum.INDEX_GOODS_NEW.getType(), Constants.INDEX_GOODS_NEW_NUMBER);
         List<NewBeeMallIndexConfigGoodsVO> recommendGoodses = newBeeMallIndexConfigService.getConfigGoodsesForIndex(IndexConfigTypeEnum.INDEX_GOODS_RECOMMOND.getType(), Constants.INDEX_GOODS_RECOMMOND_NUMBER);
+
+        /**
+         * 设置首页的轮播图、热销商品、新品上线、推荐商品属性为上面创建的
+         */
         indexInfoVO.setCarousels(carousels);
         indexInfoVO.setHotGoodses(hotGoodses);
         indexInfoVO.setNewGoodses(newGoodses);
         indexInfoVO.setRecommendGoodses(recommendGoodses);
+
+        //返回成功响应
         return ResultGenerator.genSuccessResult(indexInfoVO);
     }
 }

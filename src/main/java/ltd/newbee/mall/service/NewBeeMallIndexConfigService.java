@@ -15,6 +15,10 @@ import ltd.newbee.mall.util.PageResult;
 
 import java.util.List;
 
+/**
+ *
+ * @author 十三
+ */
 public interface NewBeeMallIndexConfigService {
 
     /**
@@ -33,11 +37,31 @@ public interface NewBeeMallIndexConfigService {
      */
     PageResult getConfigsPage(PageQueryUtil pageUtil);
 
+    /**
+     *
+     * @param indexConfig
+     * @return
+     */
     String saveIndexConfig(IndexConfig indexConfig);
 
+    /**
+     *
+     * @param indexConfig
+     * @return
+     */
     String updateIndexConfig(IndexConfig indexConfig);
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     IndexConfig getIndexConfigById(Long id);
 
+    /**
+     *
+     * @param ids
+     * @return
+     */
     Boolean deleteBatch(Long[] ids);
 }

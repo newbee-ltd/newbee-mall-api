@@ -15,6 +15,11 @@ import ltd.newbee.mall.util.PageResult;
 
 import java.util.List;
 
+/**
+ *
+ *
+ * @author 十三
+ */
 public interface NewBeeMallCarouselService {
 
     /**
@@ -33,11 +38,31 @@ public interface NewBeeMallCarouselService {
      */
     PageResult getCarouselPage(PageQueryUtil pageUtil);
 
+    /**
+     *
+     * @param carousel
+     * @return
+     */
     String saveCarousel(Carousel carousel);
 
+    /**
+     *
+     * @param carousel
+     * @return
+     */
     String updateCarousel(Carousel carousel);
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     Carousel getCarouselById(Integer id);
 
+    /**
+     *
+     * @param ids
+     * @return
+     */
     Boolean deleteBatch(Long[] ids);
 }
