@@ -15,6 +15,8 @@ import java.util.List;
 
 /**
  * 搜索页面分类数据VO
+ *
+ * @author 十三
  */
 public class SearchPageCategoryVO implements Serializable {
 

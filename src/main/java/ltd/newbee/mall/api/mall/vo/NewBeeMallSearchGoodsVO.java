@@ -14,7 +14,9 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * 搜索列表页商品VO
+ * 该类为搜索列表页商品VO，显示从整个商城或者某个单独分类内搜索出的商品数据，不显示商品原价、标签、详情图片和字段内容
+ *
+ * @author 十三
  */
 @Data
 public class NewBeeMallSearchGoodsVO implements Serializable {

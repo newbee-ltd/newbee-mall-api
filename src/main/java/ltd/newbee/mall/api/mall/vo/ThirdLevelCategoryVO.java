@@ -14,7 +14,9 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * 首页分类数据VO(第三级)
+ * 该类为首页三级分类数据VO，具有id、当前分类级别、分类名称
+ *
+ * @author 十三
  */
 @Data
 public class ThirdLevelCategoryVO implements Serializable {

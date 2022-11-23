@@ -15,7 +15,9 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * 首页分类数据VO
+ * 该类为首页一级分类数据VO，具有id、当前分类级别、分类名称以及当前一级分类下的二级分类列表数据
+ *
+ * @author 十三
  */
 @Data
 public class NewBeeMallIndexCategoryVO implements Serializable {

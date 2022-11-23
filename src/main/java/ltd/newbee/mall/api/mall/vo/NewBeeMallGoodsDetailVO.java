@@ -14,7 +14,9 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * 商品详情页VO
+ * 该类为商品详情页VO，进入具体的商品界面需要的页面数据
+ *
+ * @author 十三
  */
 @Data
 public class NewBeeMallGoodsDetailVO implements Serializable {

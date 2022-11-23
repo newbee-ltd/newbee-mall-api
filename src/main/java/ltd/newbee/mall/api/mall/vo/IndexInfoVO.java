@@ -14,6 +14,11 @@ import lombok.Data;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * 该类为首页VO，前端界面商城首页显示的数据，分为轮播图、热销商品、新品上线、推荐商品四个部分
+ *
+ * @author 十三
+ */
 @Data
 public class IndexInfoVO implements Serializable {
 

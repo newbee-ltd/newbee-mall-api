@@ -14,7 +14,9 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * 首页轮播图VO
+ * 该类为首页轮播图VO，包含轮播图图片地址和跳转路径
+ *
+ * @author 十三
  */
 @Data
 public class NewBeeMallIndexCarouselVO implements Serializable {

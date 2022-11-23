@@ -14,7 +14,9 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * 首页配置商品VO
+ * 该类为首页配置商品VO，包括新品上线、热门商品和最新推荐显示的商品，不显示商品原价、详情图片和字段内容
+ *
+ * @author 十三
  */
 @Data
 public class NewBeeMallIndexConfigGoodsVO implements Serializable {

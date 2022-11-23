@@ -14,7 +14,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * 订单详情页页面订单项VO
+ * 该类为订单详情页页面订单项VO，显示订单项所对应的部分商品信息
  */
 @Data
 public class NewBeeMallOrderItemVO implements Serializable {
