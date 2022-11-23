@@ -12,12 +12,21 @@ import lombok.Data;
 
 @Data
 public class AdminUser {
+    /**
+     * 管理员用户Id
+     * */
     private Long adminUserId;
-
+    /**
+     * 不明所以的名字，不知道和nickname的区别在哪里
+     */
     private String loginUserName;
-
+    /**
+     * 管理员用户登录密码
+     * */
     private String loginPassword;
-
+    /**
+     * 管理员用户昵称
+     * */
     private String nickName;
 
     private Byte locked;
