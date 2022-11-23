@@ -14,13 +14,36 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+/**
+ * 实现购物车项在数据库中的操作方法
+ */
 public interface NewBeeMallShoppingCartItemMapper {
+    /**
+     * 通过id删除购物车项
+     * @param cartItemId 购物车项id
+     * @return 0失败，1成功
+     */
     int deleteByPrimaryKey(Long cartItemId);
 
+    /**
+     * 根据全部购物车项信息保存购物车项
+     * @param record 要保存的购物车项
+     * @return 0失败，1成功
+     */
     int insert(NewBeeMallShoppingCartItem record);
 
+    /**
+     * 根据部分购物车项信息保存购物车项
+     * @param record 要保存的购物车项
+     * @return 0失败，1成功
+     */
     int insertSelective(NewBeeMallShoppingCartItem record);
 
+    /**
+     * 根据购物车项id查询购物车项
+     * @param cartItemId 购物车项id
+     * @return 查询到的购物车项
+     */
     NewBeeMallShoppingCartItem selectByPrimaryKey(Long cartItemId);
 
     NewBeeMallShoppingCartItem selectByUserIdAndGoodsId(@Param("newBeeMallUserId") Long newBeeMallUserId, @Param("goodsId") Long goodsId);

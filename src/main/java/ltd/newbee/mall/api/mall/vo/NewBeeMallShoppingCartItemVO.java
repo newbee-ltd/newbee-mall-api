@@ -19,21 +19,27 @@ import java.io.Serializable;
 @Data
 public class NewBeeMallShoppingCartItemVO implements Serializable {
 
+    //购物车中的购物项id
     @ApiModelProperty("购物项id")
     private Long cartItemId;
 
+    //购物车中的商品id
     @ApiModelProperty("商品id")
     private Long goodsId;
 
+    //购物车中的商品数量
     @ApiModelProperty("商品数量")
     private Integer goodsCount;
 
+    //购物车中的商品名称
     @ApiModelProperty("商品名称")
     private String goodsName;
 
+    //购物车中的商品图片
     @ApiModelProperty("商品图片")
     private String goodsCoverImg;
 
+    //购物车中的商品价格
     @ApiModelProperty("商品价格")
     private Integer sellingPrice;
 }
