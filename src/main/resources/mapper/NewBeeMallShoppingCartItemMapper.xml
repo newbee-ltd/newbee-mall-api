@@ -19,8 +19,8 @@ Copyright (c) 2019-2021 十三 all rights reserved.
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
     </resultMap>
     <sql id="Base_Column_List">
-    cart_item_id, user_id, goods_id, goods_count, is_deleted, create_time, update_time
-  </sql>
+        cart_item_id, user_id, goods_id, goods_count, is_deleted, create_time, update_time
+    </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -51,10 +51,10 @@ Copyright (c) 2019-2021 十三 all rights reserved.
         </if>
     </select>
     <select id="getTotalMyNewBeeMallCartItems" resultType="int">
-        select
-        count(*)
+        select count(*)
         from tb_newbee_mall_shopping_cart_item
-        where user_id = #{userId,jdbcType=BIGINT} and is_deleted = 0
+        where user_id = #{userId,jdbcType=BIGINT}
+          and is_deleted = 0
     </select>
     <select id="selectByUserIdAndCartItemIds" resultMap="BaseResultMap">
         select
@@ -68,15 +68,17 @@ Copyright (c) 2019-2021 十三 all rights reserved.
         and user_id = #{newBeeMallUserId,jdbcType=BIGINT} and is_deleted = 0
     </select>
     <select id="selectCountByUserId" resultType="int">
-    select
-    count(*)
-    from tb_newbee_mall_shopping_cart_item
-    where user_id = #{newBeeMallUserId,jdbcType=BIGINT} and is_deleted = 0
-  </select>
+        select count(*)
+        from tb_newbee_mall_shopping_cart_item
+        where user_id = #{newBeeMallUserId,jdbcType=BIGINT}
+          and is_deleted = 0
+    </select>
     <update id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    update tb_newbee_mall_shopping_cart_item set is_deleted = 1
-    where cart_item_id = #{cartItemId,jdbcType=BIGINT} and is_deleted = 0
-  </update>
+        update tb_newbee_mall_shopping_cart_item
+        set is_deleted = 1
+        where cart_item_id = #{cartItemId,jdbcType=BIGINT}
+          and is_deleted = 0
+    </update>
     <update id="deleteBatch">
         update tb_newbee_mall_shopping_cart_item
         set is_deleted=1 where cart_item_id in
@@ -85,13 +87,13 @@ Copyright (c) 2019-2021 十三 all rights reserved.
         </foreach>
     </update>
     <insert id="insert" parameterType="ltd.newbee.mall.entity.NewBeeMallShoppingCartItem">
-    insert into tb_newbee_mall_shopping_cart_item (cart_item_id, user_id, goods_id, 
-      goods_count, is_deleted, create_time, 
-      update_time)
-    values (#{cartItemId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{goodsId,jdbcType=BIGINT}, 
-      #{goodsCount,jdbcType=INTEGER}, #{isDeleted,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP})
-  </insert>
+        insert into tb_newbee_mall_shopping_cart_item (cart_item_id, user_id, goods_id,
+                                                       goods_count, is_deleted, create_time,
+                                                       update_time)
+        values (#{cartItemId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{goodsId,jdbcType=BIGINT},
+                #{goodsCount,jdbcType=INTEGER}, #{isDeleted,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP},
+                #{updateTime,jdbcType=TIMESTAMP})
+    </insert>
     <insert id="insertSelective" parameterType="ltd.newbee.mall.entity.NewBeeMallShoppingCartItem">
         insert into tb_newbee_mall_shopping_cart_item
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -166,13 +168,13 @@ Copyright (c) 2019-2021 十三 all rights reserved.
         where cart_item_id = #{cartItemId,jdbcType=BIGINT}
     </update>
     <update id="updateByPrimaryKey" parameterType="ltd.newbee.mall.entity.NewBeeMallShoppingCartItem">
-    update tb_newbee_mall_shopping_cart_item
-    set user_id = #{userId,jdbcType=BIGINT},
-      goods_id = #{goodsId,jdbcType=BIGINT},
-      goods_count = #{goodsCount,jdbcType=INTEGER},
-      is_deleted = #{isDeleted,jdbcType=TINYINT},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
-    where cart_item_id = #{cartItemId,jdbcType=BIGINT}
-  </update>
+        update tb_newbee_mall_shopping_cart_item
+        set user_id     = #{userId,jdbcType=BIGINT},
+            goods_id    = #{goodsId,jdbcType=BIGINT},
+            goods_count = #{goodsCount,jdbcType=INTEGER},
+            is_deleted  = #{isDeleted,jdbcType=TINYINT},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            update_time = #{updateTime,jdbcType=TIMESTAMP}
+        where cart_item_id = #{cartItemId,jdbcType=BIGINT}
+    </update>
 </mapper>

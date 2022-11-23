@@ -38,6 +38,7 @@ import java.util.Map;
 @RequestMapping("/api/v1")
 public class NewBeeMallShoppingCartAPI {
 
+
     @Resource
     private NewBeeMallShoppingCartService newBeeMallShoppingCartService;
 

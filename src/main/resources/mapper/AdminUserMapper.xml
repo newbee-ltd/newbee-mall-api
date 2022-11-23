@@ -20,6 +20,7 @@ Copyright (c) 2019-2021 十三 all rights reserved.
         admin_user_id, login_user_name, login_password, nick_name, locked
     </sql>
 
+    <!--通过提供用户名和密码，返回用户-->
     <select id="login" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
@@ -27,18 +28,23 @@ Copyright (c) 2019-2021 十三 all rights reserved.
         where login_user_name = #{userName,jdbcType=VARCHAR} AND login_password=#{password,jdbcType=VARCHAR} AND locked = 0
     </select>
 
+    <!--通过提供用户id，返回用户-->
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
         from tb_newbee_mall_admin_user
         where admin_user_id = #{adminUserId,jdbcType=BIGINT}
     </select>
+
+    <!--必须提供完整的AdminUser信息才能插入-->
     <insert id="insert" parameterType="ltd.newbee.mall.entity.AdminUser">
         insert into tb_newbee_mall_admin_user (admin_user_id, login_user_name, login_password,
         nick_name, locked)
         values (#{adminUserId,jdbcType=BIGINT}, #{loginUserName,jdbcType=VARCHAR}, #{loginPassword,jdbcType=VARCHAR},
         #{nickName,jdbcType=VARCHAR}, #{locked,jdbcType=TINYINT})
     </insert>
+
+    <!--AdminUser的5个属性存在一个不为空的就可以添加-->
     <insert id="insertSelective" parameterType="ltd.newbee.mall.entity.AdminUser">
         insert into tb_newbee_mall_admin_user
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -76,6 +82,9 @@ Copyright (c) 2019-2021 十三 all rights reserved.
             </if>
         </trim>
     </insert>
+
+
+    <!--提供用户id，并改动该id下提交后不为空的属性-->
     <update id="updateByPrimaryKeySelective" parameterType="ltd.newbee.mall.entity.AdminUser">
         update tb_newbee_mall_admin_user
         <set>
@@ -94,6 +103,8 @@ Copyright (c) 2019-2021 十三 all rights reserved.
         </set>
         where admin_user_id = #{adminUserId,jdbcType=BIGINT}
     </update>
+
+    <!--提供用户id，并改动全部属性-->
     <update id="updateByPrimaryKey" parameterType="ltd.newbee.mall.entity.AdminUser">
         update tb_newbee_mall_admin_user
         set login_user_name = #{loginUserName,jdbcType=VARCHAR},
