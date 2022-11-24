@@ -9,7 +9,9 @@
 package ltd.newbee.mall.dao;
 
 import ltd.newbee.mall.entity.MallUserToken;
+import org.apache.ibatis.annotations.Mapper;
 
+@Mapper
 public interface NewBeeMallUserTokenMapper {
     int deleteByPrimaryKey(Long userId);
 

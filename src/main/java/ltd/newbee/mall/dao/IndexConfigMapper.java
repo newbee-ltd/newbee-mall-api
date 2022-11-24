@@ -10,10 +10,12 @@ package ltd.newbee.mall.dao;
 
 import ltd.newbee.mall.entity.IndexConfig;
 import ltd.newbee.mall.util.PageQueryUtil;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+@Mapper
 public interface IndexConfigMapper {
     int deleteByPrimaryKey(Long configId);
 

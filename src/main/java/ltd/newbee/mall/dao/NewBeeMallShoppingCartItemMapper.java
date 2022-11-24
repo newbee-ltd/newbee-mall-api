@@ -10,6 +10,7 @@ package ltd.newbee.mall.dao;
 
 import ltd.newbee.mall.entity.NewBeeMallShoppingCartItem;
 import ltd.newbee.mall.util.PageQueryUtil;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.List;
 /**
  * 实现购物车项在数据库中的操作方法
  */
+@Mapper
 public interface NewBeeMallShoppingCartItemMapper {
     /**
      * 通过id删除购物车项

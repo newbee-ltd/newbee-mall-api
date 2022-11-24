@@ -11,10 +11,12 @@ package ltd.newbee.mall.dao;
 import ltd.newbee.mall.entity.NewBeeMallGoods;
 import ltd.newbee.mall.entity.StockNumDTO;
 import ltd.newbee.mall.util.PageQueryUtil;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+@Mapper
 public interface NewBeeMallGoodsMapper {
     int deleteByPrimaryKey(Long goodsId);
 

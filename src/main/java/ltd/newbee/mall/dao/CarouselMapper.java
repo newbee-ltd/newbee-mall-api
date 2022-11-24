@@ -15,7 +15,7 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-
+@Mapper
 public interface CarouselMapper {
     int deleteByPrimaryKey(Integer carouselId);
 
