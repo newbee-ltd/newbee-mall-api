@@ -22,26 +22,26 @@ public interface NewBeeMallShoppingCartService {
     /**
      * 保存商品至购物车中
      *
-     * @param saveCartItemParam
-     * @param userId
-     * @return
+     * @param saveCartItemParam 要保存的购物车项id
+     * @param userId 用户id
+     * @return 操作结果
      */
     String saveNewBeeMallCartItem(SaveCartItemParam saveCartItemParam, Long userId);
 
     /**
      * 修改购物车中的属性
      *
-     * @param updateCartItemParam
-     * @param userId
-     * @return
+     * @param updateCartItemParam 要保存修改的购物车项id
+     * @param userId 用户id
+     * @return 操作结果
      */
     String updateNewBeeMallCartItem(UpdateCartItemParam updateCartItemParam, Long userId);
 
     /**
      * 获取购物项详情
      *
-     * @param newBeeMallShoppingCartItemId
-     * @return
+     * @param newBeeMallShoppingCartItemId 购物车项id
+     * @return 购物项详情
      */
     NewBeeMallShoppingCartItem getNewBeeMallCartItemById(Long newBeeMallShoppingCartItemId);
 
@@ -49,34 +49,34 @@ public interface NewBeeMallShoppingCartService {
      * 删除购物车中的商品
      *
      *
-     * @param shoppingCartItemId
-     * @param userId
-     * @return
+     * @param shoppingCartItemId  购物车项id
+     * @param userId 用户id
+     * @return 操作结果
      */
     Boolean deleteById(Long shoppingCartItemId, Long userId);
 
     /**
      * 获取我的购物车中的列表数据
      *
-     * @param newBeeMallUserId
-     * @return
+     * @param newBeeMallUserId 用户id
+     * @return 购物车中的列表数据
      */
     List<NewBeeMallShoppingCartItemVO> getMyShoppingCartItems(Long newBeeMallUserId);
 
     /**
      * 根据userId和cartItemIds获取对应的购物项记录
      *
-     * @param cartItemIds
-     * @param newBeeMallUserId
-     * @return
+     * @param cartItemIds 购物车项id列表
+     * @param newBeeMallUserId 用户id
+     * @return 购物项列表
      */
     List<NewBeeMallShoppingCartItemVO> getCartItemsForSettle(List<Long> cartItemIds, Long newBeeMallUserId);
 
     /**
      * 我的购物车(分页数据)
      *
-     * @param pageUtil
-     * @return
+     * @param pageUtil 分页工具
+     * @return 分页的购物车VO列表
      */
     PageResult getMyShoppingCartItems(PageQueryUtil pageUtil);
 }
