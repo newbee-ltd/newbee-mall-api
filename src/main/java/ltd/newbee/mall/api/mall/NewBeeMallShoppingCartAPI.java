@@ -39,10 +39,16 @@ import java.util.Map;
 public class NewBeeMallShoppingCartAPI {
 
 
-
+    //配置数据源
     @Resource
     private NewBeeMallShoppingCartService newBeeMallShoppingCartService;
 
+    /**
+     * pc端分页显示购物车项目，处理分页购物车项列表
+     * @param pageNumber 每个分页所要显示的商品数量
+     * @param loginMallUser 已登录商城用户
+     * @return 操作结果
+     */
     @GetMapping("/shop-cart/page")
     @ApiOperation(value = "购物车列表(每页默认5条)", notes = "传参为页码")
     public Result<PageResult<List<NewBeeMallShoppingCartItemVO>>> cartItemPageList(Integer pageNumber, @TokenToMallUser MallUser loginMallUser) {
@@ -58,16 +64,28 @@ public class NewBeeMallShoppingCartAPI {
         return ResultGenerator.genSuccessResult(newBeeMallShoppingCartService.getMyShoppingCartItems(pageUtil));
     }
 
+    /**
+     * 移动端不处理购物车项目分页，处理购物车项列表
+     * @param loginMallUser 已登录商城用户
+     * @return 操作结果
+     */
     @GetMapping("/shop-cart")
     @ApiOperation(value = "购物车列表(网页移动端不分页)", notes = "")
     public Result<List<NewBeeMallShoppingCartItemVO>> cartItemList(@TokenToMallUser MallUser loginMallUser) {
         return ResultGenerator.genSuccessResult(newBeeMallShoppingCartService.getMyShoppingCartItems(loginMallUser.getUserId()));
     }
 
+    /**
+     * 添加购物车项
+     * @param saveCartItemParam 添加购物车项
+     * @param loginMallUser 已登录商城用户
+     * @return 操作结果
+     */
     @PostMapping("/shop-cart")
     @ApiOperation(value = "添加商品到购物车接口", notes = "传参为商品id、数量")
     public Result saveNewBeeMallShoppingCartItem(@RequestBody SaveCartItemParam saveCartItemParam,
                                                  @TokenToMallUser MallUser loginMallUser) {
+        //获取要删除的购物车项名
         String saveResult = newBeeMallShoppingCartService.saveNewBeeMallCartItem(saveCartItemParam, loginMallUser.getUserId());
         //添加成功
         if (ServiceResultEnum.SUCCESS.getResult().equals(saveResult)) {
@@ -77,10 +95,17 @@ public class NewBeeMallShoppingCartAPI {
         return ResultGenerator.genFailResult(saveResult);
     }
 
+    /**
+     * 修改购物车项
+     * @param updateCartItemParam 要修改的购物车项
+     * @param loginMallUser 已登录商城用户
+     * @return 操作结果
+     */
     @PutMapping("/shop-cart")
     @ApiOperation(value = "修改购物项数据", notes = "传参为购物项id、数量")
     public Result updateNewBeeMallShoppingCartItem(@RequestBody UpdateCartItemParam updateCartItemParam,
                                                    @TokenToMallUser MallUser loginMallUser) {
+        //要修改的购物车项名
         String updateResult = newBeeMallShoppingCartService.updateNewBeeMallCartItem(updateCartItemParam, loginMallUser.getUserId());
         //修改成功
         if (ServiceResultEnum.SUCCESS.getResult().equals(updateResult)) {
@@ -90,11 +115,20 @@ public class NewBeeMallShoppingCartAPI {
         return ResultGenerator.genFailResult(updateResult);
     }
 
+    /**
+     * 根据id删除购物车项
+     * @param newBeeMallShoppingCartItemId 购物车项id
+     * @param loginMallUser 已登录商城用户
+     * @return 操作结果
+     */
     @DeleteMapping("/shop-cart/{newBeeMallShoppingCartItemId}")
     @ApiOperation(value = "删除购物项", notes = "传参为购物项id")
     public Result updateNewBeeMallShoppingCartItem(@PathVariable("newBeeMallShoppingCartItemId") Long newBeeMallShoppingCartItemId,
                                                    @TokenToMallUser MallUser loginMallUser) {
+        //获取要删除的购物车项
         NewBeeMallShoppingCartItem newBeeMallCartItemById = newBeeMallShoppingCartService.getNewBeeMallCartItemById(newBeeMallShoppingCartItemId);
+
+        //判断该用户是否已登录
         if (!loginMallUser.getUserId().equals(newBeeMallCartItemById.getUserId())) {
             return ResultGenerator.genFailResult(ServiceResultEnum.REQUEST_FORBIDEN_ERROR.getResult());
         }
@@ -107,6 +141,12 @@ public class NewBeeMallShoppingCartAPI {
         return ResultGenerator.genFailResult(ServiceResultEnum.OPERATE_ERROR.getResult());
     }
 
+    /**
+     *
+     * @param cartItemIds 购物车项id
+     * @param loginMallUser 已登录商城用户
+     * @return 操作结果
+     */
     @GetMapping("/shop-cart/settle")
     @ApiOperation(value = "根据购物项id数组查询购物项明细", notes = "确认订单页面使用")
     public Result<List<NewBeeMallShoppingCartItemVO>> toSettle(Long[] cartItemIds, @TokenToMallUser MallUser loginMallUser) {
@@ -114,6 +154,7 @@ public class NewBeeMallShoppingCartAPI {
             NewBeeMallException.fail("参数异常");
         }
         int priceTotal = 0;
+        //获取购物车项
         List<NewBeeMallShoppingCartItemVO> itemsForSettle = newBeeMallShoppingCartService.getCartItemsForSettle(Arrays.asList(cartItemIds), loginMallUser.getUserId());
         if (CollectionUtils.isEmpty(itemsForSettle)) {
             //无数据则抛出异常
@@ -123,6 +164,7 @@ public class NewBeeMallShoppingCartAPI {
             for (NewBeeMallShoppingCartItemVO newBeeMallShoppingCartItemVO : itemsForSettle) {
                 priceTotal += newBeeMallShoppingCartItemVO.getGoodsCount() * newBeeMallShoppingCartItemVO.getSellingPrice();
             }
+            //处理异常价格
             if (priceTotal < 1) {
                 NewBeeMallException.fail("价格异常");
             }
