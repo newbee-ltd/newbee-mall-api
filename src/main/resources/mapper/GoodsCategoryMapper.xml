@@ -22,9 +22,9 @@ Copyright (c) 2019-2021 十三 all rights reserved.
         <result column="update_user" jdbcType="INTEGER" property="updateUser"/>
     </resultMap>
     <sql id="Base_Column_List">
-    category_id, category_level, parent_id, category_name, category_rank, is_deleted, 
+        category_id, category_level, parent_id, category_name, category_rank, is_deleted,
     create_time, create_user, update_time, update_user
-  </sql>
+    </sql>
     <select id="findGoodsCategoryList" parameterType="Map" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -84,9 +84,11 @@ Copyright (c) 2019-2021 十三 all rights reserved.
         </if>
     </select>
     <update id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    update tb_newbee_mall_goods_category set is_deleted=1
-    where category_id = #{categoryId,jdbcType=BIGINT} and is_deleted=0
-  </update>
+        update tb_newbee_mall_goods_category
+        set is_deleted=1
+        where category_id = #{categoryId,jdbcType=BIGINT}
+          and is_deleted = 0
+    </update>
     <update id="deleteBatch">
         update tb_newbee_mall_goods_category
         set is_deleted=1 where category_id in
@@ -95,15 +97,15 @@ Copyright (c) 2019-2021 十三 all rights reserved.
         </foreach>
     </update>
     <insert id="insert" parameterType="ltd.newbee.mall.entity.GoodsCategory">
-    insert into tb_newbee_mall_goods_category (category_id, category_level, parent_id, 
-      category_name, category_rank, is_deleted, 
-      create_time, create_user, update_time, 
-      update_user)
-    values (#{categoryId,jdbcType=BIGINT}, #{categoryLevel,jdbcType=TINYINT}, #{parentId,jdbcType=BIGINT}, 
-      #{categoryName,jdbcType=VARCHAR}, #{categoryRank,jdbcType=INTEGER}, #{isDeleted,jdbcType=TINYINT}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{createUser,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{updateUser,jdbcType=INTEGER})
-  </insert>
+        insert into tb_newbee_mall_goods_category (category_id, category_level, parent_id,
+                                                   category_name, category_rank, is_deleted,
+                                                   create_time, create_user, update_time,
+                                                   update_user)
+        values (#{categoryId,jdbcType=BIGINT}, #{categoryLevel,jdbcType=TINYINT}, #{parentId,jdbcType=BIGINT},
+                #{categoryName,jdbcType=VARCHAR}, #{categoryRank,jdbcType=INTEGER}, #{isDeleted,jdbcType=TINYINT},
+                #{createTime,jdbcType=TIMESTAMP}, #{createUser,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP},
+                #{updateUser,jdbcType=INTEGER})
+    </insert>
     <insert id="insertSelective" parameterType="ltd.newbee.mall.entity.GoodsCategory">
         insert into tb_newbee_mall_goods_category
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -205,16 +207,16 @@ Copyright (c) 2019-2021 十三 all rights reserved.
         where category_id = #{categoryId,jdbcType=BIGINT}
     </update>
     <update id="updateByPrimaryKey" parameterType="ltd.newbee.mall.entity.GoodsCategory">
-    update tb_newbee_mall_goods_category
-    set category_level = #{categoryLevel,jdbcType=TINYINT},
-      parent_id = #{parentId,jdbcType=BIGINT},
-      category_name = #{categoryName,jdbcType=VARCHAR},
-      category_rank = #{categoryRank,jdbcType=INTEGER},
-      is_deleted = #{isDeleted,jdbcType=TINYINT},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      create_user = #{createUser,jdbcType=INTEGER},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      update_user = #{updateUser,jdbcType=INTEGER}
-    where category_id = #{categoryId,jdbcType=BIGINT}
-  </update>
+        update tb_newbee_mall_goods_category
+        set category_level = #{categoryLevel,jdbcType=TINYINT},
+            parent_id      = #{parentId,jdbcType=BIGINT},
+            category_name  = #{categoryName,jdbcType=VARCHAR},
+            category_rank  = #{categoryRank,jdbcType=INTEGER},
+            is_deleted     = #{isDeleted,jdbcType=TINYINT},
+            create_time    = #{createTime,jdbcType=TIMESTAMP},
+            create_user    = #{createUser,jdbcType=INTEGER},
+            update_time    = #{updateTime,jdbcType=TIMESTAMP},
+            update_user    = #{updateUser,jdbcType=INTEGER}
+        where category_id = #{categoryId,jdbcType=BIGINT}
+    </update>
 </mapper>

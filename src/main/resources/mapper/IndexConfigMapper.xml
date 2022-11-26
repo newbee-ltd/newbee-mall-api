@@ -23,9 +23,9 @@ Copyright (c) 2019-2021 十三 all rights reserved.
         <result column="update_user" jdbcType="INTEGER" property="updateUser"/>
     </resultMap>
     <sql id="Base_Column_List">
-    config_id, config_name, config_type, goods_id, redirect_url, config_rank, is_deleted, 
+        config_id, config_name, config_type, goods_id, redirect_url, config_rank, is_deleted,
     create_time, create_user, update_time, update_user
-  </sql>
+    </sql>
 
     <select id="findIndexConfigList" parameterType="Map" resultMap="BaseResultMap">
         select
@@ -69,12 +69,15 @@ Copyright (c) 2019-2021 十三 all rights reserved.
         select
         <include refid="Base_Column_List"/>
         from tb_newbee_mall_index_config
-        where config_type = #{configType,jdbcType=BIGINT} and goods_id=#{goodsId,jdbcType=BIGINT} and is_deleted=0 limit 1
+        where config_type = #{configType,jdbcType=BIGINT} and goods_id=#{goodsId,jdbcType=BIGINT} and is_deleted=0 limit
+        1
     </select>
     <update id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    update tb_newbee_mall_index_config set is_deleted=1
-    where config_id = #{configId,jdbcType=BIGINT} and is_deleted=0
-  </update>
+        update tb_newbee_mall_index_config
+        set is_deleted=1
+        where config_id = #{configId,jdbcType=BIGINT}
+          and is_deleted = 0
+    </update>
     <update id="deleteBatch">
         update tb_newbee_mall_index_config
         set is_deleted=1,update_time=now() where is_deleted=0 and config_id in
@@ -83,15 +86,15 @@ Copyright (c) 2019-2021 十三 all rights reserved.
         </foreach>
     </update>
     <insert id="insert" parameterType="ltd.newbee.mall.entity.IndexConfig">
-    insert into tb_newbee_mall_index_config (config_id, config_name, config_type, 
-      goods_id, redirect_url, config_rank, 
-      is_deleted, create_time, create_user, 
-      update_time, update_user)
-    values (#{configId,jdbcType=BIGINT}, #{configName,jdbcType=VARCHAR}, #{configType,jdbcType=TINYINT}, 
-      #{goodsId,jdbcType=BIGINT}, #{redirectUrl,jdbcType=VARCHAR}, #{configRank,jdbcType=INTEGER}, 
-      #{isDeleted,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{createUser,jdbcType=INTEGER}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=INTEGER})
-  </insert>
+        insert into tb_newbee_mall_index_config (config_id, config_name, config_type,
+                                                 goods_id, redirect_url, config_rank,
+                                                 is_deleted, create_time, create_user,
+                                                 update_time, update_user)
+        values (#{configId,jdbcType=BIGINT}, #{configName,jdbcType=VARCHAR}, #{configType,jdbcType=TINYINT},
+                #{goodsId,jdbcType=BIGINT}, #{redirectUrl,jdbcType=VARCHAR}, #{configRank,jdbcType=INTEGER},
+                #{isDeleted,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{createUser,jdbcType=INTEGER},
+                #{updateTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=INTEGER})
+    </insert>
     <insert id="insertSelective" parameterType="ltd.newbee.mall.entity.IndexConfig">
         insert into tb_newbee_mall_index_config
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -202,17 +205,17 @@ Copyright (c) 2019-2021 十三 all rights reserved.
         where config_id = #{configId,jdbcType=BIGINT}
     </update>
     <update id="updateByPrimaryKey" parameterType="ltd.newbee.mall.entity.IndexConfig">
-    update tb_newbee_mall_index_config
-    set config_name = #{configName,jdbcType=VARCHAR},
-      config_type = #{configType,jdbcType=TINYINT},
-      goods_id = #{goodsId,jdbcType=BIGINT},
-      redirect_url = #{redirectUrl,jdbcType=VARCHAR},
-      config_rank = #{configRank,jdbcType=INTEGER},
-      is_deleted = #{isDeleted,jdbcType=TINYINT},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      create_user = #{createUser,jdbcType=INTEGER},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      update_user = #{updateUser,jdbcType=INTEGER}
-    where config_id = #{configId,jdbcType=BIGINT}
-  </update>
+        update tb_newbee_mall_index_config
+        set config_name  = #{configName,jdbcType=VARCHAR},
+            config_type  = #{configType,jdbcType=TINYINT},
+            goods_id     = #{goodsId,jdbcType=BIGINT},
+            redirect_url = #{redirectUrl,jdbcType=VARCHAR},
+            config_rank  = #{configRank,jdbcType=INTEGER},
+            is_deleted   = #{isDeleted,jdbcType=TINYINT},
+            create_time  = #{createTime,jdbcType=TIMESTAMP},
+            create_user  = #{createUser,jdbcType=INTEGER},
+            update_time  = #{updateTime,jdbcType=TIMESTAMP},
+            update_user  = #{updateUser,jdbcType=INTEGER}
+        where config_id = #{configId,jdbcType=BIGINT}
+    </update>
 </mapper>

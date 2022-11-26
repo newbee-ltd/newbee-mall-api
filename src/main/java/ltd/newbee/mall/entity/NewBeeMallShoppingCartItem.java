@@ -12,19 +12,43 @@ import lombok.Data;
 
 import java.util.Date;
 
+/**
+ * 购物车项包含一种多个商品
+ */
 @Data
 public class NewBeeMallShoppingCartItem {
+    /**
+     * 购物车项id
+     */
     private Long cartItemId;
 
+    /**
+     * 该购物车项所属用户的id
+     */
     private Long userId;
 
+    /**
+     * 购物车项所含有的商品id
+     */
     private Long goodsId;
 
+    /**
+     * 该购物车项含有商品的数量
+     */
     private Integer goodsCount;
 
+    /**
+     * 标记购物车项是否删除
+     */
     private Byte isDeleted;
 
+    /**
+     * 购物车项创建时间
+     */
     private Date createTime;
 
+    /**
+     * 购物车项更新时间
+     */
     private Date updateTime;
 }

@@ -39,6 +39,7 @@ import java.util.Map;
 public class NewBeeMallShoppingCartAPI {
 
 
+
     @Resource
     private NewBeeMallShoppingCartService newBeeMallShoppingCartService;
 

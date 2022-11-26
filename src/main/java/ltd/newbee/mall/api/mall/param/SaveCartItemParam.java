@@ -19,11 +19,15 @@ import java.io.Serializable;
 @Data
 public class SaveCartItemParam implements Serializable {
 
-    //购物车要添加的商品数量
+    /**
+     * 购物车要添加的商品数量
+     */
     @ApiModelProperty("商品数量")
     private Integer goodsCount;
 
-    //购物车要添加的商品id
+    /**
+     * 购物车要添加的商品id
+     */
     @ApiModelProperty("商品id")
     private Long goodsId;
 }

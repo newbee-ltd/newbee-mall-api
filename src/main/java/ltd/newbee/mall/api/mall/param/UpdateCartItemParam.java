@@ -19,11 +19,16 @@ import java.io.Serializable;
 @Data
 public class UpdateCartItemParam implements Serializable {
 
-    //购物车中要修改的购物项id
+    /**
+     * 购物车中要修改的购物项id
+     */
     @ApiModelProperty("购物项id")
     private Long cartItemId;
 
-    //购物车中定义购物项中的商品数量
+    /**
+     * 购物车中定义购物项中的商品数量
+     */
+
     @ApiModelProperty("商品数量")
     private Integer goodsCount;
 }

@@ -24,9 +24,9 @@ Copyright (c) 2019-2021 十三 all rights reserved.
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
     </resultMap>
     <sql id="Base_Column_List">
-    order_id, order_no, user_id, total_price, pay_status, pay_type, pay_time, order_status,
+        order_id, order_no, user_id, total_price, pay_status, pay_type, pay_time, order_status,
     extra_info, is_deleted, create_time, update_time
-  </sql>
+    </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -108,21 +108,21 @@ Copyright (c) 2019-2021 十三 all rights reserved.
         </where>
     </select>
     <update id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    update tb_newbee_mall_order set is_deleted=1
-    where order_id = #{orderId,jdbcType=BIGINT} and is_deleted=0
-  </update>
+        update tb_newbee_mall_order
+        set is_deleted=1
+        where order_id = #{orderId,jdbcType=BIGINT}
+          and is_deleted = 0
+    </update>
     <insert id="insert" parameterType="ltd.newbee.mall.entity.NewBeeMallOrder">
-    insert into tb_newbee_mall_order (order_id, order_no, user_id, 
-      total_price, pay_status, pay_type, 
-      pay_time, order_status, extra_info, 
-      is_deleted, create_time, update_time
-      )
-    values (#{orderId,jdbcType=BIGINT}, #{orderNo,jdbcType=VARCHAR}, #{userId,jdbcType=BIGINT}, 
-      #{totalPrice,jdbcType=INTEGER}, #{payStatus,jdbcType=TINYINT}, #{payType,jdbcType=TINYINT}, 
-      #{payTime,jdbcType=TIMESTAMP}, #{orderStatus,jdbcType=TINYINT}, #{extraInfo,jdbcType=VARCHAR}, 
-      #{isDeleted,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
-      )
-  </insert>
+        insert into tb_newbee_mall_order (order_id, order_no, user_id,
+                                          total_price, pay_status, pay_type,
+                                          pay_time, order_status, extra_info,
+                                          is_deleted, create_time, update_time)
+        values (#{orderId,jdbcType=BIGINT}, #{orderNo,jdbcType=VARCHAR}, #{userId,jdbcType=BIGINT},
+                #{totalPrice,jdbcType=INTEGER}, #{payStatus,jdbcType=TINYINT}, #{payType,jdbcType=TINYINT},
+                #{payTime,jdbcType=TIMESTAMP}, #{orderStatus,jdbcType=TINYINT}, #{extraInfo,jdbcType=VARCHAR},
+                #{isDeleted,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+    </insert>
     <insert id="insertSelective" useGeneratedKeys="true" keyProperty="orderId"
             parameterType="ltd.newbee.mall.entity.NewBeeMallOrder">
         insert into tb_newbee_mall_order
@@ -267,18 +267,18 @@ Copyright (c) 2019-2021 十三 all rights reserved.
         where order_id = #{orderId,jdbcType=BIGINT}
     </update>
     <update id="updateByPrimaryKey" parameterType="ltd.newbee.mall.entity.NewBeeMallOrder">
-    update tb_newbee_mall_order
-    set order_no = #{orderNo,jdbcType=VARCHAR},
-      user_id = #{userId,jdbcType=BIGINT},
-      total_price = #{totalPrice,jdbcType=INTEGER},
-      pay_status = #{payStatus,jdbcType=TINYINT},
-      pay_type = #{payType,jdbcType=TINYINT},
-      pay_time = #{payTime,jdbcType=TIMESTAMP},
-      order_status = #{orderStatus,jdbcType=TINYINT},
-      extra_info = #{extraInfo,jdbcType=VARCHAR},
-      is_deleted = #{isDeleted,jdbcType=TINYINT},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
-    where order_id = #{orderId,jdbcType=BIGINT}
-  </update>
+        update tb_newbee_mall_order
+        set order_no     = #{orderNo,jdbcType=VARCHAR},
+            user_id      = #{userId,jdbcType=BIGINT},
+            total_price  = #{totalPrice,jdbcType=INTEGER},
+            pay_status   = #{payStatus,jdbcType=TINYINT},
+            pay_type     = #{payType,jdbcType=TINYINT},
+            pay_time     = #{payTime,jdbcType=TIMESTAMP},
+            order_status = #{orderStatus,jdbcType=TINYINT},
+            extra_info   = #{extraInfo,jdbcType=VARCHAR},
+            is_deleted   = #{isDeleted,jdbcType=TINYINT},
+            create_time  = #{createTime,jdbcType=TIMESTAMP},
+            update_time  = #{updateTime,jdbcType=TIMESTAMP}
+        where order_id = #{orderId,jdbcType=BIGINT}
+    </update>
 </mapper>

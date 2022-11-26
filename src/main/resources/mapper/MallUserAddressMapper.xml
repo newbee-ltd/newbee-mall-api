@@ -24,9 +24,9 @@ Copyright (c) 2019-2021 十三 all rights reserved.
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
     </resultMap>
     <sql id="Base_Column_List">
-    address_id, user_id, user_name, user_phone, default_flag, province_name, city_name, 
+        address_id, user_id, user_name, user_phone, default_flag, province_name, city_name,
     region_name, detail_address, is_deleted, create_time, update_time
-  </sql>
+    </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -48,21 +48,20 @@ Copyright (c) 2019-2021 十三 all rights reserved.
         limit 20 <!-- 最多返回20条 -->
     </select>
     <update id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    update tb_newbee_mall_user_address set is_deleted = 1
-    where address_id = #{addressId,jdbcType=BIGINT}
-  </update>
+        update tb_newbee_mall_user_address
+        set is_deleted = 1
+        where address_id = #{addressId,jdbcType=BIGINT}
+    </update>
     <insert id="insert" parameterType="ltd.newbee.mall.entity.MallUserAddress">
-    insert into tb_newbee_mall_user_address (address_id, user_id, user_name, 
-      user_phone, default_flag, province_name, 
-      city_name, region_name, detail_address, 
-      is_deleted, create_time, update_time
-      )
-    values (#{addressId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, 
-      #{userPhone,jdbcType=VARCHAR}, #{defaultFlag,jdbcType=TINYINT}, #{provinceName,jdbcType=VARCHAR}, 
-      #{cityName,jdbcType=VARCHAR}, #{regionName,jdbcType=VARCHAR}, #{detailAddress,jdbcType=VARCHAR}, 
-      #{isDeleted,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
-      )
-  </insert>
+        insert into tb_newbee_mall_user_address (address_id, user_id, user_name,
+                                                 user_phone, default_flag, province_name,
+                                                 city_name, region_name, detail_address,
+                                                 is_deleted, create_time, update_time)
+        values (#{addressId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR},
+                #{userPhone,jdbcType=VARCHAR}, #{defaultFlag,jdbcType=TINYINT}, #{provinceName,jdbcType=VARCHAR},
+                #{cityName,jdbcType=VARCHAR}, #{regionName,jdbcType=VARCHAR}, #{detailAddress,jdbcType=VARCHAR},
+                #{isDeleted,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+    </insert>
     <insert id="insertSelective" parameterType="ltd.newbee.mall.entity.MallUserAddress">
         insert into tb_newbee_mall_user_address
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -182,18 +181,18 @@ Copyright (c) 2019-2021 十三 all rights reserved.
         where address_id = #{addressId,jdbcType=BIGINT}
     </update>
     <update id="updateByPrimaryKey" parameterType="ltd.newbee.mall.entity.MallUserAddress">
-    update tb_newbee_mall_user_address
-    set user_id = #{userId,jdbcType=BIGINT},
-      user_name = #{userName,jdbcType=VARCHAR},
-      user_phone = #{userPhone,jdbcType=VARCHAR},
-      default_flag = #{defaultFlag,jdbcType=TINYINT},
-      province_name = #{provinceName,jdbcType=VARCHAR},
-      city_name = #{cityName,jdbcType=VARCHAR},
-      region_name = #{regionName,jdbcType=VARCHAR},
-      detail_address = #{detailAddress,jdbcType=VARCHAR},
-      is_deleted = #{isDeleted,jdbcType=TINYINT},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
-    where address_id = #{addressId,jdbcType=BIGINT}
-  </update>
+        update tb_newbee_mall_user_address
+        set user_id        = #{userId,jdbcType=BIGINT},
+            user_name      = #{userName,jdbcType=VARCHAR},
+            user_phone     = #{userPhone,jdbcType=VARCHAR},
+            default_flag   = #{defaultFlag,jdbcType=TINYINT},
+            province_name  = #{provinceName,jdbcType=VARCHAR},
+            city_name      = #{cityName,jdbcType=VARCHAR},
+            region_name    = #{regionName,jdbcType=VARCHAR},
+            detail_address = #{detailAddress,jdbcType=VARCHAR},
+            is_deleted     = #{isDeleted,jdbcType=TINYINT},
+            create_time    = #{createTime,jdbcType=TIMESTAMP},
+            update_time    = #{updateTime,jdbcType=TIMESTAMP}
+        where address_id = #{addressId,jdbcType=BIGINT}
+    </update>
 </mapper>

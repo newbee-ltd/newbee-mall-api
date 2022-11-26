@@ -9,88 +9,89 @@ Copyright (c) 2019-2021 十三 all rights reserved.
 -->
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ltd.newbee.mall.dao.NewBeeAdminUserTokenMapper">
-  <resultMap id="BaseResultMap" type="ltd.newbee.mall.entity.AdminUserToken">
-    <id column="admin_user_id" jdbcType="BIGINT" property="adminUserId" />
-    <result column="token" jdbcType="VARCHAR" property="token" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-    <result column="expire_time" jdbcType="TIMESTAMP" property="expireTime" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    admin_user_id, token, update_time, expire_time
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from tb_newbee_mall_admin_user_token
-    where admin_user_id = #{adminUserId,jdbcType=BIGINT}
-  </select>
-  <select id="selectByToken" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List"/>
-    from tb_newbee_mall_admin_user_token
-    where token = #{token,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from tb_newbee_mall_admin_user_token
-    where admin_user_id = #{adminUserId,jdbcType=BIGINT}
-  </delete>
-  <insert id="insert" parameterType="ltd.newbee.mall.entity.AdminUserToken">
-    insert into tb_newbee_mall_admin_user_token (admin_user_id, token, update_time, 
-      expire_time)
-    values (#{adminUserId,jdbcType=BIGINT}, #{token,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{expireTime,jdbcType=TIMESTAMP})
-  </insert>
-  <insert id="insertSelective" parameterType="ltd.newbee.mall.entity.AdminUserToken">
-    insert into tb_newbee_mall_admin_user_token
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="adminUserId != null">
-        admin_user_id,
-      </if>
-      <if test="token != null">
-        token,
-      </if>
-      <if test="updateTime != null">
-        update_time,
-      </if>
-      <if test="expireTime != null">
-        expire_time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="adminUserId != null">
-        #{adminUserId,jdbcType=BIGINT},
-      </if>
-      <if test="token != null">
-        #{token,jdbcType=VARCHAR},
-      </if>
-      <if test="updateTime != null">
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="expireTime != null">
-        #{expireTime,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="ltd.newbee.mall.entity.AdminUserToken">
-    update tb_newbee_mall_admin_user_token
-    <set>
-      <if test="token != null">
-        token = #{token,jdbcType=VARCHAR},
-      </if>
-      <if test="updateTime != null">
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="expireTime != null">
-        expire_time = #{expireTime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where admin_user_id = #{adminUserId,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="ltd.newbee.mall.entity.AdminUserToken">
-    update tb_newbee_mall_admin_user_token
-    set token = #{token,jdbcType=VARCHAR},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      expire_time = #{expireTime,jdbcType=TIMESTAMP}
-    where admin_user_id = #{adminUserId,jdbcType=BIGINT}
-  </update>
+    <resultMap id="BaseResultMap" type="ltd.newbee.mall.entity.AdminUserToken">
+        <id column="admin_user_id" jdbcType="BIGINT" property="adminUserId"/>
+        <result column="token" jdbcType="VARCHAR" property="token"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="expire_time" jdbcType="TIMESTAMP" property="expireTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        admin_user_id, token, update_time, expire_time
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_newbee_mall_admin_user_token
+        where admin_user_id = #{adminUserId,jdbcType=BIGINT}
+    </select>
+    <select id="selectByToken" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_newbee_mall_admin_user_token
+        where token = #{token,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from tb_newbee_mall_admin_user_token
+        where admin_user_id = #{adminUserId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="ltd.newbee.mall.entity.AdminUserToken">
+        insert into tb_newbee_mall_admin_user_token (admin_user_id, token, update_time,
+                                                     expire_time)
+        values (#{adminUserId,jdbcType=BIGINT}, #{token,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP},
+                #{expireTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="ltd.newbee.mall.entity.AdminUserToken">
+        insert into tb_newbee_mall_admin_user_token
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="adminUserId != null">
+                admin_user_id,
+            </if>
+            <if test="token != null">
+                token,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="expireTime != null">
+                expire_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="adminUserId != null">
+                #{adminUserId,jdbcType=BIGINT},
+            </if>
+            <if test="token != null">
+                #{token,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="expireTime != null">
+                #{expireTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="ltd.newbee.mall.entity.AdminUserToken">
+        update tb_newbee_mall_admin_user_token
+        <set>
+            <if test="token != null">
+                token = #{token,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="expireTime != null">
+                expire_time = #{expireTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where admin_user_id = #{adminUserId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="ltd.newbee.mall.entity.AdminUserToken">
+        update tb_newbee_mall_admin_user_token
+        set token       = #{token,jdbcType=VARCHAR},
+            update_time = #{updateTime,jdbcType=TIMESTAMP},
+            expire_time = #{expireTime,jdbcType=TIMESTAMP}
+        where admin_user_id = #{adminUserId,jdbcType=BIGINT}
+    </update>
 </mapper>

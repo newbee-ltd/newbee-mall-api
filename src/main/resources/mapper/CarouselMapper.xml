@@ -21,9 +21,9 @@ Copyright (c) 2019-2021 十三 all rights reserved.
         <result column="update_user" jdbcType="INTEGER" property="updateUser"/>
     </resultMap>
     <sql id="Base_Column_List">
-    carousel_id, carousel_url, redirect_url, carousel_rank, is_deleted, create_time, 
+        carousel_id, carousel_url, redirect_url, carousel_rank, is_deleted, create_time,
     create_user, update_time, update_user
-  </sql>
+    </sql>
     <select id="findCarouselList" parameterType="Map" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -35,7 +35,8 @@ Copyright (c) 2019-2021 十三 all rights reserved.
         </if>
     </select>
     <select id="getTotalCarousels" parameterType="Map" resultType="int">
-        select count(*) from tb_newbee_mall_carousel
+        select count(*)
+        from tb_newbee_mall_carousel
         where is_deleted = 0
     </select>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -53,19 +54,18 @@ Copyright (c) 2019-2021 十三 all rights reserved.
         limit #{number}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from tb_newbee_mall_carousel
-    where carousel_id = #{carouselId,jdbcType=INTEGER}
-  </delete>
+        delete
+        from tb_newbee_mall_carousel
+        where carousel_id = #{carouselId,jdbcType=INTEGER}
+    </delete>
     <insert id="insert" parameterType="ltd.newbee.mall.entity.Carousel">
-    insert into tb_newbee_mall_carousel (carousel_id, carousel_url, redirect_url, 
-      carousel_rank, is_deleted, create_time, 
-      create_user, update_time, update_user
-      )
-    values (#{carouselId,jdbcType=INTEGER}, #{carouselUrl,jdbcType=VARCHAR}, #{redirectUrl,jdbcType=VARCHAR}, 
-      #{carouselRank,jdbcType=INTEGER}, #{isDeleted,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{createUser,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=INTEGER}
-      )
-  </insert>
+        insert into tb_newbee_mall_carousel (carousel_id, carousel_url, redirect_url,
+                                             carousel_rank, is_deleted, create_time,
+                                             create_user, update_time, update_user)
+        values (#{carouselId,jdbcType=INTEGER}, #{carouselUrl,jdbcType=VARCHAR}, #{redirectUrl,jdbcType=VARCHAR},
+                #{carouselRank,jdbcType=INTEGER}, #{isDeleted,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP},
+                #{createUser,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=INTEGER})
+    </insert>
     <insert id="insertSelective" parameterType="ltd.newbee.mall.entity.Carousel">
         insert into tb_newbee_mall_carousel
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -158,17 +158,17 @@ Copyright (c) 2019-2021 十三 all rights reserved.
         where carousel_id = #{carouselId,jdbcType=INTEGER}
     </update>
     <update id="updateByPrimaryKey" parameterType="ltd.newbee.mall.entity.Carousel">
-    update tb_newbee_mall_carousel
-    set carousel_url = #{carouselUrl,jdbcType=VARCHAR},
-      redirect_url = #{redirectUrl,jdbcType=VARCHAR},
-      carousel_rank = #{carouselRank,jdbcType=INTEGER},
-      is_deleted = #{isDeleted,jdbcType=TINYINT},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      create_user = #{createUser,jdbcType=INTEGER},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      update_user = #{updateUser,jdbcType=INTEGER}
-    where carousel_id = #{carouselId,jdbcType=INTEGER}
-  </update>
+        update tb_newbee_mall_carousel
+        set carousel_url  = #{carouselUrl,jdbcType=VARCHAR},
+            redirect_url  = #{redirectUrl,jdbcType=VARCHAR},
+            carousel_rank = #{carouselRank,jdbcType=INTEGER},
+            is_deleted    = #{isDeleted,jdbcType=TINYINT},
+            create_time   = #{createTime,jdbcType=TIMESTAMP},
+            create_user   = #{createUser,jdbcType=INTEGER},
+            update_time   = #{updateTime,jdbcType=TIMESTAMP},
+            update_user   = #{updateUser,jdbcType=INTEGER}
+        where carousel_id = #{carouselId,jdbcType=INTEGER}
+    </update>
     <update id="deleteBatch">
         update tb_newbee_mall_carousel
         set is_deleted=1,update_time=now() where carousel_id in

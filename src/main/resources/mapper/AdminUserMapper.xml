@@ -10,11 +10,11 @@ Copyright (c) 2019-2021 十三 all rights reserved.
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ltd.newbee.mall.dao.AdminUserMapper">
     <resultMap id="BaseResultMap" type="ltd.newbee.mall.entity.AdminUser">
-        <id column="admin_user_id" jdbcType="BIGINT" property="adminUserId" />
-        <result column="login_user_name" jdbcType="VARCHAR" property="loginUserName" />
-        <result column="login_password" jdbcType="VARCHAR" property="loginPassword" />
-        <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
-        <result column="locked" jdbcType="TINYINT" property="locked" />
+        <id column="admin_user_id" jdbcType="BIGINT" property="adminUserId"/>
+        <result column="login_user_name" jdbcType="VARCHAR" property="loginUserName"/>
+        <result column="login_password" jdbcType="VARCHAR" property="loginPassword"/>
+        <result column="nick_name" jdbcType="VARCHAR" property="nickName"/>
+        <result column="locked" jdbcType="TINYINT" property="locked"/>
     </resultMap>
     <sql id="Base_Column_List">
         admin_user_id, login_user_name, login_password, nick_name, locked
@@ -23,15 +23,16 @@ Copyright (c) 2019-2021 十三 all rights reserved.
     <!--通过提供用户名和密码，返回用户-->
     <select id="login" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         from tb_newbee_mall_admin_user
-        where login_user_name = #{userName,jdbcType=VARCHAR} AND login_password=#{password,jdbcType=VARCHAR} AND locked = 0
+        where login_user_name = #{userName,jdbcType=VARCHAR} AND login_password=#{password,jdbcType=VARCHAR} AND locked
+        = 0
     </select>
 
     <!--通过提供用户id，返回用户-->
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         from tb_newbee_mall_admin_user
         where admin_user_id = #{adminUserId,jdbcType=BIGINT}
     </select>
@@ -39,9 +40,9 @@ Copyright (c) 2019-2021 十三 all rights reserved.
     <!--必须提供完整的AdminUser信息才能插入-->
     <insert id="insert" parameterType="ltd.newbee.mall.entity.AdminUser">
         insert into tb_newbee_mall_admin_user (admin_user_id, login_user_name, login_password,
-        nick_name, locked)
+                                               nick_name, locked)
         values (#{adminUserId,jdbcType=BIGINT}, #{loginUserName,jdbcType=VARCHAR}, #{loginPassword,jdbcType=VARCHAR},
-        #{nickName,jdbcType=VARCHAR}, #{locked,jdbcType=TINYINT})
+                #{nickName,jdbcType=VARCHAR}, #{locked,jdbcType=TINYINT})
     </insert>
 
     <!--AdminUser的5个属性存在一个不为空的就可以添加-->
@@ -108,9 +109,9 @@ Copyright (c) 2019-2021 十三 all rights reserved.
     <update id="updateByPrimaryKey" parameterType="ltd.newbee.mall.entity.AdminUser">
         update tb_newbee_mall_admin_user
         set login_user_name = #{loginUserName,jdbcType=VARCHAR},
-        login_password = #{loginPassword,jdbcType=VARCHAR},
-        nick_name = #{nickName,jdbcType=VARCHAR},
-        locked = #{locked,jdbcType=TINYINT}
+            login_password  = #{loginPassword,jdbcType=VARCHAR},
+            nick_name       = #{nickName,jdbcType=VARCHAR},
+            locked          = #{locked,jdbcType=TINYINT}
         where admin_user_id = #{adminUserId,jdbcType=BIGINT}
     </update>
 </mapper>
