@@ -22,16 +22,46 @@ import java.util.List;
  */
 @Mapper
 public interface CarouselMapper {
+    /**
+     * 根据轮播图id删除轮播图
+     * @param carouselId
+     * @return 0失败，1成功
+     */
     int deleteByPrimaryKey(Integer carouselId);
 
+    /**
+     * 新增轮播图
+     * @param record
+     * @return 0失败，1成功
+     */
     int insert(Carousel record);
 
+    /**
+     *新增轮播图
+     * @param record
+     * @return 0失败，1成功
+     */
     int insertSelective(Carousel record);
 
+    /**
+     * 根据轮播图id返回轮播图
+     * @param carouselId
+     * @return 轮播图
+     */
     Carousel selectByPrimaryKey(Integer carouselId);
 
+    /**
+     * 根据轮播图id更新轮播图信息
+     * @param record
+     * @return 0失败，1成功
+     */
     int updateByPrimaryKeySelective(Carousel record);
 
+    /**
+     * 根据轮播图id更新轮播图信息
+     * @param record
+     * @return 0失败，1成功
+     */
     int updateByPrimaryKey(Carousel record);
 
     /**
@@ -48,6 +78,11 @@ public interface CarouselMapper {
      */
     int getTotalCarousels(PageQueryUtil pageUtil);
 
+    /**
+     * 批量删除
+     * @param ids
+     * @return
+     */
     int deleteBatch(Long[] ids);
 
     /**
