@@ -29,6 +29,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 该类为商城商品相关接口
+ *
+ * @author 十三
+ */
 @RestController
 @Api(value = "v1", tags = "4.新蜂商城商品相关接口")
 @RequestMapping("/api/v1")
@@ -39,6 +44,15 @@ public class NewBeeMallGoodsAPI {
     @Resource
     private NewBeeMallGoodsService newBeeMallGoodsService;
 
+    /**
+     * 实现根据关键字和分类id进行搜索的商品搜索接口
+     * @param keyword
+     * @param goodsCategoryId
+     * @param orderBy
+     * @param pageNumber
+     * @param loginMallUser
+     * @return 商品搜索响应结果
+     */
     @GetMapping("/search")
     @ApiOperation(value = "商品搜索接口", notes = "根据关键字和分类id进行搜索")
     public Result<PageResult<List<NewBeeMallSearchGoodsVO>>> search(@RequestParam(required = false) @ApiParam(value = "搜索关键字") String keyword,
@@ -74,6 +88,12 @@ public class NewBeeMallGoodsAPI {
         return ResultGenerator.genSuccessResult(newBeeMallGoodsService.searchNewBeeMallGoods(pageUtil));
     }
 
+    /**
+     * 实现商品详情接口
+     * @param goodsId
+     * @param loginMallUser
+     * @return 商品详情成功响应结果
+     */
     @GetMapping("/goods/detail/{goodsId}")
     @ApiOperation(value = "商品详情接口", notes = "传参为商品id")
     public Result<NewBeeMallGoodsDetailVO> goodsDetail(@ApiParam(value = "商品id") @PathVariable("goodsId") Long goodsId, @TokenToMallUser MallUser loginMallUser) {
@@ -81,12 +101,18 @@ public class NewBeeMallGoodsAPI {
         if (goodsId < 1) {
             return ResultGenerator.genFailResult("参数异常");
         }
+        //根据id获取商品详情
         NewBeeMallGoods goods = newBeeMallGoodsService.getNewBeeMallGoodsById(goodsId);
+        /**
+         * 如果商品状态为下架，则抛出异常
+         */
         if (Constants.SELL_STATUS_UP != goods.getGoodsSellStatus()) {
             NewBeeMallException.fail(ServiceResultEnum.GOODS_PUT_DOWN.getResult());
         }
         NewBeeMallGoodsDetailVO goodsDetailVO = new NewBeeMallGoodsDetailVO();
+        //将商品实体类转换为商品详情页VO
         BeanUtil.copyProperties(goods, goodsDetailVO);
+        //将商品实体类中的详情图放到VO的详情图中，用“，”作为分割符
         goodsDetailVO.setGoodsCarouselList(goods.getGoodsCarousel().split(","));
         return ResultGenerator.genSuccessResult(goodsDetailVO);
     }

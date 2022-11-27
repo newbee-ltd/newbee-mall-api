@@ -8,6 +8,11 @@
  */
 package ltd.newbee.mall.common;
 
+/**
+ * 该类为异常类
+ *
+ * @author 13
+ */
 public class NewBeeMallException extends RuntimeException {
 
     public NewBeeMallException() {

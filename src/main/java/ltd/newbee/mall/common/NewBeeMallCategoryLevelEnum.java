@@ -9,10 +9,9 @@
 package ltd.newbee.mall.common;
 
 /**
+ * 该类为分类级别枚举类，可以获取、设置分类级别，并根据参数level返回分类级别
+ *
  * @author 13
- * @qq交流群 796794009
- * @email 2449207463@qq.com
- * @link https://github.com/newbee-ltd
  * @apiNote 分类级别
  */
 public enum NewBeeMallCategoryLevelEnum {
@@ -26,11 +25,21 @@ public enum NewBeeMallCategoryLevelEnum {
 
     private String name;
 
+    /**
+     * 构造方法
+     * @param level
+     * @param name
+     */
     NewBeeMallCategoryLevelEnum(int level, String name) {
         this.level = level;
         this.name = name;
     }
 
+    /**
+     * 根据level参数返回分类级别，有误则返回DEFAULT
+     * @param level
+     * @return 分类级别
+     */
     public static NewBeeMallCategoryLevelEnum getNewBeeMallOrderStatusEnumByLevel(int level) {
         for (NewBeeMallCategoryLevelEnum newBeeMallCategoryLevelEnum : NewBeeMallCategoryLevelEnum.values()) {
             if (newBeeMallCategoryLevelEnum.getLevel() == level) {
@@ -40,18 +49,34 @@ public enum NewBeeMallCategoryLevelEnum {
         return DEFAULT;
     }
 
+    /**
+     * 获取分类level
+     * @return 分类level
+     */
     public int getLevel() {
         return level;
     }
 
+    /**
+     * 设置分类level
+     * @param level
+     */
     public void setLevel(int level) {
         this.level = level;
     }
 
+    /**
+     * 获取分类名（一级、二级、三级OR ERROR）
+     * @return 分类名
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * 设置分类名（一级、二级、三级OR ERROR）
+     * @param name
+     */
     public void setName(String name) {
         this.name = name;
     }

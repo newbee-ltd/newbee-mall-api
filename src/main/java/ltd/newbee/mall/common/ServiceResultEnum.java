@@ -8,6 +8,11 @@
  */
 package ltd.newbee.mall.common;
 
+/**
+ * 该类为service结果枚举类
+ *
+ * @author 13
+ */
 public enum ServiceResultEnum {
     ERROR("error"),
 
@@ -93,14 +98,26 @@ public enum ServiceResultEnum {
 
     private String result;
 
+    /**
+     * 构造方法
+     * @param result
+     */
     ServiceResultEnum(String result) {
         this.result = result;
     }
 
+    /**
+     * 获取service结果
+     * @return 结果
+     */
     public String getResult() {
         return result;
     }
 
+    /**
+     * 设置service结果
+     * @param result
+     */
     public void setResult(String result) {
         this.result = result;
     }

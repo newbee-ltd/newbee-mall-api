@@ -15,6 +15,11 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+/**
+ * 该类为轮播图的数据访问接口
+ *
+ * @author 13
+ */
 @Mapper
 public interface CarouselMapper {
     int deleteByPrimaryKey(Integer carouselId);
@@ -29,11 +34,26 @@ public interface CarouselMapper {
 
     int updateByPrimaryKey(Carousel record);
 
+    /**
+     * 根据分页查询参数获取轮播图列表
+     * @param pageUtil
+     * @return 轮播图列表
+     */
     List<Carousel> findCarouselList(PageQueryUtil pageUtil);
 
+    /**
+     * 根据分页查询参数获取总轮播图数
+     * @param pageUtil
+     * @return 轮播图数
+     */
     int getTotalCarousels(PageQueryUtil pageUtil);
 
     int deleteBatch(Long[] ids);
 
+    /**
+     * 根据数量获取轮播图列表
+     * @param number
+     * @return 轮播图列表
+     */
     List<Carousel> findCarouselsByNum(@Param("number") int number);
 }
