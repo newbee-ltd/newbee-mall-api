@@ -9,7 +9,7 @@
 package ltd.newbee.mall.common;
 
 /**
- * 该类为service结果枚举类
+ * 用于表示服务层的返回结果
  *
  * @author 13
  */

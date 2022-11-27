@@ -133,6 +133,12 @@ public class NewBeeMallShoppingCartServiceImpl implements NewBeeMallShoppingCart
         return getNewBeeMallShoppingCartItemVOS(newBeeMallShoppingCartItemVOS, newBeeMallShoppingCartItems);
     }
 
+    /**
+     * 获取购物项数据列表
+     * @param cartItemIds 购物项id
+     * @param newBeeMallUserId 用户id
+     * @return 购物项数据列表
+     */
     @Override
     public List<NewBeeMallShoppingCartItemVO> getCartItemsForSettle(List<Long> cartItemIds, Long newBeeMallUserId) {
         List<NewBeeMallShoppingCartItemVO> newBeeMallShoppingCartItemVOS = new ArrayList<>();
@@ -185,6 +191,12 @@ public class NewBeeMallShoppingCartServiceImpl implements NewBeeMallShoppingCart
         return newBeeMallShoppingCartItemVOS;
     }
 
+
+    /**
+     * 获取购物车中的商品列表
+     * @param pageUtil 分页工具
+     * @return 购物车中的商品列表
+     */
     @Override
     public PageResult getMyShoppingCartItems(PageQueryUtil pageUtil) {
         List<NewBeeMallShoppingCartItemVO> newBeeMallShoppingCartItemVOS = new ArrayList<>();

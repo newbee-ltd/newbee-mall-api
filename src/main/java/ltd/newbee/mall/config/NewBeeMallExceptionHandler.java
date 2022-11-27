@@ -30,7 +30,7 @@ public class NewBeeMallExceptionHandler {
     @ExceptionHandler(BindException.class)
     public Object bindException(BindException e) {
         Result result = new Result();
-        result.setResultCode(510);
+        result.setResultCode(510); // TODO 其实这种位置还是改成一个枚举或者一个常量比较好 510未免魔法数字了
         BindingResult bindingResult = e.getBindingResult();
         result.setMessage(Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage());
         return result;
