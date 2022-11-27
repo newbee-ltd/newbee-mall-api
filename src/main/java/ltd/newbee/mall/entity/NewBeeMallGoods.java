@@ -13,39 +13,60 @@ import lombok.Data;
 
 import java.util.Date;
 
+/**
+ * 该类为商品实体类
+ *
+ * @author 13
+ */
 @Data
 public class NewBeeMallGoods {
+    //商品id
     private Long goodsId;
 
+    //商品名称
     private String goodsName;
 
+    //商品简介
     private String goodsIntro;
 
+    //商品分类id
     private Long goodsCategoryId;
 
+    //商品主图
     private String goodsCoverImg;
 
+    //商品轮播图
     private String goodsCarousel;
 
+    //商品原价
     private Integer originalPrice;
 
+    //商品实际售价
     private Integer sellingPrice;
 
+    //商品库存数量
     private Integer stockNum;
 
+    //商品标签
     private String tag;
 
+    //上架状态
     private Byte goodsSellStatus;
 
+    //创建人id
     private Integer createUser;
 
+    //创建时间
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
 
+    //修改人id
     private Integer updateUser;
 
+    //修改时间
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date updateTime;
 
+    //商品详情
     private String goodsDetailContent;
 }

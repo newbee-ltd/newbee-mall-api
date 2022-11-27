@@ -14,27 +14,39 @@ import lombok.Data;
 import java.util.Date;
 
 /**
- * 这玩意是轮播图对应的链接 不是很懂 看前端是怎么用的
+ * 该类为轮播图实体
+ *
+ * @author 13
  */
 @Data
 public class Carousel {
+
+    //轮播图id
     private Integer carouselId;
 
+    //轮播图url
     private String carouselUrl;
 
+    //轮播图跳转url
     private String redirectUrl;
 
+    //轮播图排序值
     private Integer carouselRank;
 
+    //删除标记，0未删除，1删除
     private Byte isDeleted;
 
+    //创建时间
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
 
+    //创建人id
     private Integer createUser;
 
+    //修改时间
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date updateTime;
 
+    //修改人id
     private Integer updateUser;
 }
