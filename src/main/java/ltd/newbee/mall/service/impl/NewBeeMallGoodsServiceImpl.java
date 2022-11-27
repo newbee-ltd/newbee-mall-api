@@ -78,9 +78,9 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
     }
 
     /**
-     * 批量修改销售状态(上架下架)
+     * 批量新增商品数据
      *
-     * @param ids
+     * @param newBeeMallGoodsList
      * @return
      */
     @Override

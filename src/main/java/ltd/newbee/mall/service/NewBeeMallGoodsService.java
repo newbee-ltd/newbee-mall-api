@@ -54,8 +54,8 @@ public interface NewBeeMallGoodsService {
 
     /**
      * 批量修改销售状态(上架下架)
-     *
      * @param ids
+     * @param sellStatus
      * @return
      */
     Boolean batchUpdateSellStatus(Long[] ids, int sellStatus);
