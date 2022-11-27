@@ -19,6 +19,7 @@ import ltd.newbee.mall.entity.MallUserToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -27,6 +28,9 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
+/**
+ * 用于处理token转换为MallUser的方法参数解析器
+ */
 @Component
 public class TokenToMallUserMethodArgumentResolver implements HandlerMethodArgumentResolver {
 
@@ -45,6 +49,18 @@ public class TokenToMallUserMethodArgumentResolver implements HandlerMethodArgum
         return false;
     }
 
+    /**
+     * 从token中获取用户信息 接下来这段是copilot写的 学一下
+     * 他算是手动的实现了一下UserDetailsServiceImpl 和 UserDetails 这两个接口
+     * 写这玩意的朋友基础还是很好的 但他就是喜欢自己造轮子
+     * @param parameter the method parameter to resolve. This parameter must
+     * have previously been passed to {@link #supportsParameter} which must
+     * have returned {@code true}.
+     * @param mavContainer the ModelAndViewContainer for the current request
+     * @param webRequest the current request
+     * @param binderFactory a factory for creating {@link WebDataBinder} instances
+     * @return the resolved argument value, or {@code null}
+     */
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
         if (parameter.getParameterAnnotation(TokenToMallUser.class) instanceof TokenToMallUser) {
             MallUser mallUser = null;

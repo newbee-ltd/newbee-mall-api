@@ -27,6 +27,10 @@ import springfox.documentation.spring.web.plugins.Docket;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Swagger3配置
+ * 他这个用的还是蛮新的
+ */
 @Configuration
 @EnableOpenApi
 public class Swagger3Config {
@@ -43,7 +47,7 @@ public class Swagger3Config {
                 .globalRequestParameters(getGlobalRequestParameters());
     }
 
-    //生成全局通用参数
+    //生成全局通用参数 这个好 可以拿来直接用 没有项目不需要token的嘛对吧
     private List<RequestParameter> getGlobalRequestParameters() {
         List<RequestParameter> parameters = new ArrayList<>();
         parameters.add(new RequestParameterBuilder()

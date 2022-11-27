@@ -8,6 +8,9 @@
  */
 package ltd.newbee.mall.common;
 
+/**
+ * 用于表示服务层的返回结果
+ */
 public enum ServiceResultEnum {
     ERROR("error"),
 

@@ -9,6 +9,7 @@
 package ltd.newbee.mall.common;
 
 /**
+ * 用于表示首页配置的类型
  * @author 13
  * @qq交流群 796794009
  * @email 2449207463@qq.com
