@@ -27,6 +27,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * 该类为首页配置项业务逻辑的实现
+ *
+ * @author 13
+ */
 @Service
 public class NewBeeMallIndexConfigServiceImpl implements NewBeeMallIndexConfigService {
 
@@ -36,6 +41,12 @@ public class NewBeeMallIndexConfigServiceImpl implements NewBeeMallIndexConfigSe
     @Autowired
     private NewBeeMallGoodsMapper goodsMapper;
 
+    /**
+     * 后台分页
+     *
+     * @param pageUtil
+     * @return
+     */
     @Override
     public PageResult getConfigsPage(PageQueryUtil pageUtil) {
         List<IndexConfig> indexConfigs = indexConfigMapper.findIndexConfigList(pageUtil);
@@ -44,6 +55,11 @@ public class NewBeeMallIndexConfigServiceImpl implements NewBeeMallIndexConfigSe
         return pageResult;
     }
 
+    /**
+     * 新增首页配置项
+     * @param indexConfig
+     * @return
+     */
     @Override
     public String saveIndexConfig(IndexConfig indexConfig) {
         if (goodsMapper.selectByPrimaryKey(indexConfig.getGoodsId()) == null) {
@@ -58,6 +74,11 @@ public class NewBeeMallIndexConfigServiceImpl implements NewBeeMallIndexConfigSe
         return ServiceResultEnum.DB_ERROR.getResult();
     }
 
+    /**
+     * 修改首页配置项信息
+     * @param indexConfig
+     * @return
+     */
     @Override
     public String updateIndexConfig(IndexConfig indexConfig) {
         if (goodsMapper.selectByPrimaryKey(indexConfig.getGoodsId()) == null) {
@@ -79,20 +100,40 @@ public class NewBeeMallIndexConfigServiceImpl implements NewBeeMallIndexConfigSe
         return ServiceResultEnum.DB_ERROR.getResult();
     }
 
+    /**
+     * 根据id返回首页配置项
+     * @param id
+     * @return
+     */
     @Override
     public IndexConfig getIndexConfigById(Long id) {
         return indexConfigMapper.selectByPrimaryKey(id);
     }
 
+    /**
+     * 返回固定数量的首页配置商品对象(首页调用)
+     *
+     * @param number
+     * @return
+     */
     @Override
     public List<NewBeeMallIndexConfigGoodsVO> getConfigGoodsesForIndex(int configType, int number) {
+        //创建指定数量的首页配置商品VO
         List<NewBeeMallIndexConfigGoodsVO> newBeeMallIndexConfigGoodsVOS = new ArrayList<>(number);
+        //根据类别和数量获取首页配置商品
         List<IndexConfig> indexConfigs = indexConfigMapper.findIndexConfigsByTypeAndNum(configType, number);
+        /**
+         * 如果首页配置商品不为空，根据商品id将每一个商品类型转换为首页配置商品VO
+         */
         if (!CollectionUtils.isEmpty(indexConfigs)) {
             //取出所有的goodsId
             List<Long> goodsIds = indexConfigs.stream().map(IndexConfig::getGoodsId).collect(Collectors.toList());
+            //根据商品id获取商品
             List<NewBeeMallGoods> newBeeMallGoods = goodsMapper.selectByPrimaryKeys(goodsIds);
             newBeeMallIndexConfigGoodsVOS = BeanUtil.copyList(newBeeMallGoods, NewBeeMallIndexConfigGoodsVO.class);
+            /**
+             * 对每一个首页配置商品VO，如果字符串过长，则重新设置首页配置项VO中的商品名称和商品简介
+             */
             for (NewBeeMallIndexConfigGoodsVO newBeeMallIndexConfigGoodsVO : newBeeMallIndexConfigGoodsVOS) {
                 String goodsName = newBeeMallIndexConfigGoodsVO.getGoodsName();
                 String goodsIntro = newBeeMallIndexConfigGoodsVO.getGoodsIntro();
@@ -107,9 +148,15 @@ public class NewBeeMallIndexConfigServiceImpl implements NewBeeMallIndexConfigSe
                 }
             }
         }
+        //返回首页配置商品VO列表
         return newBeeMallIndexConfigGoodsVOS;
     }
 
+    /**
+     * 批量删除
+     * @param ids
+     * @return
+     */
     @Override
     public Boolean deleteBatch(Long[] ids) {
         if (ids.length < 1) {

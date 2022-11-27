@@ -15,14 +15,39 @@ import ltd.newbee.mall.util.PageResult;
 
 import java.util.List;
 
+/**
+ * 该类为商品分类业务层接口
+ *
+ * @author 十三
+ */
 public interface NewBeeMallCategoryService {
 
+    /**
+     * 新增分类
+     * @param goodsCategory
+     * @return
+     */
     String saveCategory(GoodsCategory goodsCategory);
 
+    /**
+     * 修改分类
+     * @param goodsCategory
+     * @return
+     */
     String updateGoodsCategory(GoodsCategory goodsCategory);
 
+    /**
+     * 根据id返回分类
+     * @param id
+     * @return
+     */
     GoodsCategory getGoodsCategoryById(Long id);
 
+    /**
+     * 批量删除
+     * @param ids
+     * @return
+     */
     Boolean deleteBatch(Long[] ids);
 
     /**
