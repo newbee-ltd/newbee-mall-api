@@ -15,7 +15,7 @@ package ltd.newbee.mall.common;
  * @apiNote 常量配置
  */
 public class Constants {
-    // TODO 最后改到发布环境的时候这玩意肯定是要配过的
+    // TODO 最后改到发布环境的时候这玩意肯定是要配过的 他等于把图床服务整合进项目里了
     //public final static String FILE_UPLOAD_DIC = "/opt/newbee/upload/";//上传文件的默认url前缀，根据部署设置自行修改
     public final static String FILE_UPLOAD_DIC = "D:\\upload\\";//上传文件的默认url前缀，根据部署设置自行修改
 
