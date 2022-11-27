@@ -9,6 +9,16 @@ import java.net.URI;
  */
 public class NewBeeMallUtils {
 
+    /**
+     * 这个方法是给admin上传图片用的 照理说和咱这次没关系 但对我的大作业有借鉴意义 所以看一眼
+     * 由于他没有上security,没有filter,所以非管理员也能访问上传的upload的接口地址
+     * 上了security的话白名单也无法限制用户访问这个upload
+     * 所以下面传入的这个接口返回的地址，并不是应该图片上传到服务器后的真实地址，而我们自定义的非真实地址
+     * 通过重新拼接，将图片上传到服务器后的真实地址返回<br>
+     * <a href="https://blog.csdn.net/csucsgoat/article/details/123271937">可以看看这篇blog</a>
+     * @param uri 传入的uri 例如：http://localhost:8080/manage-api/v1/upload/2021/04/04/1617510000.jpg
+     * @return 返回的是：/upload/2021/04/04/1617510000.jpg
+     */
     public static URI getHost(URI uri) {
         URI effectiveURI = null;
         try {

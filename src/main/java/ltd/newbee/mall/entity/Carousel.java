@@ -13,6 +13,9 @@ import lombok.Data;
 
 import java.util.Date;
 
+/**
+ * 这玩意是轮播图对应的链接 不是很懂 看前端是怎么用的
+ */
 @Data
 public class Carousel {
     private Integer carouselId;

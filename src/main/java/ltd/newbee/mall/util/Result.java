@@ -1,15 +1,18 @@
 package ltd.newbee.mall.util;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
 import java.io.Serializable;
 
 /**
+ * 这玩意就是我们说的R类 但我觉得其实还是用我那个Hashmap的版本简洁一点
  * @author 13
  * @qq交流群 796794009
  * @email 2449207463@qq.com
  * @link https://github.com/newbee-ltd
  */
+@Data
 public class Result<T> implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -29,30 +32,6 @@ public class Result<T> implements Serializable {
     public Result(int resultCode, String message) {
         this.resultCode = resultCode;
         this.message = message;
-    }
-
-    public int getResultCode() {
-        return resultCode;
-    }
-
-    public void setResultCode(int resultCode) {
-        this.resultCode = resultCode;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    public void setData(T data) {
-        this.data = data;
     }
 
     @Override

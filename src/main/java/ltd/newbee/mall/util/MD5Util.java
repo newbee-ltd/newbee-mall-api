@@ -3,6 +3,7 @@ package ltd.newbee.mall.util;
 import java.security.MessageDigest;
 
 /**
+ * MD5已经被破解了 但他就是喜欢自己造轮子 放着现成的security不用 放着现成的BCrypt不用 诶就是MD5
  * @author 13
  * @qq交流群 796794009
  * @email 2449207463@qq.com
