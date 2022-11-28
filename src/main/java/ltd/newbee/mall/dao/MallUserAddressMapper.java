@@ -17,6 +17,13 @@ import java.util.List;
 public interface MallUserAddressMapper {
     int deleteByPrimaryKey(Long addressId);
 
+    /**
+     * TODO insert和insertSelective感觉具体区别不大，可以尝试精简（未必正确）
+     * TODO 而且这些用法目前都没人用
+     * insert为全部信息插入，insertSelective为改动选定的信息
+     * @param record
+     * @return
+     */
     int insert(MallUserAddress record);
 
     int insertSelective(MallUserAddress record);

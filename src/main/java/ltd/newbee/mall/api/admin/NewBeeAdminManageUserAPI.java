@@ -62,6 +62,12 @@ public class NewBeeAdminManageUserAPI {
         return ResultGenerator.genFailResult(loginResult);
     }
 
+    /**
+     * 管理员获取用户列表，并且用户密码不会直接显示
+     * 当管理员id不存在时无法返回用户列表
+     * @param adminUser
+     * @return
+     */
     @RequestMapping(value = "/adminUser/profile", method = RequestMethod.GET)
     public Result profile(@TokenToAdminUser AdminUserToken adminUser) {
         logger.info("adminUser:{}", adminUser.toString());
@@ -75,6 +81,13 @@ public class NewBeeAdminManageUserAPI {
         return ResultGenerator.genFailResult(ServiceResultEnum.DATA_NOT_EXIST.getResult());
     }
 
+    /**
+     * 修改管理员密码，旧密码也要提供
+     * TODO 这个个人认为是个很蠢的设计，改密码有一种原因就是忘记了本来的密码，然后要改密码需要输入原来的密码，那我还改锤子，但是这个没有验证码机制所以我也不知道怎么办、、
+     * @param adminPasswordParam
+     * @param adminUser
+     * @return
+     */
     @RequestMapping(value = "/adminUser/password", method = RequestMethod.PUT)
     public Result passwordUpdate(@RequestBody @Valid UpdateAdminPasswordParam adminPasswordParam, @TokenToAdminUser AdminUserToken adminUser) {
         logger.info("adminUser:{}", adminUser.toString());
