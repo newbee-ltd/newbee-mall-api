@@ -16,6 +16,11 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+/**
+ * 修改首页配置项信息的参数对象
+ *
+ * @author 13
+ */
 @Data
 public class IndexConfigEditParam {
 

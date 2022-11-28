@@ -17,6 +17,11 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+/**
+ * 添加商品分类的参数对象
+ *
+ * @author 13
+ */
 @Data
 public class GoodsCategoryAddParam {
 

@@ -49,8 +49,11 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
      */
     @Override
     public PageResult getNewBeeMallGoodsPage(PageQueryUtil pageUtil) {
+        //根据分页查询参数获取商品列表
         List<NewBeeMallGoods> goodsList = goodsMapper.findNewBeeMallGoodsList(pageUtil);
+        //获取商品列表总数
         int total = goodsMapper.getTotalNewBeeMallGoods(pageUtil);
+        //封装分页结果并返回
         PageResult pageResult = new PageResult(goodsList, total, pageUtil.getLimit(), pageUtil.getPage());
         return pageResult;
     }
@@ -64,13 +67,21 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
     @Override
     public String saveNewBeeMallGoods(NewBeeMallGoods goods) {
         GoodsCategory goodsCategory = goodsCategoryMapper.selectByPrimaryKey(goods.getGoodsCategoryId());
-        // 分类不存在或者不是三级分类，则该参数字段异常
+        /**
+         * 分类不存在或者不是三级分类，则该参数字段异常
+         */
         if (goodsCategory == null || goodsCategory.getCategoryLevel().intValue() != NewBeeMallCategoryLevelEnum.LEVEL_THREE.getLevel()) {
             return ServiceResultEnum.GOODS_CATEGORY_ERROR.getResult();
         }
+        /**
+         * 如果已经存在有相同商品名称和关联分类id的商品，则添加失败
+         */
         if (goodsMapper.selectByCategoryIdAndName(goods.getGoodsName(), goods.getGoodsCategoryId()) != null) {
             return ServiceResultEnum.SAME_GOODS_EXIST.getResult();
         }
+        /**
+         * 如果添加成功，返回success，否则返回数据库错误
+         */
         if (goodsMapper.insertSelective(goods) > 0) {
             return ServiceResultEnum.SUCCESS.getResult();
         }
@@ -99,11 +110,16 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
     @Override
     public String updateNewBeeMallGoods(NewBeeMallGoods goods) {
         GoodsCategory goodsCategory = goodsCategoryMapper.selectByPrimaryKey(goods.getGoodsCategoryId());
-        // 分类不存在或者不是三级分类，则该参数字段异常
+        /**
+         * 分类不存在或者不是三级分类，则该参数字段异常
+         */
         if (goodsCategory == null || goodsCategory.getCategoryLevel().intValue() != NewBeeMallCategoryLevelEnum.LEVEL_THREE.getLevel()) {
             return ServiceResultEnum.GOODS_CATEGORY_ERROR.getResult();
         }
         NewBeeMallGoods temp = goodsMapper.selectByPrimaryKey(goods.getGoodsId());
+        /**
+         * 如果商品不存在，返回错误
+         */
         if (temp == null) {
             return ServiceResultEnum.DATA_NOT_EXIST.getResult();
         }
@@ -112,7 +128,11 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
             //name和分类id相同且不同id 不能继续修改
             return ServiceResultEnum.SAME_GOODS_EXIST.getResult();
         }
+        //设置修改时间
         goods.setUpdateTime(new Date());
+        /**
+         * 如果修改成功，返回success，否则返回数据库错误
+         */
         if (goodsMapper.updateByPrimaryKeySelective(goods) > 0) {
             return ServiceResultEnum.SUCCESS.getResult();
         }

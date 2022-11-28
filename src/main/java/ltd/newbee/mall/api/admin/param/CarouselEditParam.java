@@ -16,6 +16,11 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+/**
+ * 修改轮播图信息的参数对象
+ *
+ * @author 13
+ */
 @Data
 public class CarouselEditParam {
 

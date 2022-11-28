@@ -49,8 +49,11 @@ public class NewBeeMallIndexConfigServiceImpl implements NewBeeMallIndexConfigSe
      */
     @Override
     public PageResult getConfigsPage(PageQueryUtil pageUtil) {
+        //根据分页查询参数获取首页配置项列表
         List<IndexConfig> indexConfigs = indexConfigMapper.findIndexConfigList(pageUtil);
+        //获取首页配置项列表总数
         int total = indexConfigMapper.getTotalIndexConfigs(pageUtil);
+        //封装分页结果并返回
         PageResult pageResult = new PageResult(indexConfigs, total, pageUtil.getLimit(), pageUtil.getPage());
         return pageResult;
     }
@@ -62,12 +65,21 @@ public class NewBeeMallIndexConfigServiceImpl implements NewBeeMallIndexConfigSe
      */
     @Override
     public String saveIndexConfig(IndexConfig indexConfig) {
+        /**
+         * 如果该首页配置项对应的商品id不存在，返回商品不存在错误
+         */
         if (goodsMapper.selectByPrimaryKey(indexConfig.getGoodsId()) == null) {
             return ServiceResultEnum.GOODS_NOT_EXIST.getResult();
         }
+        /**
+         * 如果已经存在有相同商品id和配置项类型的首页配置项，则添加失败
+         */
         if (indexConfigMapper.selectByTypeAndGoodsId(indexConfig.getConfigType(), indexConfig.getGoodsId()) != null) {
             return ServiceResultEnum.SAME_INDEX_CONFIG_EXIST.getResult();
         }
+        /**
+         * 如果添加成功，返回success，否则返回数据库错误
+         */
         if (indexConfigMapper.insertSelective(indexConfig) > 0) {
             return ServiceResultEnum.SUCCESS.getResult();
         }
@@ -81,10 +93,16 @@ public class NewBeeMallIndexConfigServiceImpl implements NewBeeMallIndexConfigSe
      */
     @Override
     public String updateIndexConfig(IndexConfig indexConfig) {
+        /**
+         * 如果该首页配置项对应的商品id不存在，返回商品不存在错误
+         */
         if (goodsMapper.selectByPrimaryKey(indexConfig.getGoodsId()) == null) {
             return ServiceResultEnum.GOODS_NOT_EXIST.getResult();
         }
         IndexConfig temp = indexConfigMapper.selectByPrimaryKey(indexConfig.getConfigId());
+        /**
+         * 如果首页配置项不存在，返回错误
+         */
         if (temp == null) {
             return ServiceResultEnum.DATA_NOT_EXIST.getResult();
         }
@@ -93,7 +111,11 @@ public class NewBeeMallIndexConfigServiceImpl implements NewBeeMallIndexConfigSe
             //goodsId相同且不同id 不能继续修改
             return ServiceResultEnum.SAME_INDEX_CONFIG_EXIST.getResult();
         }
+        //设置修改时间
         indexConfig.setUpdateTime(new Date());
+        /**
+         * 如果修改成功，返回success，否则返回数据库错误
+         */
         if (indexConfigMapper.updateByPrimaryKeySelective(indexConfig) > 0) {
             return ServiceResultEnum.SUCCESS.getResult();
         }
