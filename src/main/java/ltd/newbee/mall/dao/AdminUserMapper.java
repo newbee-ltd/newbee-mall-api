@@ -24,8 +24,7 @@ public interface AdminUserMapper {
 
     /**
      * 提供修改的属性插添加用户
-     * 截止Push前未发现用法，存在缺陷，可以只输入1个属性进行用户添加，但目前该用法仅存在于dao层，service层未调用该方法
-     * 怀疑是测试炫技的方法，没有任何实际价值，估计只是为了介绍xml中prefix等等语法
+     * 可以只输入1个属性进行用户添加
      * @param record
      * @return
      */
