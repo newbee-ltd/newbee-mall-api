@@ -63,7 +63,7 @@ public enum IndexConfigTypeEnum {
      * 设置配置类型
      * @param type
      */
-    public void setType(int type) {
+    private void setType(int type) {
         this.type = type;
     }
 
@@ -79,7 +79,7 @@ public enum IndexConfigTypeEnum {
      * 设置配置名称
      * @param name
      */
-    public void setName(String name) {
+    private void setName(String name) {
         this.name = name;
     }
 }

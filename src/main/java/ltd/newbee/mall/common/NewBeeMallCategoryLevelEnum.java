@@ -61,7 +61,7 @@ public enum NewBeeMallCategoryLevelEnum {
      * 设置分类level
      * @param level
      */
-    public void setLevel(int level) {
+    private void setLevel(int level) {
         this.level = level;
     }
 
@@ -77,7 +77,7 @@ public enum NewBeeMallCategoryLevelEnum {
      * 设置分类名（一级、二级、三级OR ERROR）
      * @param name
      */
-    public void setName(String name) {
+    private void setName(String name) {
         this.name = name;
     }
 }

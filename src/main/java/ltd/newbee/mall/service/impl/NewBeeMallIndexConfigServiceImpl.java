@@ -54,8 +54,7 @@ public class NewBeeMallIndexConfigServiceImpl implements NewBeeMallIndexConfigSe
         //获取首页配置项列表总数
         int total = indexConfigMapper.getTotalIndexConfigs(pageUtil);
         //封装分页结果并返回
-        PageResult pageResult = new PageResult(indexConfigs, total, pageUtil.getLimit(), pageUtil.getPage());
-        return pageResult;
+        return new PageResult(indexConfigs, total, pageUtil.getLimit(), pageUtil.getPage());
     }
 
     /**

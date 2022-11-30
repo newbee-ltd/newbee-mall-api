@@ -216,8 +216,7 @@ public class NewBeeMallCategoryServiceImpl implements NewBeeMallCategoryService 
     public PageResult getCategorisPage(PageQueryUtil pageUtil) {
         List<GoodsCategory> goodsCategories = goodsCategoryMapper.findGoodsCategoryList(pageUtil);
         int total = goodsCategoryMapper.getTotalGoodsCategories(pageUtil);
-        PageResult pageResult = new PageResult(goodsCategories, total, pageUtil.getLimit(), pageUtil.getPage());
-        return pageResult;
+        return new PageResult(goodsCategories, total, pageUtil.getLimit(), pageUtil.getPage());
     }
 
     /**

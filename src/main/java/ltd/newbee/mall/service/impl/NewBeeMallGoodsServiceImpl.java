@@ -54,8 +54,7 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
         //获取商品列表总数
         int total = goodsMapper.getTotalNewBeeMallGoods(pageUtil);
         //封装分页结果并返回
-        PageResult pageResult = new PageResult(goodsList, total, pageUtil.getLimit(), pageUtil.getPage());
-        return pageResult;
+        return new PageResult(goodsList, total, pageUtil.getLimit(), pageUtil.getPage());
     }
 
     /**
@@ -206,7 +205,6 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
             }
         }
         //设置分页结果并返回
-        PageResult pageResult = new PageResult(newBeeMallSearchGoodsVOS, total, pageUtil.getLimit(), pageUtil.getPage());
-        return pageResult;
+        return new PageResult(newBeeMallSearchGoodsVOS, total, pageUtil.getLimit(), pageUtil.getPage());
     }
 }
