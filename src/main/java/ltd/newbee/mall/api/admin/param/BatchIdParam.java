@@ -12,6 +12,11 @@ import lombok.Data;
 
 import java.io.Serializable;
 
+/**
+ * 批量处理时的参数对象
+ *
+ * @author 13
+ */
 @Data
 public class BatchIdParam implements Serializable {
     //id数组

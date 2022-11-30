@@ -33,6 +33,11 @@ import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+/**
+ * 该类为后台管理系统文件上传接口
+ *
+ * @author 13
+ */
 @RestController
 @Api(value = "v1", tags = "8-7.后台管理系统文件上传接口")
 @RequestMapping("/manage-api/v1")
@@ -44,7 +49,12 @@ public class NewBeeAdminUploadAPI {
     private StandardServletMultipartResolver standardServletMultipartResolver;
 
     /**
-     * 图片上传
+     * 单图上传
+     * @param httpServletRequest
+     * @param file
+     * @param adminUser
+     * @return
+     * @throws URISyntaxException
      */
     @RequestMapping(value = "/upload/file", method = RequestMethod.POST)
     @ApiOperation(value = "单图上传", notes = "file Name \"file\"")
@@ -78,7 +88,11 @@ public class NewBeeAdminUploadAPI {
     }
 
     /**
-     * 图片上传
+     * 多图上传
+     * @param httpServletRequest
+     * @param adminUser
+     * @return
+     * @throws URISyntaxException
      */
     @RequestMapping(value = "/upload/files", method = RequestMethod.POST)
     @ApiOperation(value = "多图上传", notes = "wangEditor图片上传")
