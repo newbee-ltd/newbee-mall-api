@@ -18,8 +18,7 @@ public interface MallUserAddressMapper {
     int deleteByPrimaryKey(Long addressId);
 
     /**
-     * TODO insert和insertSelective感觉具体区别不大，可以尝试精简（未必正确）
-     * TODO 而且这些用法目前都没人用
+     * TODO insert和insertSelective感觉具体区别不大，可能是用来优化SQL性能的 可以再看
      * insert为全部信息插入，insertSelective为改动选定的信息
      * @param record
      * @return

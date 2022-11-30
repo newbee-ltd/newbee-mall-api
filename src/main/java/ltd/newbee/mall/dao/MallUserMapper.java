@@ -20,7 +20,6 @@ public interface MallUserMapper {
     /**
      * 看起来是根据id删除用户
      * TODO 可以后期加入管理员删除用户操作
-     * TODO 数据库操作为将删除属性置为1，没有在数据库中移除用户
      * @param userId
      * @return
      */
@@ -46,7 +45,7 @@ public interface MallUserMapper {
 
     /**
      * 批量锁定。解锁用户操作
-     * TODO 蜜汁操作不是很理解
+     * 蜜汁操作不是很理解
      * @param ids
      * @param lockStatus
      * @return
