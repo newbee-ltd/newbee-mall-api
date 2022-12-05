@@ -42,19 +42,23 @@ public class NewBeeAdminOrderAPI {
 
     private static final Logger logger = LoggerFactory.getLogger(NewBeeAdminOrderAPI.class);
 
+    private static final String ADMIN_LOG = "adminUser:{}";
+
+    private static final String PARAM_ERROR = "参数异常！";
+
     @Resource
     private NewBeeMallOrderService newBeeMallOrderService;
 
     /**
      * 列表
      */
-    @RequestMapping(value = "/orders", method = RequestMethod.GET)
+    @GetMapping(value = "/orders")
     @ApiOperation(value = "订单列表", notes = "可根据订单号和订单状态筛选")
     public Result list(@RequestParam(required = false) @ApiParam(value = "页码") Integer pageNumber,
                        @RequestParam(required = false) @ApiParam(value = "每页条数") Integer pageSize,
                        @RequestParam(required = false) @ApiParam(value = "订单号") String orderNo,
                        @RequestParam(required = false) @ApiParam(value = "订单状态") Integer orderStatus, @TokenToAdminUser AdminUserToken adminUser) {
-        logger.info("adminUser:{}", adminUser.toString());
+        logger.info(ADMIN_LOG, adminUser.toString());
         if (pageNumber == null || pageNumber < 1 || pageSize == null || pageSize < 10) {
             return ResultGenerator.genFailResult("分页参数异常！");
         }
@@ -74,19 +78,19 @@ public class NewBeeAdminOrderAPI {
     @GetMapping("/orders/{orderId}")
     @ApiOperation(value = "订单详情接口", notes = "传参为订单号")
     public Result<NewBeeMallOrderDetailVO> orderDetailPage(@ApiParam(value = "订单号") @PathVariable("orderId") Long orderId, @TokenToAdminUser AdminUserToken adminUser) {
-        logger.info("adminUser:{}", adminUser.toString());
+        logger.info(ADMIN_LOG, adminUser.toString());
         return ResultGenerator.genSuccessResult(newBeeMallOrderService.getOrderDetailByOrderId(orderId));
     }
 
     /**
      * 配货
      */
-    @RequestMapping(value = "/orders/checkDone", method = RequestMethod.PUT)
+    @PutMapping(value = "/orders/checkDone")
     @ApiOperation(value = "修改订单状态为配货成功", notes = "批量修改")
     public Result checkDone(@RequestBody BatchIdParam batchIdParam, @TokenToAdminUser AdminUserToken adminUser) {
-        logger.info("adminUser:{}", adminUser.toString());
+        logger.info(ADMIN_LOG, adminUser.toString());
         if (batchIdParam==null||batchIdParam.getIds().length < 1) {
-            return ResultGenerator.genFailResult("参数异常！");
+            return ResultGenerator.genFailResult(PARAM_ERROR);
         }
         String result = newBeeMallOrderService.checkDone(batchIdParam.getIds());
         if (ServiceResultEnum.SUCCESS.getResult().equals(result)) {
@@ -99,12 +103,12 @@ public class NewBeeAdminOrderAPI {
     /**
      * 出库
      */
-    @RequestMapping(value = "/orders/checkOut", method = RequestMethod.PUT)
+    @PutMapping(value = "/orders/checkOut")
     @ApiOperation(value = "修改订单状态为已出库", notes = "批量修改")
     public Result checkOut(@RequestBody BatchIdParam batchIdParam, @TokenToAdminUser AdminUserToken adminUser) {
-        logger.info("adminUser:{}", adminUser.toString());
+        logger.info(ADMIN_LOG, adminUser.toString());
         if (batchIdParam==null||batchIdParam.getIds().length < 1) {
-            return ResultGenerator.genFailResult("参数异常！");
+            return ResultGenerator.genFailResult(PARAM_ERROR);
         }
         String result = newBeeMallOrderService.checkOut(batchIdParam.getIds());
         if (ServiceResultEnum.SUCCESS.getResult().equals(result)) {
@@ -117,12 +121,12 @@ public class NewBeeAdminOrderAPI {
     /**
      * 关闭订单
      */
-    @RequestMapping(value = "/orders/close", method = RequestMethod.PUT)
+    @PutMapping(value = "/orders/close")
     @ApiOperation(value = "修改订单状态为商家关闭", notes = "批量修改")
     public Result closeOrder(@RequestBody BatchIdParam batchIdParam, @TokenToAdminUser AdminUserToken adminUser) {
-        logger.info("adminUser:{}", adminUser.toString());
+        logger.info(ADMIN_LOG, adminUser.toString());
         if (batchIdParam==null||batchIdParam.getIds().length < 1) {
-            return ResultGenerator.genFailResult("参数异常！");
+            return ResultGenerator.genFailResult(PARAM_ERROR);
         }
         String result = newBeeMallOrderService.closeOrder(batchIdParam.getIds());
         if (ServiceResultEnum.SUCCESS.getResult().equals(result)) {
