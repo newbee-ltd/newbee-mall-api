@@ -57,13 +57,6 @@ public enum PayTypeEnum {
         return payType;
     }
 
-//    /**
-//     * 设置支付方式码
-//     * @param payType
-//     */
-//    public void setPayType(int payType) {
-//        this.payType = payType;
-//    }
 
     /**
      * 获取支付方式描述
@@ -73,11 +66,4 @@ public enum PayTypeEnum {
         return name;
     }
 
-//    /**
-//     * 设置支付方式描述
-//     * @param name
-//     */
-//    public void setName(String name) {
-//        this.name = name;
-//    }
 }

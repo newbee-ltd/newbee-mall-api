@@ -152,25 +152,10 @@ public class NewBeeMallCategoryServiceImpl implements NewBeeMallCategoryService 
                      */
                     Map<Long, List<GoodsCategory>> thirdLevelCategoryMap = thirdLevelCategories.stream().collect(groupingBy(GoodsCategory::getParentId));
                     List<SecondLevelCategoryVO> secondLevelCategoryVOS = new ArrayList<>();
-                    //处理二级分类
                     /**
-                     * 对每一个二级分类，都将实体类转换为VO类
+                     * 处理二级分类
                      */
-                    for (GoodsCategory secondLevelCategory : secondLevelCategories) {
-                        SecondLevelCategoryVO secondLevelCategoryVO = new SecondLevelCategoryVO();
-                        BeanUtil.copyProperties(secondLevelCategory, secondLevelCategoryVO);
-                        /**
-                         * 如果该二级分类下有数据则放入 secondLevelCategoryVOS 对象中
-                         */
-                        if (thirdLevelCategoryMap.containsKey(secondLevelCategory.getCategoryId())) {
-                            /**
-                             * 根据二级分类的id取出thirdLevelCategoryMap分组中的三级分类list
-                             */
-                            List<GoodsCategory> tempGoodsCategories = thirdLevelCategoryMap.get(secondLevelCategory.getCategoryId());
-                            secondLevelCategoryVO.setThirdLevelCategoryVOS((BeanUtil.copyList(tempGoodsCategories, ThirdLevelCategoryVO.class)));
-                            secondLevelCategoryVOS.add(secondLevelCategoryVO);
-                        }
-                    }
+                    handleSecondLevelCategory(secondLevelCategories, thirdLevelCategoryMap, secondLevelCategoryVOS);
                     /**
                      * 处理一级分类
                      */
@@ -179,30 +164,69 @@ public class NewBeeMallCategoryServiceImpl implements NewBeeMallCategoryService 
                          * 根据 parentId 将 secondLevelCategoryVO 分组
                          */
                         Map<Long, List<SecondLevelCategoryVO>> secondLevelCategoryVOMap = secondLevelCategoryVOS.stream().collect(groupingBy(SecondLevelCategoryVO::getParentId));
-                        /**
-                         * 对每一个一级分类，都将实体类转换为VO类
-                         */
-                        for (GoodsCategory firstCategory : firstLevelCategories) {
-                            NewBeeMallIndexCategoryVO newBeeMallIndexCategoryVO = new NewBeeMallIndexCategoryVO();
-                            BeanUtil.copyProperties(firstCategory, newBeeMallIndexCategoryVO);
-                            /**
-                             * 如果该一级分类下有数据则放入 newBeeMallIndexCategoryVOS 对象中
-                             */
-                            if (secondLevelCategoryVOMap.containsKey(firstCategory.getCategoryId())) {
-                                /**
-                                 * 根据一级分类的id取出secondLevelCategoryVOMap分组中的二级级分类list
-                                 */
-                                List<SecondLevelCategoryVO> tempGoodsCategories = secondLevelCategoryVOMap.get(firstCategory.getCategoryId());
-                                newBeeMallIndexCategoryVO.setSecondLevelCategoryVOS(tempGoodsCategories);
-                                newBeeMallIndexCategoryVOS.add(newBeeMallIndexCategoryVO);
-                            }
-                        }
+                        handleFirstLevelCategory(firstLevelCategories, secondLevelCategoryVOMap, newBeeMallIndexCategoryVOS);
                     }
                 }
             }
-            return newBeeMallIndexCategoryVOS;
-        } else {
-            return null;
+
+        }
+        return newBeeMallIndexCategoryVOS;
+    }
+
+    /**
+     * 处理二级分类
+     * @param secondLevelCategories
+     * @param thirdLevelCategoryMap
+     * @param secondLevelCategoryVOS
+     * @return
+     */
+    private void handleSecondLevelCategory(List<GoodsCategory> secondLevelCategories, Map<Long, List<GoodsCategory>> thirdLevelCategoryMap, List<SecondLevelCategoryVO> secondLevelCategoryVOS) {
+
+        /**
+         * 对每一个二级分类，都将实体类转换为VO类
+         */
+        for (GoodsCategory secondLevelCategory : secondLevelCategories) {
+            SecondLevelCategoryVO secondLevelCategoryVO = new SecondLevelCategoryVO();
+            BeanUtil.copyProperties(secondLevelCategory, secondLevelCategoryVO);
+            /**
+             * 如果该二级分类下有数据则放入 secondLevelCategoryVOS 对象中
+             */
+            if (thirdLevelCategoryMap.containsKey(secondLevelCategory.getCategoryId())) {
+                /**
+                 * 根据二级分类的id取出thirdLevelCategoryMap分组中的三级分类list
+                 */
+                List<GoodsCategory> tempGoodsCategories = thirdLevelCategoryMap.get(secondLevelCategory.getCategoryId());
+                secondLevelCategoryVO.setThirdLevelCategoryVOS((BeanUtil.copyList(tempGoodsCategories, ThirdLevelCategoryVO.class)));
+                secondLevelCategoryVOS.add(secondLevelCategoryVO);
+            }
+        }
+    }
+
+    /**
+     * 处理一级分类
+     * @param firstLevelCategories
+     * @param secondLevelCategoryVOMap
+     * @param newBeeMallIndexCategoryVOS
+     * @return
+     */
+    private void handleFirstLevelCategory(List<GoodsCategory> firstLevelCategories, Map<Long, List<SecondLevelCategoryVO>> secondLevelCategoryVOMap, List<NewBeeMallIndexCategoryVO> newBeeMallIndexCategoryVOS) {
+        /**
+         * 对每一个一级分类，都将实体类转换为VO类
+         */
+        for (GoodsCategory firstCategory : firstLevelCategories) {
+            NewBeeMallIndexCategoryVO newBeeMallIndexCategoryVO = new NewBeeMallIndexCategoryVO();
+            BeanUtil.copyProperties(firstCategory, newBeeMallIndexCategoryVO);
+            /**
+             * 如果该一级分类下有数据则放入 newBeeMallIndexCategoryVOS 对象中
+             */
+            if (secondLevelCategoryVOMap.containsKey(firstCategory.getCategoryId())) {
+                /**
+                 * 根据一级分类的id取出secondLevelCategoryVOMap分组中的二级级分类list
+                 */
+                List<SecondLevelCategoryVO> tempGoodsCategories = secondLevelCategoryVOMap.get(firstCategory.getCategoryId());
+                newBeeMallIndexCategoryVO.setSecondLevelCategoryVOS(tempGoodsCategories);
+                newBeeMallIndexCategoryVOS.add(newBeeMallIndexCategoryVO);
+            }
         }
     }
 

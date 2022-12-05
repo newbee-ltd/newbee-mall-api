@@ -62,13 +62,6 @@ public enum NewBeeMallOrderStatusEnum {
         return orderStatus;
     }
 
-//    /**
-//     * 设置订单状态码
-//     * @param orderStatus
-//     */
-//    public void setOrderStatus(int orderStatus) {
-//        this.orderStatus = orderStatus;
-//    }
 
     /**
      * 获取订单状态描述
@@ -78,11 +71,4 @@ public enum NewBeeMallOrderStatusEnum {
         return name;
     }
 
-//    /**
-//     * 设置订单状态描述
-//     * @param name
-//     */
-//    public void setName(String name) {
-//        this.name = name;
-//    }
 }

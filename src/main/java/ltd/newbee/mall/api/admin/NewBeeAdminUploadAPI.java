@@ -45,6 +45,8 @@ public class NewBeeAdminUploadAPI {
 
     private static final Logger logger = LoggerFactory.getLogger(NewBeeAdminUploadAPI.class);
 
+    private Random r;
+
     @Autowired
     private StandardServletMultipartResolver standardServletMultipartResolver;
 
@@ -64,7 +66,7 @@ public class NewBeeAdminUploadAPI {
         String suffixName = fileName.substring(fileName.lastIndexOf("."));
         //生成文件名称通用方法
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
-        Random r = new Random();
+        r = new Random();
         StringBuilder tempName = new StringBuilder();
         tempName.append(sdf.format(new Date())).append(r.nextInt(100)).append(suffixName);
         String newFileName = tempName.toString();
@@ -124,7 +126,7 @@ public class NewBeeAdminUploadAPI {
             String suffixName = fileName.substring(fileName.lastIndexOf("."));
             //生成文件名称通用方法
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
-            Random r = new Random();
+            r = new Random();
             StringBuilder tempName = new StringBuilder();
             tempName.append(sdf.format(new Date())).append(r.nextInt(100)).append(suffixName);
             String newFileName = tempName.toString();

@@ -59,13 +59,6 @@ public enum IndexConfigTypeEnum {
         return type;
     }
 
-//    /**
-//     * 设置配置类型
-//     * @param type
-//     */
-//    private void setType(int type) {
-//        this.type = type;
-//    }
 
     /**
      * 获取配置名称
@@ -75,11 +68,4 @@ public enum IndexConfigTypeEnum {
         return name;
     }
 
-//    /**
-//     * 设置配置名称
-//     * @param name
-//     */
-//    private void setName(String name) {
-//        this.name = name;
-//    }
 }

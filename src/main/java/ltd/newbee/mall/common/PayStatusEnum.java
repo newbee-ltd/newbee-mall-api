@@ -56,13 +56,6 @@ public enum PayStatusEnum {
         return payStatus;
     }
 
-//    /**
-//     * 设置支付状态码
-//     * @param payStatus
-//     */
-//    public void setPayStatus(int payStatus) {
-//        this.payStatus = payStatus;
-//    }
 
     /**
      * 获取支付状态描述
@@ -72,11 +65,4 @@ public enum PayStatusEnum {
         return name;
     }
 
-//    /**
-//     * 设置支付状态描述
-//     * @param name
-//     */
-//    public void setName(String name) {
-//        this.name = name;
-//    }
 }
