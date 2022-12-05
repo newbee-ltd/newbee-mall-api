@@ -57,13 +57,13 @@ public enum NewBeeMallCategoryLevelEnum {
         return level;
     }
 
-    /**
-     * 设置分类level
-     * @param level
-     */
-    private void setLevel(int level) {
-        this.level = level;
-    }
+//    /**
+//     * 设置分类level
+//     * @param level
+//     */
+//    private void setLevel(int level) {
+//        this.level = level;
+//    }
 
     /**
      * 获取分类名（一级、二级、三级OR ERROR）
@@ -73,11 +73,11 @@ public enum NewBeeMallCategoryLevelEnum {
         return name;
     }
 
-    /**
-     * 设置分类名（一级、二级、三级OR ERROR）
-     * @param name
-     */
-    private void setName(String name) {
-        this.name = name;
-    }
+//    /**
+//     * 设置分类名（一级、二级、三级OR ERROR）
+//     * @param name
+//     */
+//    private void setName(String name) {
+//        this.name = name;
+//    }
 }

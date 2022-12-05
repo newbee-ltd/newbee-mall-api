@@ -114,11 +114,11 @@ public enum ServiceResultEnum {
         return result;
     }
 
-    /**
-     * 设置service结果
-     * @param result
-     */
-    public void setResult(String result) {
-        this.result = result;
-    }
+//    /**
+//     * 设置service结果
+//     * @param result
+//     */
+//    public void setResult(String result) {
+//        this.result = result;
+//    }
 }
