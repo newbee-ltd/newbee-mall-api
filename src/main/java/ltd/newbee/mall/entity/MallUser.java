@@ -15,20 +15,37 @@ import java.util.Date;
 
 @Data
 public class MallUser {
+    /**
+     * 用户id
+     */
     private Long userId;
-
+    /**
+     * 用户昵称
+     */
     private String nickName;
-
+    /**
+     * 用户登录名
+     */
     private String loginName;
-
+    /**
+     * Md5加密的密码
+     */
     private String passwordMd5;
-
+    /**
+     * 用户个性签名
+     */
     private String introduceSign;
-
+    /**
+     * 是否被删除的标记位
+     */
     private Byte isDeleted;
-
+    /**
+     *
+     */
     private Byte lockedFlag;
-
+    /**
+     * 创建时间
+     */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
 }

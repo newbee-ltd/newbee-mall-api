@@ -9,10 +9,9 @@
 package ltd.newbee.mall.common;
 
 /**
+ * 该类为支付状态枚举类，可以获取、设置支付状态，并根据参数payStatus返回订单状态
+ *
  * @author 13
- * @qq交流群 796794009
- * @email 2449207463@qq.com
- * @link https://github.com/newbee-ltd
  * @apiNote 订单状态:0.支付中 1.支付成功 -1.支付失败
  */
 public enum PayStatusEnum {
@@ -25,11 +24,21 @@ public enum PayStatusEnum {
 
     private String name;
 
+    /**
+     * 构造方法
+     * @param payStatus
+     * @param name
+     */
     PayStatusEnum(int payStatus, String name) {
         this.payStatus = payStatus;
         this.name = name;
     }
 
+    /**
+     * 根据payStatus参数返回支付状态，有误则返回DEFAULT
+     * @param payStatus
+     * @return 支付状态
+     */
     public static PayStatusEnum getPayStatusEnumByStatus(int payStatus) {
         for (PayStatusEnum payStatusEnum : PayStatusEnum.values()) {
             if (payStatusEnum.getPayStatus() == payStatus) {
@@ -39,19 +48,21 @@ public enum PayStatusEnum {
         return DEFAULT;
     }
 
+    /**
+     * 获取支付状态码
+     * @return 支付状态码
+     */
     public int getPayStatus() {
         return payStatus;
     }
 
-    public void setPayStatus(int payStatus) {
-        this.payStatus = payStatus;
-    }
 
+    /**
+     * 获取支付状态描述
+     * @return 支付状态描述
+     */
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 }

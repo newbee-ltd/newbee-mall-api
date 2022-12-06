@@ -1,18 +1,20 @@
 package ltd.newbee.mall.util;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.List;
 
 /**
  * 分页工具类
- *
+ * 这玩意是一个手写的分页工具类 这就是他不上mybatisPlus的坏处了 本来人家有插件的结果搁这儿重新造轮子
  * @author 13
  * @qq交流群 796794009
  * @email 2449207463@qq.com
  * @link https://github.com/newbee-ltd
  */
+@Data // 他既然上了lombok然后后面再写一坨get set方法是在想什么 很有祖传的味道
 public class PageResult<T> implements Serializable {
 
     @ApiModelProperty("总记录数")
@@ -45,45 +47,4 @@ public class PageResult<T> implements Serializable {
         this.currPage = currPage;
         this.totalPage = (int) Math.ceil((double) totalCount / pageSize);
     }
-
-    public int getTotalCount() {
-        return totalCount;
-    }
-
-    public void setTotalCount(int totalCount) {
-        this.totalCount = totalCount;
-    }
-
-    public int getPageSize() {
-        return pageSize;
-    }
-
-    public void setPageSize(int pageSize) {
-        this.pageSize = pageSize;
-    }
-
-    public int getTotalPage() {
-        return totalPage;
-    }
-
-    public void setTotalPage(int totalPage) {
-        this.totalPage = totalPage;
-    }
-
-    public int getCurrPage() {
-        return currPage;
-    }
-
-    public void setCurrPage(int currPage) {
-        this.currPage = currPage;
-    }
-
-    public List<T> getList() {
-        return list;
-    }
-
-    public void setList(List<T> list) {
-        this.list = list;
-    }
-
 }

@@ -28,6 +28,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * 该类为商品业务逻辑的实现
+ *
+ * @author 13
+ */
 @Service
 public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
 
@@ -36,30 +41,58 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
     @Autowired
     private GoodsCategoryMapper goodsCategoryMapper;
 
+    /**
+     * 后台分页
+     *
+     * @param pageUtil
+     * @return
+     */
     @Override
     public PageResult getNewBeeMallGoodsPage(PageQueryUtil pageUtil) {
+        //根据分页查询参数获取商品列表
         List<NewBeeMallGoods> goodsList = goodsMapper.findNewBeeMallGoodsList(pageUtil);
+        //获取商品列表总数
         int total = goodsMapper.getTotalNewBeeMallGoods(pageUtil);
-        PageResult pageResult = new PageResult(goodsList, total, pageUtil.getLimit(), pageUtil.getPage());
-        return pageResult;
+        //封装分页结果并返回
+        return new PageResult(goodsList, total, pageUtil.getLimit(), pageUtil.getPage());
     }
 
+    /**
+     * 添加商品
+     *
+     * @param goods
+     * @return
+     */
     @Override
     public String saveNewBeeMallGoods(NewBeeMallGoods goods) {
         GoodsCategory goodsCategory = goodsCategoryMapper.selectByPrimaryKey(goods.getGoodsCategoryId());
-        // 分类不存在或者不是三级分类，则该参数字段异常
+        /**
+         * 分类不存在或者不是三级分类，则该参数字段异常
+         */
         if (goodsCategory == null || goodsCategory.getCategoryLevel().intValue() != NewBeeMallCategoryLevelEnum.LEVEL_THREE.getLevel()) {
             return ServiceResultEnum.GOODS_CATEGORY_ERROR.getResult();
         }
+        /**
+         * 如果已经存在有相同商品名称和关联分类id的商品，则添加失败
+         */
         if (goodsMapper.selectByCategoryIdAndName(goods.getGoodsName(), goods.getGoodsCategoryId()) != null) {
             return ServiceResultEnum.SAME_GOODS_EXIST.getResult();
         }
+        /**
+         * 如果添加成功，返回success，否则返回数据库错误
+         */
         if (goodsMapper.insertSelective(goods) > 0) {
             return ServiceResultEnum.SUCCESS.getResult();
         }
         return ServiceResultEnum.DB_ERROR.getResult();
     }
 
+    /**
+     * 批量新增商品数据
+     *
+     * @param newBeeMallGoodsList
+     * @return
+     */
     @Override
     public void batchSaveNewBeeMallGoods(List<NewBeeMallGoods> newBeeMallGoodsList) {
         if (!CollectionUtils.isEmpty(newBeeMallGoodsList)) {
@@ -67,14 +100,25 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
         }
     }
 
+    /**
+     * 修改商品信息
+     *
+     * @param goods
+     * @return
+     */
     @Override
     public String updateNewBeeMallGoods(NewBeeMallGoods goods) {
         GoodsCategory goodsCategory = goodsCategoryMapper.selectByPrimaryKey(goods.getGoodsCategoryId());
-        // 分类不存在或者不是三级分类，则该参数字段异常
+        /**
+         * 分类不存在或者不是三级分类，则该参数字段异常
+         */
         if (goodsCategory == null || goodsCategory.getCategoryLevel().intValue() != NewBeeMallCategoryLevelEnum.LEVEL_THREE.getLevel()) {
             return ServiceResultEnum.GOODS_CATEGORY_ERROR.getResult();
         }
         NewBeeMallGoods temp = goodsMapper.selectByPrimaryKey(goods.getGoodsId());
+        /**
+         * 如果商品不存在，返回错误
+         */
         if (temp == null) {
             return ServiceResultEnum.DATA_NOT_EXIST.getResult();
         }
@@ -83,38 +127,73 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
             //name和分类id相同且不同id 不能继续修改
             return ServiceResultEnum.SAME_GOODS_EXIST.getResult();
         }
+        //设置修改时间
         goods.setUpdateTime(new Date());
+        /**
+         * 如果修改成功，返回success，否则返回数据库错误
+         */
         if (goodsMapper.updateByPrimaryKeySelective(goods) > 0) {
             return ServiceResultEnum.SUCCESS.getResult();
         }
         return ServiceResultEnum.DB_ERROR.getResult();
     }
 
+    /**
+     * 获取商品详情
+     *
+     * @param id
+     * @return
+     */
     @Override
     public NewBeeMallGoods getNewBeeMallGoodsById(Long id) {
+        //根据id查找商品
         NewBeeMallGoods newBeeMallGoods = goodsMapper.selectByPrimaryKey(id);
+        /**
+         * 如果商品为空，返回操作结果为商品不存在
+         */
         if (newBeeMallGoods == null) {
             NewBeeMallException.fail(ServiceResultEnum.GOODS_NOT_EXIST.getResult());
         }
+        //返回商品
         return newBeeMallGoods;
     }
 
+    /**
+     * 批量更新商品状态
+     * @param ids
+     * @param sellStatus
+     * @return
+     */
     @Override
     public Boolean batchUpdateSellStatus(Long[] ids, int sellStatus) {
         return goodsMapper.batchUpdateSellStatus(ids, sellStatus) > 0;
     }
 
+    /**
+     * 商品搜索
+     *
+     * @param pageUtil
+     * @return
+     */
     @Override
     public PageResult searchNewBeeMallGoods(PageQueryUtil pageUtil) {
+        //根据分页查询参数获取商品列表
         List<NewBeeMallGoods> goodsList = goodsMapper.findNewBeeMallGoodsListBySearch(pageUtil);
+        //获取搜索到的商品总数
         int total = goodsMapper.getTotalNewBeeMallGoodsBySearch(pageUtil);
         List<NewBeeMallSearchGoodsVO> newBeeMallSearchGoodsVOS = new ArrayList<>();
+        /**
+         * 如果商品列表不为空，进行类型转换为VO
+         */
         if (!CollectionUtils.isEmpty(goodsList)) {
             newBeeMallSearchGoodsVOS = BeanUtil.copyList(goodsList, NewBeeMallSearchGoodsVO.class);
+            /**
+             * 对每一个商品VO，如果字符串过长，则重新设置搜索VO中的商品名称和商品简介
+             */
             for (NewBeeMallSearchGoodsVO newBeeMallSearchGoodsVO : newBeeMallSearchGoodsVOS) {
                 String goodsName = newBeeMallSearchGoodsVO.getGoodsName();
                 String goodsIntro = newBeeMallSearchGoodsVO.getGoodsIntro();
-                // 字符串过长导致文字超出的问题
+                //字符串过长导致文字超出的问题
                 if (goodsName.length() > 28) {
                     goodsName = goodsName.substring(0, 28) + "...";
                     newBeeMallSearchGoodsVO.setGoodsName(goodsName);
@@ -125,7 +204,7 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
                 }
             }
         }
-        PageResult pageResult = new PageResult(newBeeMallSearchGoodsVOS, total, pageUtil.getLimit(), pageUtil.getPage());
-        return pageResult;
+        //设置分页结果并返回
+        return new PageResult(newBeeMallSearchGoodsVOS, total, pageUtil.getLimit(), pageUtil.getPage());
     }
 }

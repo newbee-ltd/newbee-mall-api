@@ -15,27 +15,90 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+/**
+ * 该类为首页配置项的数据访问接口
+ *
+ * @author 13
+ */
 @Mapper
 public interface IndexConfigMapper {
+
+    /**
+     * 根据id删除首页配置项
+     * @param configId
+     * @return
+     */
     int deleteByPrimaryKey(Long configId);
 
+    /**
+     * 新增首页配置项
+     * @param record
+     * @return
+     */
     int insert(IndexConfig record);
 
+    /**
+     * 新增首页配置项
+     * @param record
+     * @return
+     */
     int insertSelective(IndexConfig record);
 
+    /**
+     * 根据id返回首页配置项
+     * @param configId
+     * @return
+     */
     IndexConfig selectByPrimaryKey(Long configId);
 
+    /**
+     * 根据配置项属性和商品id返回首页配置项
+     * @param configType
+     * @param goodsId
+     * @return 首页配置项
+     */
     IndexConfig selectByTypeAndGoodsId(@Param("configType") int configType, @Param("goodsId") Long goodsId);
 
+    /**
+     * 更新首页配置项信息
+     * @param record
+     * @return
+     */
     int updateByPrimaryKeySelective(IndexConfig record);
 
+    /**
+     * 更新首页配置项信息
+     * @param record
+     * @return
+     */
     int updateByPrimaryKey(IndexConfig record);
 
+    /**
+     * 根据分页查询参数获取首页配置项列表
+     * @param pageUtil
+     * @return 首页配置项列表
+     */
     List<IndexConfig> findIndexConfigList(PageQueryUtil pageUtil);
 
+    /**
+     * 根据分页查询参数获取首页配置项总数
+     * @param pageUtil
+     * @return
+     */
     int getTotalIndexConfigs(PageQueryUtil pageUtil);
 
+    /**
+     * 批量删除
+     * @param ids
+     * @return
+     */
     int deleteBatch(Long[] ids);
 
+    /**
+     * 根据配置项属性和数量获取配置项列表
+     * @param configType
+     * @param number
+     * @return 首页配置项列表
+     */
     List<IndexConfig> findIndexConfigsByTypeAndNum(@Param("configType") int configType, @Param("number") int number);
 }

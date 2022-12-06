@@ -14,7 +14,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * 搜索页面分类数据VO
+ * 此类为搜索页面分类数据VO，包括一级、二级、三级分类，以及当前分类
  *
  * @author 十三
  */
@@ -30,42 +30,82 @@ public class SearchPageCategoryVO implements Serializable {
 
     private String currentCategoryName;
 
+    /**
+     * 获取一级分类名
+     * @return 一级分类名
+     */
     public String getFirstLevelCategoryName() {
         return firstLevelCategoryName;
     }
 
+    /**
+     * 设置一级分类名
+     * @param firstLevelCategoryName
+     */
     public void setFirstLevelCategoryName(String firstLevelCategoryName) {
         this.firstLevelCategoryName = firstLevelCategoryName;
     }
 
+    /**
+     * 获取二级分类
+     * @return 二级分类列表
+     */
     public List<GoodsCategory> getSecondLevelCategoryList() {
         return secondLevelCategoryList;
     }
 
+    /**
+     * 设置二级分类列表
+     * @param secondLevelCategoryList
+     */
     public void setSecondLevelCategoryList(List<GoodsCategory> secondLevelCategoryList) {
         this.secondLevelCategoryList = secondLevelCategoryList;
     }
 
+    /**
+     * 获取二级分类名
+     * @return 二级分类名
+     */
     public String getSecondLevelCategoryName() {
         return secondLevelCategoryName;
     }
 
+    /**
+     * 设置二级分类名
+     * @param secondLevelCategoryName
+     */
     public void setSecondLevelCategoryName(String secondLevelCategoryName) {
         this.secondLevelCategoryName = secondLevelCategoryName;
     }
 
+    /**
+     * 获取三级分类列表
+     * @return 三级分类列表
+     */
     public List<GoodsCategory> getThirdLevelCategoryList() {
         return thirdLevelCategoryList;
     }
 
+    /**
+     * 设置三级分类列表
+     * @param thirdLevelCategoryList
+     */
     public void setThirdLevelCategoryList(List<GoodsCategory> thirdLevelCategoryList) {
         this.thirdLevelCategoryList = thirdLevelCategoryList;
     }
 
+    /**
+     * 获取当前分类名
+     * @return 当前分类名
+     */
     public String getCurrentCategoryName() {
         return currentCategoryName;
     }
 
+    /**
+     * 设置当前分类名
+     * @param currentCategoryName
+     */
     public void setCurrentCategoryName(String currentCategoryName) {
         this.currentCategoryName = currentCategoryName;
     }

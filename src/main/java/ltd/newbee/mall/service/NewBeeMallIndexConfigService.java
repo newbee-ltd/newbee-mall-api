@@ -16,6 +16,7 @@ import ltd.newbee.mall.util.PageResult;
 import java.util.List;
 
 /**
+ * 该类为首页配置项业务层接口
  *
  * @author 十三
  */
@@ -38,28 +39,28 @@ public interface NewBeeMallIndexConfigService {
     PageResult getConfigsPage(PageQueryUtil pageUtil);
 
     /**
-     *
+     * 新增首页配置项
      * @param indexConfig
      * @return
      */
     String saveIndexConfig(IndexConfig indexConfig);
 
     /**
-     *
+     * 修改首页配置项信息
      * @param indexConfig
      * @return
      */
     String updateIndexConfig(IndexConfig indexConfig);
 
     /**
-     *
+     * 根据id返回首页配置项
      * @param id
      * @return
      */
     IndexConfig getIndexConfigById(Long id);
 
     /**
-     *
+     * 批量删除
      * @param ids
      * @return
      */

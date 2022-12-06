@@ -47,6 +47,11 @@ public class NewBeeAdminManageUserAPI {
 
     private static final Logger logger = LoggerFactory.getLogger(NewBeeAdminManageUserAPI.class);
 
+    /**
+     * 登录
+     * @param adminLoginParam
+     * @return
+     */
     @RequestMapping(value = "/adminUser/login", method = RequestMethod.POST)
     public Result<String> login(@RequestBody @Valid AdminLoginParam adminLoginParam) {
         String loginResult = adminUserService.login(adminLoginParam.getUserName(), adminLoginParam.getPasswordMd5());
@@ -62,6 +67,12 @@ public class NewBeeAdminManageUserAPI {
         return ResultGenerator.genFailResult(loginResult);
     }
 
+    /**
+     * 管理员获显示自己信息，密码不会直接显示
+     * 当管理员未登录时无效
+     * @param adminUser
+     * @return
+     */
     @RequestMapping(value = "/adminUser/profile", method = RequestMethod.GET)
     public Result profile(@TokenToAdminUser AdminUserToken adminUser) {
         logger.info("adminUser:{}", adminUser.toString());
@@ -75,6 +86,13 @@ public class NewBeeAdminManageUserAPI {
         return ResultGenerator.genFailResult(ServiceResultEnum.DATA_NOT_EXIST.getResult());
     }
 
+    /**
+     * 修改管理员密码，旧密码也要提供
+     * TODO 这个个人认为是个很蠢的设计，改密码有一种原因就是忘记了本来的密码，然后要改密码需要输入原来的密码，那我还改锤子，但是这个没有验证码机制所以我也不知道怎么办、、
+     * @param adminPasswordParam
+     * @param adminUser
+     * @return
+     */
     @RequestMapping(value = "/adminUser/password", method = RequestMethod.PUT)
     public Result passwordUpdate(@RequestBody @Valid UpdateAdminPasswordParam adminPasswordParam, @TokenToAdminUser AdminUserToken adminUser) {
         logger.info("adminUser:{}", adminUser.toString());
@@ -85,6 +103,12 @@ public class NewBeeAdminManageUserAPI {
         }
     }
 
+    /**
+     * 修改管理员用户名和昵称
+     * @param adminNameParam
+     * @param adminUser
+     * @return
+     */
     @RequestMapping(value = "/adminUser/name", method = RequestMethod.PUT)
     public Result nameUpdate(@RequestBody @Valid UpdateAdminNameParam adminNameParam, @TokenToAdminUser AdminUserToken adminUser) {
         logger.info("adminUser:{}", adminUser.toString());
@@ -95,6 +119,11 @@ public class NewBeeAdminManageUserAPI {
         }
     }
 
+    /**
+     * 登出
+     * @param adminUser
+     * @return
+     */
     @RequestMapping(value = "/logout", method = RequestMethod.DELETE)
     public Result logout(@TokenToAdminUser AdminUserToken adminUser) {
         logger.info("adminUser:{}", adminUser.toString());

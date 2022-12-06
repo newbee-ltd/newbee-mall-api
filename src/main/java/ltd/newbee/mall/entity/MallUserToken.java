@@ -12,6 +12,9 @@ import lombok.Data;
 
 import java.util.Date;
 
+/**
+ * 他甚至为了造轮子自己写了个Token类 我哭死
+ */
 @Data
 public class MallUserToken {
     private Long userId;

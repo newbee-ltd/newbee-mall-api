@@ -14,6 +14,11 @@ import ltd.newbee.mall.util.PageResult;
 
 import java.util.List;
 
+/**
+ * 该类为商品业务层接口
+ *
+ * @author 十三
+ */
 public interface NewBeeMallGoodsService {
     /**
      * 后台分页
@@ -49,8 +54,8 @@ public interface NewBeeMallGoodsService {
 
     /**
      * 批量修改销售状态(上架下架)
-     *
      * @param ids
+     * @param sellStatus
      * @return
      */
     Boolean batchUpdateSellStatus(Long[] ids, int sellStatus);

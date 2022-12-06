@@ -35,6 +35,12 @@ public interface NewBeeMallOrderMapper {
 
     int getTotalNewBeeMallOrders(PageQueryUtil pageUtil);
 
+    /*
+     * 注解@Param用于映射属性与xml中的select标签的parameterType属性
+     * 当使用了@Param注解来声明参数的时候，SQL语句取值使用#{}，${}取值都可以。
+     * 当不使用@Param注解声明参数的时候，必须使用的是#{}来取参数。使用${}方式取值会报错。
+     * 不使用@Param注解时，参数只能有一个，并且是Javabean。在SQL语句里可以引用JavaBean的属性，而且只能引用JavaBean的属性。
+     */
     List<NewBeeMallOrder> selectByPrimaryKeys(@Param("orderIds") List<Long> orderIds);
 
     int checkOut(@Param("orderIds") List<Long> orderIds);

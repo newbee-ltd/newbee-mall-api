@@ -29,7 +29,7 @@ public class NeeBeeMallWebMvcConfigurer extends WebMvcConfigurationSupport {
     private TokenToAdminUserMethodArgumentResolver tokenToAdminUserMethodArgumentResolver;
 
     /**
-     * @param argumentResolvers
+     * @param argumentResolvers 参数解析器 用于将token转换为用户信息
      * @tip @TokenToMallUser @TokenToAdminUser 注解处理方法
      */
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
@@ -37,6 +37,10 @@ public class NeeBeeMallWebMvcConfigurer extends WebMvcConfigurationSupport {
         argumentResolvers.add(tokenToAdminUserMethodArgumentResolver);
     }
 
+    /**
+     * 视图解析器
+     * @param registry 资源处理器
+     */
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/upload/**").addResourceLocations("file:" + Constants.FILE_UPLOAD_DIC);
         registry.addResourceHandler("/goods-img/**").addResourceLocations("file:" + Constants.FILE_UPLOAD_DIC);
@@ -54,8 +58,19 @@ public class NeeBeeMallWebMvcConfigurer extends WebMvcConfigurationSupport {
      */
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**").allowedOriginPatterns("*")
-                .allowedMethods("GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS")
-                .allowCredentials(true).maxAge(3600);
+        // 设置允许跨域的路径
+        registry.addMapping("/**")
+                // 设置允许跨域请求的域名
+                .allowedOriginPatterns("*")
+                // 是否允许cookie
+                .allowCredentials(true)
+                // 设置允许的请求方式
+                .allowedMethods("GET", "HEAD", "POST", "PUT", "DELETE","OPTIONS")
+                // 设置允许的header属性
+                .allowedHeaders("*")
+                // 我们这次不带token 只在前端挂载路由守卫 所以可以直接写*
+                .allowedOriginPatterns("*")
+                // 跨域允许时间
+                .maxAge(3600);
     }
 }

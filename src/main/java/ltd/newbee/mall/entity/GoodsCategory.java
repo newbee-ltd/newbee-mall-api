@@ -13,27 +13,42 @@ import lombok.Data;
 
 import java.util.Date;
 
+/**
+ * 该类为商品分类项实体类
+ *
+ * @author 13
+ */
 @Data
 public class GoodsCategory {
+    //分类id
     private Long categoryId;
 
+    //分类级别
     private Byte categoryLevel;
 
+    //父分类id
     private Long parentId;
 
+    //分类名称
     private String categoryName;
 
+    //排序值
     private Integer categoryRank;
 
+    //删除标记，0未删除，1删除
     private Byte isDeleted;
 
+    //创建时间
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
 
+    //创建人id
     private Integer createUser;
 
+    //修改时间
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date updateTime;
 
+    //修改人id
     private Integer updateUser;
 }

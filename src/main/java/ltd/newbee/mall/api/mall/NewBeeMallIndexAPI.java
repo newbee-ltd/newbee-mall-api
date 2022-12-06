@@ -43,9 +43,9 @@ public class NewBeeMallIndexAPI {
     private NewBeeMallIndexConfigService newBeeMallIndexConfigService;
 
     /**
+     * 获取首页数据，包括轮播图、热销商品、新品上线和推荐商品
      *
-     *
-     * @return 首页数据
+     * @return 首页成功响应结果
      */
     @GetMapping("/index-infos")
     @ApiOperation(value = "获取首页数据", notes = "轮播图、新品、推荐等")
@@ -54,7 +54,7 @@ public class NewBeeMallIndexAPI {
         IndexInfoVO indexInfoVO = new IndexInfoVO();
 
         /**
-         * 创建轮播图、热销商品、新品上线、推荐商品
+         * 首页调用获取轮播图、热销商品、新品上线、推荐商品数据
          */
         List<NewBeeMallIndexCarouselVO> carousels = newBeeMallCarouselService.getCarouselsForIndex(Constants.INDEX_CAROUSEL_NUMBER);
         List<NewBeeMallIndexConfigGoodsVO> hotGoodses = newBeeMallIndexConfigService.getConfigGoodsesForIndex(IndexConfigTypeEnum.INDEX_GOODS_HOT.getType(), Constants.INDEX_GOODS_HOT_NUMBER);
@@ -62,7 +62,7 @@ public class NewBeeMallIndexAPI {
         List<NewBeeMallIndexConfigGoodsVO> recommendGoodses = newBeeMallIndexConfigService.getConfigGoodsesForIndex(IndexConfigTypeEnum.INDEX_GOODS_RECOMMOND.getType(), Constants.INDEX_GOODS_RECOMMOND_NUMBER);
 
         /**
-         * 设置首页的轮播图、热销商品、新品上线、推荐商品属性为上面创建的
+         * 设置首页的轮播图、热销商品、新品上线、推荐商品属性为上面获取的
          */
         indexInfoVO.setCarousels(carousels);
         indexInfoVO.setHotGoodses(hotGoodses);

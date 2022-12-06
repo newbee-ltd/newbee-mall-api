@@ -12,6 +12,9 @@ import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
 
+/**
+ * TODO 个人认为两个那么比较鸡肋
+ */
 @Data
 public class UpdateAdminNameParam {
 

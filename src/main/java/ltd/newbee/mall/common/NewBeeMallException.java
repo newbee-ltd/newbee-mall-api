@@ -8,6 +8,14 @@
  */
 package ltd.newbee.mall.common;
 
+/**
+ * 该类为异常类
+ *
+ * @author 13
+ * 自定义异常 由于spring的Exception处理只会管Service层还是Controller层的RuntimeException<br>
+ * 所以需要自定义异常来处理其他全局的RuntimeException<br>
+ * 我的建议是应该和Handler一起放到一个单独的Exception包下 但他喜欢这样就不动了
+ */
 public class NewBeeMallException extends RuntimeException {
 
     public NewBeeMallException() {

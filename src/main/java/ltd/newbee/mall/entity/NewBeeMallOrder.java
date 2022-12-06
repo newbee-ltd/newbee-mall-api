@@ -13,12 +13,17 @@ import lombok.Data;
 
 import java.util.Date;
 
+/**
+ * 订单实体类 这个订单是买东西下单之后生成的那个东西 需要和其他实体类做好区分
+ * 这时候他倒记起来自己有lombok了
+ */
 @Data
 public class NewBeeMallOrder {
     private Long orderId;
 
     private String orderNo;
 
+    // TODO 这个位置之后要改成把USER整个塞进去的
     private Long userId;
 
     private Integer totalPrice;
@@ -35,6 +40,12 @@ public class NewBeeMallOrder {
 
     private Byte isDeleted;
 
+    /*
+     * 关于注解@JsonFormat：<br>
+     * 这玩意自己写数据库也能用。这玩意在fasterxml.jackson包里面，应该自带了。用于格式化日期，比如把日期格式化成yyyy-MM-dd HH:mm:ss这种格式。<br>
+     * 使用这个注解可以使MySQL返回的日期与Java实体类中的日期格式一致，否则会出现日期格式不一致的情况。<br>
+     * <a href="https://blog.csdn.net/asd26655/article/details/125252564">可以看看这个</a>
+     */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")

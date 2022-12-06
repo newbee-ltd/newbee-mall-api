@@ -9,11 +9,10 @@
 package ltd.newbee.mall.common;
 
 /**
+ * 该类为支付方式枚举类，可以获取、设置支付方式，并根据参数payType返回支付方式
+ *
  * @author 13
- * @qq交流群 796794009
- * @email 2449207463@qq.com
- * @link https://github.com/newbee-ltd
- * @apiNote 订单状态:0.无 1.支付宝 2.微信支付
+ * @apiNote 支付方式:0.无 1.支付宝 2.微信支付
  */
 public enum PayTypeEnum {
 
@@ -26,11 +25,21 @@ public enum PayTypeEnum {
 
     private String name;
 
+    /**
+     * 构造方法
+     * @param payType
+     * @param name
+     */
     PayTypeEnum(int payType, String name) {
         this.payType = payType;
         this.name = name;
     }
 
+    /**
+     * 根据payType参数返回支付方式，有误则返回DEFAULT
+     * @param payType
+     * @return 支付方式
+     */
     public static PayTypeEnum getPayTypeEnumByType(int payType) {
         for (PayTypeEnum payTypeEnum : PayTypeEnum.values()) {
             if (payTypeEnum.getPayType() == payType) {
@@ -40,19 +49,21 @@ public enum PayTypeEnum {
         return DEFAULT;
     }
 
+    /**
+     * 获取支付方式码
+     * @return 支付方式码
+     */
     public int getPayType() {
         return payType;
     }
 
-    public void setPayType(int payType) {
-        this.payType = payType;
-    }
 
+    /**
+     * 获取支付方式描述
+     * @return 支付方式描述
+     */
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 }

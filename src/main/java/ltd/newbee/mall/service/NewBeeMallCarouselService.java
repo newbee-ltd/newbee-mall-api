@@ -16,7 +16,7 @@ import ltd.newbee.mall.util.PageResult;
 import java.util.List;
 
 /**
- *
+ * 该类为轮播图业务层接口
  *
  * @author 十三
  */
@@ -39,30 +39,30 @@ public interface NewBeeMallCarouselService {
     PageResult getCarouselPage(PageQueryUtil pageUtil);
 
     /**
-     *
+     * 新增轮播图
      * @param carousel
-     * @return
+     * @return 操作结果是否成功
      */
     String saveCarousel(Carousel carousel);
 
     /**
-     *
+     * 修改轮播图信息
      * @param carousel
-     * @return
+     * @return 操作结果是否成功
      */
     String updateCarousel(Carousel carousel);
 
     /**
-     *
+     * 根据id返回轮播图
      * @param id
-     * @return
+     * @return 轮播图
      */
     Carousel getCarouselById(Integer id);
 
     /**
-     *
+     * 批量删除轮播图
      * @param ids
-     * @return
+     * @return 删除结果
      */
     Boolean deleteBatch(Long[] ids);
 }

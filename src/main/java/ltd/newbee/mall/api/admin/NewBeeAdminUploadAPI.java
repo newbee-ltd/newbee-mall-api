@@ -33,6 +33,11 @@ import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+/**
+ * 该类为后台管理系统文件上传接口
+ *
+ * @author 13
+ */
 @RestController
 @Api(value = "v1", tags = "8-7.后台管理系统文件上传接口")
 @RequestMapping("/manage-api/v1")
@@ -40,11 +45,18 @@ public class NewBeeAdminUploadAPI {
 
     private static final Logger logger = LoggerFactory.getLogger(NewBeeAdminUploadAPI.class);
 
+    private Random r;
+
     @Autowired
     private StandardServletMultipartResolver standardServletMultipartResolver;
 
     /**
-     * 图片上传
+     * 单图上传
+     * @param httpServletRequest
+     * @param file
+     * @param adminUser
+     * @return
+     * @throws URISyntaxException
      */
     @RequestMapping(value = "/upload/file", method = RequestMethod.POST)
     @ApiOperation(value = "单图上传", notes = "file Name \"file\"")
@@ -54,7 +66,7 @@ public class NewBeeAdminUploadAPI {
         String suffixName = fileName.substring(fileName.lastIndexOf("."));
         //生成文件名称通用方法
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
-        Random r = new Random();
+        r = new Random();
         StringBuilder tempName = new StringBuilder();
         tempName.append(sdf.format(new Date())).append(r.nextInt(100)).append(suffixName);
         String newFileName = tempName.toString();
@@ -78,7 +90,11 @@ public class NewBeeAdminUploadAPI {
     }
 
     /**
-     * 图片上传
+     * 多图上传
+     * @param httpServletRequest
+     * @param adminUser
+     * @return
+     * @throws URISyntaxException
      */
     @RequestMapping(value = "/upload/files", method = RequestMethod.POST)
     @ApiOperation(value = "多图上传", notes = "wangEditor图片上传")
@@ -110,7 +126,7 @@ public class NewBeeAdminUploadAPI {
             String suffixName = fileName.substring(fileName.lastIndexOf("."));
             //生成文件名称通用方法
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
-            Random r = new Random();
+            r = new Random();
             StringBuilder tempName = new StringBuilder();
             tempName.append(sdf.format(new Date())).append(r.nextInt(100)).append(suffixName);
             String newFileName = tempName.toString();

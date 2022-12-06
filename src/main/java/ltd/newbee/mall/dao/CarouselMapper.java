@@ -15,25 +15,80 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+/**
+ * 该类为轮播图的数据访问接口
+ *
+ * @author 13
+ */
 @Mapper
 public interface CarouselMapper {
+    /**
+     * 根据轮播图id删除轮播图
+     * @param carouselId
+     * @return 0失败，1成功
+     */
     int deleteByPrimaryKey(Integer carouselId);
 
+    /**
+     * 新增轮播图
+     * @param record
+     * @return 0失败，1成功
+     */
     int insert(Carousel record);
 
+    /**
+     *新增轮播图
+     * @param record
+     * @return 0失败，1成功
+     */
     int insertSelective(Carousel record);
 
+    /**
+     * 根据轮播图id返回轮播图
+     * @param carouselId
+     * @return 轮播图
+     */
     Carousel selectByPrimaryKey(Integer carouselId);
 
+    /**
+     * 根据轮播图id更新轮播图信息
+     * @param record
+     * @return 0失败，1成功
+     */
     int updateByPrimaryKeySelective(Carousel record);
 
+    /**
+     * 根据轮播图id更新轮播图信息
+     * @param record
+     * @return 0失败，1成功
+     */
     int updateByPrimaryKey(Carousel record);
 
+    /**
+     * 根据分页查询参数获取轮播图列表
+     * @param pageUtil
+     * @return 轮播图列表
+     */
     List<Carousel> findCarouselList(PageQueryUtil pageUtil);
 
+    /**
+     * 根据分页查询参数获取总轮播图数
+     * @param pageUtil
+     * @return 轮播图数
+     */
     int getTotalCarousels(PageQueryUtil pageUtil);
 
+    /**
+     * 批量删除
+     * @param ids
+     * @return
+     */
     int deleteBatch(Long[] ids);
 
+    /**
+     * 根据数量获取轮播图列表
+     * @param number
+     * @return 轮播图列表
+     */
     List<Carousel> findCarouselsByNum(@Param("number") int number);
 }

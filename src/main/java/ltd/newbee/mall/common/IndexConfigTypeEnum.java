@@ -9,10 +9,9 @@
 package ltd.newbee.mall.common;
 
 /**
+ * 该类为首页配置枚举类，可以获取、设置配置项，并根据参数type返回配置项
+ *
  * @author 13
- * @qq交流群 796794009
- * @email 2449207463@qq.com
- * @link https://github.com/newbee-ltd
  * @apiNote 首页配置项 1-搜索框热搜 2-搜索下拉框热搜 3-(首页)热销商品 4-(首页)新品上线 5-(首页)为你推荐
  */
 public enum IndexConfigTypeEnum {
@@ -28,11 +27,21 @@ public enum IndexConfigTypeEnum {
 
     private String name;
 
+    /**
+     * 构造方法
+     * @param type
+     * @param name
+     */
     IndexConfigTypeEnum(int type, String name) {
         this.type = type;
         this.name = name;
     }
 
+    /**
+     * 根据参数返回首页配置项，有误则返回DEFAULT
+     * @param type
+     * @return 首页配置项
+     */
     public static IndexConfigTypeEnum getIndexConfigTypeEnumByType(int type) {
         for (IndexConfigTypeEnum indexConfigTypeEnum : IndexConfigTypeEnum.values()) {
             if (indexConfigTypeEnum.getType() == type) {
@@ -42,19 +51,21 @@ public enum IndexConfigTypeEnum {
         return DEFAULT;
     }
 
+    /**
+     * 获取配置类型
+     * @return 配置类型
+     */
     public int getType() {
         return type;
     }
 
-    public void setType(int type) {
-        this.type = type;
-    }
 
+    /**
+     * 获取配置名称
+     * @return 配置名称
+     */
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 }

@@ -10,10 +10,15 @@ package ltd.newbee.mall.entity;
 
 import lombok.Data;
 
+/**
+ * 订单地址实体类
+ */
 @Data
 public class NewBeeMallOrderAddress {
     private Long orderId;
 
+    // TODO 其实也可以把User的对象放进来
+    // user可以有除了username以外的多个Phone
     private String userName;
 
     private String userPhone;

@@ -24,6 +24,11 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import java.util.List;
 
+/**
+ * 该类为商城分类界面接口
+ *
+ * @author 十三
+ */
 @RestController
 @Api(value = "v1", tags = "3.新蜂商城分类页面接口")
 @RequestMapping("/api/v1")
@@ -32,13 +37,23 @@ public class NewBeeMallGoodsCategoryAPI {
     @Resource
     private NewBeeMallCategoryService newBeeMallCategoryService;
 
+    /**
+     * 获取分类数据
+     * @return 分类数据成功响应结果
+     */
     @GetMapping("/categories")
     @ApiOperation(value = "获取分类数据", notes = "分类页面使用")
     public Result<List<NewBeeMallIndexCategoryVO>> getCategories() {
+        //首页调用获取分类数据
         List<NewBeeMallIndexCategoryVO> categories = newBeeMallCategoryService.getCategoriesForIndex();
+
+        /**
+         * 判定如果获取到的分类数据为空，则抛出异常
+         */
         if (CollectionUtils.isEmpty(categories)) {
             NewBeeMallException.fail(ServiceResultEnum.DATA_NOT_EXIST.getResult());
         }
+        //返回成功响应
         return ResultGenerator.genSuccessResult(categories);
     }
 }

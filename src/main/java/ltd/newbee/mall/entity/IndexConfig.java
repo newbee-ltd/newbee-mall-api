@@ -13,29 +13,45 @@ import lombok.Data;
 
 import java.util.Date;
 
+/**
+ * 该类为首页配置项实体类
+ *
+ * @author 13
+ */
 @Data
 public class IndexConfig {
+    //首页配置项id
     private Long configId;
 
+    //首页配置项显示字符
     private String configName;
 
+    //首页配置项类型
     private Byte configType;
 
+    //商品id
     private Long goodsId;
 
+    //跳转地址
     private String redirectUrl;
 
+    //排序值
     private Integer configRank;
 
+    //删除标记，0未删除，1删除
     private Byte isDeleted;
 
+    //创建时间
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
 
+    //创建人id
     private Integer createUser;
 
+    //修改时间
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date updateTime;
 
+    //修改人id
     private Integer updateUser;
 }

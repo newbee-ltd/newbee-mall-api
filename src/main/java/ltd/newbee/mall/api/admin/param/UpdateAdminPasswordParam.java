@@ -12,6 +12,9 @@ import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
 
+/**
+ * 更新密码需要输入原密码
+ */
 @Data
 public class UpdateAdminPasswordParam {
 
