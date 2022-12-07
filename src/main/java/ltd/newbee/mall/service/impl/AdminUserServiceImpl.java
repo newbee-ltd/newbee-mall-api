@@ -130,7 +130,9 @@ public class AdminUserServiceImpl implements AdminUserService {
     @Override
     public Boolean deleteById(Long userId) {
         MallUser mallUser = mallUserMapper.selectByPrimaryKey(userId);
-        if(ObjectUtils.isEmpty())
+        if(ObjectUtils.isEmpty(mallUser)) {
+            
+        }
     }
 
     @Override
