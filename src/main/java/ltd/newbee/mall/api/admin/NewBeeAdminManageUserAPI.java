@@ -10,6 +10,7 @@ package ltd.newbee.mall.api.admin;
 
 import io.swagger.annotations.Api;
 import ltd.newbee.mall.api.admin.param.AdminLoginParam;
+import ltd.newbee.mall.api.admin.param.DeleteUserParam;
 import ltd.newbee.mall.api.admin.param.UpdateAdminNameParam;
 import ltd.newbee.mall.api.admin.param.UpdateAdminPasswordParam;
 import ltd.newbee.mall.common.Constants;
@@ -23,10 +24,7 @@ import ltd.newbee.mall.util.ResultGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -117,6 +115,11 @@ public class NewBeeAdminManageUserAPI {
         } else {
             return ResultGenerator.genFailResult(ServiceResultEnum.DB_ERROR.getResult());
         }
+    }
+
+    @DeleteMapping("/adminUser/deleteUser")
+    public Result deleteUser(@Valid @RequestBody DeleteUserParam deleteUserParam, @TokenToAdminUser AdminUserToken adminUser) {
+
     }
 
     /**
