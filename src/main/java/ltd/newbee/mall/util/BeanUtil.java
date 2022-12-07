@@ -84,10 +84,12 @@ public abstract class BeanUtil {
                 }
             }
             if (clz.getSuperclass() != Object.class) {
+                log.error("父类不是Object");
                 return checkPojoNullField(o, clz.getSuperclass());
             }
             return true;
         } catch (IllegalAccessException e) {
+            log.error("检查Pojo对象是否有null字段异常");
             return false;
         }
     }

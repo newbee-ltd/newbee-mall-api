@@ -10,6 +10,7 @@ package ltd.newbee.mall.api.admin;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import ltd.newbee.mall.common.Constants;
 import ltd.newbee.mall.config.annotation.TokenToAdminUser;
 import ltd.newbee.mall.entity.AdminUserToken;
@@ -30,6 +31,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -41,14 +44,18 @@ import java.util.*;
 @RestController
 @Api(value = "v1", tags = "8-7.后台管理系统文件上传接口")
 @RequestMapping("/manage-api/v1")
+@Slf4j
 public class NewBeeAdminUploadAPI {
 
     private static final Logger logger = LoggerFactory.getLogger(NewBeeAdminUploadAPI.class);
 
-    private Random r;
+    private Random r = SecureRandom.getInstanceStrong();;
 
     @Autowired
     private StandardServletMultipartResolver standardServletMultipartResolver;
+
+    public NewBeeAdminUploadAPI() throws NoSuchAlgorithmException {
+    }
 
     /**
      * 单图上传
@@ -66,7 +73,6 @@ public class NewBeeAdminUploadAPI {
         String suffixName = fileName.substring(fileName.lastIndexOf("."));
         //生成文件名称通用方法
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
-        r = new Random();
         StringBuilder tempName = new StringBuilder();
         tempName.append(sdf.format(new Date())).append(r.nextInt(100)).append(suffixName);
         String newFileName = tempName.toString();
@@ -84,6 +90,7 @@ public class NewBeeAdminUploadAPI {
             resultSuccess.setData(NewBeeMallUtils.getHost(new URI(httpServletRequest.getRequestURL() + "")) + "/upload/" + newFileName);
             return resultSuccess;
         } catch (IOException e) {
+            log.error("文件上传失败", e);
             e.printStackTrace();
             return ResultGenerator.genFailResult("文件上传失败");
         }
@@ -126,7 +133,6 @@ public class NewBeeAdminUploadAPI {
             String suffixName = fileName.substring(fileName.lastIndexOf("."));
             //生成文件名称通用方法
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
-            r = new Random();
             StringBuilder tempName = new StringBuilder();
             tempName.append(sdf.format(new Date())).append(r.nextInt(100)).append(suffixName);
             String newFileName = tempName.toString();
@@ -142,6 +148,7 @@ public class NewBeeAdminUploadAPI {
                 multipartFiles.get(i).transferTo(destFile);
                 fileNames.add(NewBeeMallUtils.getHost(new URI(httpServletRequest.getRequestURL() + "")) + "/upload/" + newFileName);
             } catch (IOException e) {
+                log.error("文件上传失败", e);
                 e.printStackTrace();
                 return ResultGenerator.genFailResult("文件上传失败");
             }

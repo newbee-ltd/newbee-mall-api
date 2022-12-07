@@ -9,11 +9,13 @@
 package ltd.newbee.mall.entity;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.Date;
 
 @Data
-public class MallUserAddress {
+@EqualsAndHashCode(callSuper = true)
+public class MallUserAddress extends MallUser{
     private Long addressId;
 
     private Long userId;

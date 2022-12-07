@@ -8,6 +8,7 @@
  */
 package ltd.newbee.mall.config;
 
+import lombok.extern.slf4j.Slf4j;
 import ltd.newbee.mall.common.NewBeeMallException;
 import ltd.newbee.mall.common.ServiceResultEnum;
 import ltd.newbee.mall.util.Result;
@@ -25,6 +26,7 @@ import java.util.Objects;
  * newbee-mall全局异常处理
  */
 @RestControllerAdvice
+@Slf4j
 public class NewBeeMallExceptionHandler {
 
     @ExceptionHandler(BindException.class)
@@ -58,6 +60,7 @@ public class NewBeeMallExceptionHandler {
                 result.setResultCode(419);
             }
         } else {
+            log.error("系统异常", e);
             e.printStackTrace();
             result.setMessage("未知异常，请查看控制台日志并检查配置文件。");
         }

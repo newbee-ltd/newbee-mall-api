@@ -62,7 +62,8 @@ public class NewBeeMallUserAddressServiceImpl implements NewBeeMallUserAddressSe
         if (mallUserAddress.getDefaultFlag().intValue() == 1) {
             //修改为默认地址，需要将原有的默认地址修改掉
             MallUserAddress defaultAddress = userAddressMapper.getMyDefaultAddress(mallUserAddress.getUserId());
-            if (defaultAddress != null && !defaultAddress.getAddressId().equals(tempAddress)) {
+            if (defaultAddress != null &&
+                    !defaultAddress.getAddressId().equals(tempAddress.getAddressId())) {
                 //存在默认地址且默认地址并不是当前修改的地址
                 defaultAddress.setDefaultFlag((byte) 0);
                 defaultAddress.setUpdateTime(now);

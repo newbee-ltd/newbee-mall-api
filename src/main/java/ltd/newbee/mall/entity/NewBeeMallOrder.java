@@ -10,6 +10,7 @@ package ltd.newbee.mall.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.Date;
 
@@ -18,12 +19,12 @@ import java.util.Date;
  * 这时候他倒记起来自己有lombok了
  */
 @Data
-public class NewBeeMallOrder {
+@EqualsAndHashCode(callSuper = true)
+public class NewBeeMallOrder extends MallUser{
     private Long orderId;
 
     private String orderNo;
 
-    // TODO 这个位置之后要改成把USER整个塞进去的
     private Long userId;
 
     private Integer totalPrice;
