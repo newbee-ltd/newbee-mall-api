@@ -21,52 +21,52 @@ import java.util.Date;
 @Data
 public class NewBeeMallGoods {
     //商品id
-    private Long goodsId;
+    protected Long goodsId;
 
     //商品名称
-    private String goodsName;
+    protected String goodsName;
 
     //商品简介
-    private String goodsIntro;
+    protected String goodsIntro;
 
     //商品分类id
-    private Long goodsCategoryId;
+    protected Long goodsCategoryId;
 
     //商品主图
-    private String goodsCoverImg;
+    protected String goodsCoverImg;
 
     //商品轮播图
-    private String goodsCarousel;
+    protected String goodsCarousel;
 
     //商品原价
-    private Integer originalPrice;
+    protected Integer originalPrice;
 
     //商品实际售价
-    private Integer sellingPrice;
+    protected Integer sellingPrice;
 
     //商品库存数量
-    private Integer stockNum;
+    protected Integer stockNum;
 
     //商品标签
-    private String tag;
+    protected String tag;
 
     //上架状态
-    private Byte goodsSellStatus;
+    protected Byte goodsSellStatus;
 
     //创建人id
-    private Integer createUser;
+    protected Integer createUser;
 
     //创建时间
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date createTime;
+    protected Date createTime;
 
     //修改人id
-    private Integer updateUser;
+    protected Integer updateUser;
 
     //修改时间
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date updateTime;
+    protected Date updateTime;
 
     //商品详情
-    private String goodsDetailContent;
+    protected String goodsDetailContent;
 }
