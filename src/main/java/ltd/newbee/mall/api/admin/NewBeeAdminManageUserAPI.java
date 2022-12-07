@@ -117,7 +117,12 @@ public class NewBeeAdminManageUserAPI {
         }
     }
 
-
+    /**
+     * 管理员通过Id删除用户
+     * @param deleteUserParam
+     * @param adminUser
+     * @return
+     */
     @DeleteMapping("/adminUser/deleteUser")
     public Result deleteUser(@Valid @RequestBody DeleteUserParam deleteUserParam, @TokenToAdminUser AdminUserToken adminUser) {
         logger.info("adminUser:{}", adminUser.toString());
