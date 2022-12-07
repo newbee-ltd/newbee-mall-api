@@ -20,6 +20,8 @@ public enum ServiceResultEnum {
 
     DATA_NOT_EXIST("未查询到记录！"),
 
+    ID_NOT_EXIST("未查询到该用户Id！"),
+
     PARAM_ERROR("参数错误！"),
 
     SAME_CATEGORY_EXIST("已存在同级同名的分类！"),

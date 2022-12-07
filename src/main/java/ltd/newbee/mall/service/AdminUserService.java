@@ -48,6 +48,8 @@ public interface AdminUserService {
      */
     Boolean updateName(Long loginUserId, String loginUserName, String nickName);
 
+
+    Boolean deleteById(Long userId);
     /**
      * 登出接口
      * @param adminUserId
