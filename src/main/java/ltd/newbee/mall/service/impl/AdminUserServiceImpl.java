@@ -10,14 +10,17 @@ package ltd.newbee.mall.service.impl;
 
 import ltd.newbee.mall.common.ServiceResultEnum;
 import ltd.newbee.mall.dao.AdminUserMapper;
+import ltd.newbee.mall.dao.MallUserMapper;
 import ltd.newbee.mall.dao.NewBeeAdminUserTokenMapper;
 import ltd.newbee.mall.entity.AdminUser;
 import ltd.newbee.mall.entity.AdminUserToken;
+import ltd.newbee.mall.entity.MallUser;
 import ltd.newbee.mall.service.AdminUserService;
 import ltd.newbee.mall.util.MD5Util;
 import ltd.newbee.mall.util.NumberUtil;
 import ltd.newbee.mall.util.SystemUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -30,6 +33,9 @@ public class AdminUserServiceImpl implements AdminUserService {
 
     @Resource
     private NewBeeAdminUserTokenMapper newBeeAdminUserTokenMapper;
+
+    @Resource
+    private MallUserMapper mallUserMapper;
 
     @Override
     public String login(String userName, String password) {
@@ -119,6 +125,12 @@ public class AdminUserServiceImpl implements AdminUserService {
             }
         }
         return false;
+    }
+
+    @Override
+    public Boolean deleteById(Long userId) {
+        MallUser mallUser = mallUserMapper.selectByPrimaryKey(userId);
+        if(ObjectUtils.isEmpty())
     }
 
     @Override
