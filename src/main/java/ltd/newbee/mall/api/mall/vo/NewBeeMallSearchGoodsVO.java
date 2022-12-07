@@ -22,18 +22,18 @@ import java.io.Serializable;
 public class NewBeeMallSearchGoodsVO implements Serializable {
 
     @ApiModelProperty("商品id")
-    private Long goodsId;
+    public Long goodsId;
 
     @ApiModelProperty("商品名称")
-    private String goodsName;
+    public String goodsName;
 
     @ApiModelProperty("商品简介")
-    private String goodsIntro;
+    public String goodsIntro;
 
     @ApiModelProperty("商品图片地址")
-    private String goodsCoverImg;
+    public String goodsCoverImg;
 
     @ApiModelProperty("商品价格")
-    private Integer sellingPrice;
+    public Integer sellingPrice;
 
 }
