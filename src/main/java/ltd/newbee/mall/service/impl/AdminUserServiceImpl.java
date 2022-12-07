@@ -133,6 +133,8 @@ public class AdminUserServiceImpl implements AdminUserService {
         if(ObjectUtils.isEmpty(mallUser)) {
             return false;
         }
+        mallUserMapper.deleteByPrimaryKey(userId);
+        return true;
     }
 
     @Override
