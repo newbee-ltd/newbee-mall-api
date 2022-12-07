@@ -90,8 +90,7 @@ public class NewBeeAdminUploadAPI {
             resultSuccess.setData(NewBeeMallUtils.getHost(new URI(httpServletRequest.getRequestURL() + "")) + "/upload/" + newFileName);
             return resultSuccess;
         } catch (IOException e) {
-            log.error("文件上传失败", e);
-            e.printStackTrace();
+            logger.info("WRONG:", e);
             return ResultGenerator.genFailResult("文件上传失败");
         }
     }
@@ -148,8 +147,7 @@ public class NewBeeAdminUploadAPI {
                 multipartFiles.get(i).transferTo(destFile);
                 fileNames.add(NewBeeMallUtils.getHost(new URI(httpServletRequest.getRequestURL() + "")) + "/upload/" + newFileName);
             } catch (IOException e) {
-                log.error("文件上传失败", e);
-                e.printStackTrace();
+                logger.info("WRONG:", e);
                 return ResultGenerator.genFailResult("文件上传失败");
             }
         }

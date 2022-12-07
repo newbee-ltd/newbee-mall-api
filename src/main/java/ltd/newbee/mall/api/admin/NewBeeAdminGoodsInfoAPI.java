@@ -56,6 +56,8 @@ public class NewBeeAdminGoodsInfoAPI {
     @Resource
     private NewBeeMallCategoryService newBeeMallCategoryService;
 
+    private static final String ADMIN_USER = "adminUser:{}";
+
     /**
      * 根据名称和上架状态获取商品列表
      * @param pageNumber
@@ -71,7 +73,7 @@ public class NewBeeAdminGoodsInfoAPI {
                        @RequestParam(required = false) @ApiParam(value = "每页条数") Integer pageSize,
                        @RequestParam(required = false) @ApiParam(value = "商品名称") String goodsName,
                        @RequestParam(required = false) @ApiParam(value = "上架状态 0-上架 1-下架") Integer goodsSellStatus, @TokenToAdminUser AdminUserToken adminUser) {
-        logger.info("adminUser:{}", adminUser.toString());
+        logger.info(ADMIN_USER, adminUser.toString());
         //分类参数异常
         if (pageNumber == null || pageNumber < 1 || pageSize == null || pageSize < 10) {
             return ResultGenerator.genFailResult("分页参数异常！");
@@ -101,7 +103,7 @@ public class NewBeeAdminGoodsInfoAPI {
     @RequestMapping(value = "/goods", method = RequestMethod.POST)
     @ApiOperation(value = "新增商品信息", notes = "新增商品信息")
     public Result save(@RequestBody @Valid GoodsAddParam goodsAddParam, @TokenToAdminUser AdminUserToken adminUser) {
-        logger.info("adminUser:{}", adminUser.toString());
+        logger.info(ADMIN_USER, adminUser.toString());
         NewBeeMallGoods newBeeMallGoods = new NewBeeMallGoods();
         //将商品添加参数对象转换为商品
         BeanUtil.copyProperties(goodsAddParam, newBeeMallGoods);
@@ -127,7 +129,7 @@ public class NewBeeAdminGoodsInfoAPI {
     @RequestMapping(value = "/goods", method = RequestMethod.PUT)
     @ApiOperation(value = "修改商品信息", notes = "修改商品信息")
     public Result update(@RequestBody @Valid GoodsEditParam goodsEditParam, @TokenToAdminUser AdminUserToken adminUser) {
-        logger.info("adminUser:{}", adminUser.toString());
+        logger.info(ADMIN_USER, adminUser.toString());
         NewBeeMallGoods newBeeMallGoods = new NewBeeMallGoods();
         //将商品修改参数对象转换为商品
         BeanUtil.copyProperties(goodsEditParam, newBeeMallGoods);
@@ -152,7 +154,7 @@ public class NewBeeAdminGoodsInfoAPI {
     @GetMapping("/goods/{id}")
     @ApiOperation(value = "获取单条商品信息", notes = "根据id查询")
     public Result info(@PathVariable("id") Long id, @TokenToAdminUser AdminUserToken adminUser) {
-        logger.info("adminUser:{}", adminUser.toString());
+        logger.info(ADMIN_USER, adminUser.toString());
         Map goodsInfo = new HashMap(8);
         NewBeeMallGoods goods = newBeeMallGoodsService.getNewBeeMallGoodsById(id);
         /**
@@ -193,7 +195,7 @@ public class NewBeeAdminGoodsInfoAPI {
     @RequestMapping(value = "/goods/status/{sellStatus}", method = RequestMethod.PUT)
     @ApiOperation(value = "批量修改销售状态", notes = "批量修改销售状态")
     public Result delete(@RequestBody BatchIdParam batchIdParam, @PathVariable("sellStatus") int sellStatus, @TokenToAdminUser AdminUserToken adminUser) {
-        logger.info("adminUser:{}", adminUser.toString());
+        logger.info(ADMIN_USER, adminUser.toString());
         /**
          * 如果批量处理参数为空或数组长度小于1，返回参数异常失败响应
          */

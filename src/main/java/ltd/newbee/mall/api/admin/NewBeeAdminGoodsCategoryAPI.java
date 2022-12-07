@@ -54,6 +54,8 @@ public class NewBeeAdminGoodsCategoryAPI {
     @Resource
     private NewBeeMallCategoryService newBeeMallCategoryService;
 
+    private static final String ADMIN_USER = "adminUser:{}";
+
     /**
      * 根据级别和上级分类id获取商品分类列表
      * @param pageNumber
@@ -69,7 +71,7 @@ public class NewBeeAdminGoodsCategoryAPI {
                        @RequestParam(required = false) @ApiParam(value = "每页条数") Integer pageSize,
                        @RequestParam(required = false) @ApiParam(value = "分类级别") Integer categoryLevel,
                        @RequestParam(required = false) @ApiParam(value = "上级分类的id") Long parentId, @TokenToAdminUser AdminUserToken adminUser) {
-        logger.info("adminUser:{}", adminUser.toString());
+        logger.info(ADMIN_USER, adminUser.toString());
         //分页参数异常
         if (pageNumber == null || pageNumber < 1 || pageSize == null || pageSize < 10 || categoryLevel == null || categoryLevel < 0 || categoryLevel > 3 || parentId == null || parentId < 0) {
             return ResultGenerator.genFailResult("分页参数异常！");
@@ -96,7 +98,7 @@ public class NewBeeAdminGoodsCategoryAPI {
     @RequestMapping(value = "/categories4Select", method = RequestMethod.GET)
     @ApiOperation(value = "商品分类列表", notes = "用于三级分类联动效果制作")
     public Result listForSelect(@RequestParam("categoryId") Long categoryId, @TokenToAdminUser AdminUserToken adminUser) {
-        logger.info("adminUser:{}", adminUser.toString());
+        logger.info(ADMIN_USER, adminUser.toString());
         if (categoryId == null || categoryId < 1) {
             return ResultGenerator.genFailResult("缺少参数！");
         }
@@ -134,7 +136,7 @@ public class NewBeeAdminGoodsCategoryAPI {
     @RequestMapping(value = "/categories", method = RequestMethod.POST)
     @ApiOperation(value = "新增分类", notes = "新增分类")
     public Result save(@RequestBody @Valid GoodsCategoryAddParam goodsCategoryAddParam, @TokenToAdminUser AdminUserToken adminUser) {
-        logger.info("adminUser:{}", adminUser.toString());
+        logger.info(ADMIN_USER, adminUser.toString());
         GoodsCategory goodsCategory = new GoodsCategory();
         //将分类添加参数对象转换为分类
         BeanUtil.copyProperties(goodsCategoryAddParam, goodsCategory);
@@ -160,7 +162,7 @@ public class NewBeeAdminGoodsCategoryAPI {
     @RequestMapping(value = "/categories", method = RequestMethod.PUT)
     @ApiOperation(value = "修改分类信息", notes = "修改分类信息")
     public Result update(@RequestBody @Valid GoodsCategoryEditParam goodsCategoryEditParam, @TokenToAdminUser AdminUserToken adminUser) {
-        logger.info("adminUser:{}", adminUser.toString());
+        logger.info(ADMIN_USER, adminUser.toString());
         GoodsCategory goodsCategory = new GoodsCategory();
         //将分类修改参数对象转换为分类
         BeanUtil.copyProperties(goodsCategoryEditParam, goodsCategory);
@@ -185,7 +187,7 @@ public class NewBeeAdminGoodsCategoryAPI {
     @RequestMapping(value = "/categories/{id}", method = RequestMethod.GET)
     @ApiOperation(value = "获取单条分类信息", notes = "根据id查询")
     public Result info(@PathVariable("id") Long id, @TokenToAdminUser AdminUserToken adminUser) {
-        logger.info("adminUser:{}", adminUser.toString());
+        logger.info(ADMIN_USER, adminUser.toString());
         //根据id获取单条分类信息
         GoodsCategory goodsCategory = newBeeMallCategoryService.getGoodsCategoryById(id);
         /**
@@ -206,7 +208,7 @@ public class NewBeeAdminGoodsCategoryAPI {
     @RequestMapping(value = "/categories", method = RequestMethod.DELETE)
     @ApiOperation(value = "批量删除分类信息", notes = "批量删除分类信息")
     public Result delete(@RequestBody BatchIdParam batchIdParam, @TokenToAdminUser AdminUserToken adminUser) {
-        logger.info("adminUser:{}", adminUser.toString());
+        logger.info(ADMIN_USER, adminUser.toString());
         /**
          * 如果批量处理参数为空或数组长度小于1，返回参数异常失败响应
          */
