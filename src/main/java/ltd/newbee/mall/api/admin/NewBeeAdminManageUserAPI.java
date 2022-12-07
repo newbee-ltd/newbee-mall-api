@@ -120,7 +120,7 @@ public class NewBeeAdminManageUserAPI {
     @DeleteMapping("/adminUser/deleteUser")
     public Result deleteUser(@Valid @RequestBody DeleteUserParam deleteUserParam, @TokenToAdminUser AdminUserToken adminUser) {
         logger.info("adminUser:{}", adminUser.toString());
-
+        if(adminUserService.deleteById())
     }
 
     /**
