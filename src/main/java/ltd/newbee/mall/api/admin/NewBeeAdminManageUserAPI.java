@@ -117,13 +117,14 @@ public class NewBeeAdminManageUserAPI {
         }
     }
 
+
     @DeleteMapping("/adminUser/deleteUser")
     public Result deleteUser(@Valid @RequestBody DeleteUserParam deleteUserParam, @TokenToAdminUser AdminUserToken adminUser) {
         logger.info("adminUser:{}", adminUser.toString());
         if(adminUserService.deleteById(deleteUserParam.getUserId())) {
             return ResultGenerator.genSuccessResult();
         } else {
-            return ResultGenerator.genFailResult()
+            return ResultGenerator.genFailResult(ServiceResultEnum.ID_NOT_EXIST.getResult());
         }
     }
 
