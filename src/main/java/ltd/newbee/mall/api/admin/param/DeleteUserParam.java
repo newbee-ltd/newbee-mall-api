@@ -6,6 +6,6 @@ import javax.validation.constraints.NotNull;
 @Data
 public class DeleteUserParam {
 
-    @NotNull
+    @NotNull(message = "用户Id不能为空")
     private Long userId;
 }
