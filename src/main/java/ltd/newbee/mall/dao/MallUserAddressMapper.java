@@ -8,13 +8,14 @@
  */
 package ltd.newbee.mall.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import ltd.newbee.mall.entity.MallUserAddress;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
 @Mapper
-public interface MallUserAddressMapper {
+public interface MallUserAddressMapper extends BaseMapper<MallUserAddress> {
     int deleteByPrimaryKey(Long addressId);
 
     /**

@@ -8,6 +8,10 @@
  */
 package ltd.newbee.mall.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -20,7 +24,10 @@ import java.util.Date;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
+@TableName("tb_newbee_mall_order")
 public class NewBeeMallOrder extends MallUser{
+
+    @TableId(value = "order_id", type = IdType.AUTO)
     private Long orderId;
 
     private String orderNo;
@@ -39,6 +46,7 @@ public class NewBeeMallOrder extends MallUser{
 
     private String extraInfo;
 
+    @TableLogic(value = "0", delval = "1")
     private Byte isDeleted;
 
     /*

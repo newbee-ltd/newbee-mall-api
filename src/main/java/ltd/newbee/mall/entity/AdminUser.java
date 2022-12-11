@@ -8,13 +8,18 @@
  */
 package ltd.newbee.mall.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 @Data
+@TableName("tb_newbee_mall_admin_user")
 public class AdminUser {
     /**
      * 管理员用户Id
      * */
+    @TableId(value = "admin_user_id", type = IdType.AUTO)
     private Long adminUserId;
     /**
      * 不明所以的名字，不知道和nickname的区别在哪里

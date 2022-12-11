@@ -8,11 +8,12 @@
  */
 package ltd.newbee.mall.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import ltd.newbee.mall.entity.MallUserToken;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface NewBeeMallUserTokenMapper {
+public interface NewBeeMallUserTokenMapper extends BaseMapper<MallUserToken> {
     int deleteByPrimaryKey(Long userId);
 
     int insert(MallUserToken record);

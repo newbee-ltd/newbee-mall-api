@@ -8,6 +8,10 @@
  */
 package ltd.newbee.mall.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
@@ -19,8 +23,10 @@ import java.util.Date;
  * @author 13
  */
 @Data
+@TableName("tb_newbee_mall_index_config")
 public class IndexConfig {
     //首页配置项id
+    @TableId(value = "config_id", type = IdType.AUTO)
     private Long configId;
 
     //首页配置项显示字符
@@ -39,6 +45,7 @@ public class IndexConfig {
     private Integer configRank;
 
     //删除标记，0未删除，1删除
+    @TableLogic(value = "0", delval = "1")
     private Byte isDeleted;
 
     //创建时间

@@ -8,6 +8,7 @@
  */
 package ltd.newbee.mall.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import ltd.newbee.mall.entity.IndexConfig;
 import ltd.newbee.mall.util.PageQueryUtil;
 import org.apache.ibatis.annotations.Mapper;
@@ -21,7 +22,7 @@ import java.util.List;
  * @author 13
  */
 @Mapper
-public interface IndexConfigMapper {
+public interface IndexConfigMapper extends BaseMapper<IndexConfig> {
 
     /**
      * 根据id删除首页配置项

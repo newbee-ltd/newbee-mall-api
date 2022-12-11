@@ -8,13 +8,18 @@
  */
 package ltd.newbee.mall.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 /**
  * 订单地址实体类
  */
 @Data
+@TableName("tb_newbee_mall_order_address")
 public class NewBeeMallOrderAddress {
+
+    @TableId(value = "order_id")
     private Long orderId;
 
     // TODO 其实也可以把User的对象放进来

@@ -8,6 +8,9 @@
  */
 package ltd.newbee.mall.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.util.Date;
@@ -16,7 +19,9 @@ import java.util.Date;
  * 他甚至为了造轮子自己写了个Token类 我哭死
  */
 @Data
+@TableName("tb_newbee_mall_user_token")
 public class MallUserToken {
+    @TableId(value = "user_id")
     private Long userId;
 
     private String token;

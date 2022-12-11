@@ -8,6 +8,7 @@
  */
 package ltd.newbee.mall.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import ltd.newbee.mall.entity.NewBeeMallGoods;
 import ltd.newbee.mall.entity.StockNumDTO;
 import ltd.newbee.mall.util.PageQueryUtil;
@@ -22,7 +23,7 @@ import java.util.List;
  * @author 13
  */
 @Mapper
-public interface NewBeeMallGoodsMapper {
+public interface NewBeeMallGoodsMapper extends BaseMapper<NewBeeMallGoods> {
 
     /**
      * 根据id删除商品

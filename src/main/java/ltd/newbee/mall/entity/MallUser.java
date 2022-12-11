@@ -8,16 +8,22 @@
  */
 package ltd.newbee.mall.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.util.Date;
 
 @Data
+@TableName("tb_newbee_mall_user")
 public class MallUser {
     /**
      * 用户id
      */
+    @TableId(value = "user_id", type = IdType.AUTO)
     protected Long userId;
     /**
      * 用户昵称
@@ -38,6 +44,7 @@ public class MallUser {
     /**
      * 是否被删除的标记位
      */
+    @TableLogic(value = "0", delval = "1")
     protected Byte isDeleted;
     /**
      *

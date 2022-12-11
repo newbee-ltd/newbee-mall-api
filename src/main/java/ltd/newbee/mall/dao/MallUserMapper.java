@@ -8,6 +8,7 @@
  */
 package ltd.newbee.mall.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import ltd.newbee.mall.entity.MallUser;
 import ltd.newbee.mall.util.PageQueryUtil;
 import org.apache.ibatis.annotations.Mapper;
@@ -16,7 +17,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 @Mapper
-public interface MallUserMapper {
+public interface MallUserMapper extends BaseMapper<MallUser> {
     /**
      * 看起来是根据id删除用户
      * TODO 可以后期加入管理员删除用户操作

@@ -8,6 +8,7 @@
  */
 package ltd.newbee.mall.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import ltd.newbee.mall.entity.Carousel;
 import ltd.newbee.mall.util.PageQueryUtil;
 import org.apache.ibatis.annotations.Mapper;
@@ -21,7 +22,7 @@ import java.util.List;
  * @author 13
  */
 @Mapper
-public interface CarouselMapper {
+public interface CarouselMapper extends BaseMapper<CarouselMapper> {
     /**
      * 根据轮播图id删除轮播图
      * @param carouselId

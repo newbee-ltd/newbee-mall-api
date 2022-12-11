@@ -8,6 +8,9 @@
  */
 package ltd.newbee.mall.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.util.Date;
@@ -16,10 +19,12 @@ import java.util.Date;
  * 购物车项包含一种多个商品
  */
 @Data
+@TableName("tb_newbee_mall_shopping_cart_item")
 public class NewBeeMallShoppingCartItem {
     /**
      * 购物车项id
      */
+    @TableId(value = "cart_item_id", type = IdType.AUTO)
     private Long cartItemId;
 
     /**

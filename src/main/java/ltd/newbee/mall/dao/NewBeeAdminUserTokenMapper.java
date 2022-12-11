@@ -8,11 +8,12 @@
  */
 package ltd.newbee.mall.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import ltd.newbee.mall.entity.AdminUserToken;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface NewBeeAdminUserTokenMapper {
+public interface NewBeeAdminUserTokenMapper extends BaseMapper<AdminUserToken> {
     int deleteByPrimaryKey(Long userId);
 
     int insert(AdminUserToken record);

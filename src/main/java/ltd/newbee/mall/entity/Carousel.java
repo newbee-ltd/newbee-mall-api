@@ -8,6 +8,10 @@
  */
 package ltd.newbee.mall.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
@@ -19,9 +23,11 @@ import java.util.Date;
  * @author 13
  */
 @Data
+@TableName("tb_newbee_mall_carousel")
 public class Carousel {
 
     //轮播图id
+    @TableId(value = "carousel_id",type = IdType.AUTO)
     private Integer carouselId;
 
     //轮播图url
@@ -34,6 +40,7 @@ public class Carousel {
     private Integer carouselRank;
 
     //删除标记，0未删除，1删除
+    @TableLogic(value = "0", delval = "1")
     private Byte isDeleted;
 
     //创建时间

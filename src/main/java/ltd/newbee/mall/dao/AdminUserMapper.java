@@ -8,12 +8,13 @@
  */
 package ltd.newbee.mall.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import ltd.newbee.mall.entity.AdminUser;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 @Mapper
-public interface AdminUserMapper {
+public interface AdminUserMapper extends BaseMapper<AdminUserMapper> {
     /**
      * 未发现service使用，管理员早已在数据库中添加完成
      * 提供完整的5个属性添加用户

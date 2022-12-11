@@ -8,6 +8,9 @@
  */
 package ltd.newbee.mall.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
@@ -19,8 +22,10 @@ import java.util.Date;
  * @author 13
  */
 @Data
+@TableName("tb_newbee_mall_goods_info")
 public class NewBeeMallGoods {
     //商品id
+    @TableId(value = "goods_id", type = IdType.AUTO)
     protected Long goodsId;
 
     //商品名称
