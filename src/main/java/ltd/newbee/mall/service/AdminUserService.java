@@ -57,5 +57,12 @@ public interface AdminUserService {
      */
     Boolean logout(Long adminUserId);
 
+    /**
+     * 删除管理员
+     * @param adminUserId
+     * @return
+     * @author 庄浩渊
+     */
+    Boolean deleteAdminUserById(Long adminUserId);
 
 }

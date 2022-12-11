@@ -59,4 +59,10 @@ public interface AdminUserMapper {
      * @return
      */
     int updateByPrimaryKey(AdminUser record);
+    /**
+     * 提供id，删除对应管理员
+     * @param adminUserId
+     * @return
+     */
+    int deleteAdminUserById(Long adminUserId);
 }

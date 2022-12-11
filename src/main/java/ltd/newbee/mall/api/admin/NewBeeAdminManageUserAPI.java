@@ -9,10 +9,7 @@
 package ltd.newbee.mall.api.admin;
 
 import io.swagger.annotations.Api;
-import ltd.newbee.mall.api.admin.param.AdminLoginParam;
-import ltd.newbee.mall.api.admin.param.DeleteUserParam;
-import ltd.newbee.mall.api.admin.param.UpdateAdminNameParam;
-import ltd.newbee.mall.api.admin.param.UpdateAdminPasswordParam;
+import ltd.newbee.mall.api.admin.param.*;
 import ltd.newbee.mall.common.Constants;
 import ltd.newbee.mall.common.ServiceResultEnum;
 import ltd.newbee.mall.config.annotation.TokenToAdminUser;
@@ -133,6 +130,22 @@ public class NewBeeAdminManageUserAPI {
             return ResultGenerator.genFailResult(ServiceResultEnum.ID_NOT_EXIST.getResult());
         }
     }
+    /**
+     * 管理员通过Id删除用户
+     * @param deleteAdminUserParam
+     * @param adminUser
+     * @return
+     */
+    @RequestMapping(value ="/adminUser/deleteAdminUser", method = RequestMethod.DELETE)
+    public Result deleteAdminUser(@Valid @RequestBody DeleteAdminUserParam deleteAdminUserParam, @TokenToAdminUser AdminUserToken adminUser) {
+        logger.info(ADMIN_USER, adminUser.toString());
+        if(adminUserService.deleteAdminUserById(deleteAdminUserParam.getAdminUserId())){
+            return  ResultGenerator.genSuccessResult();
+        }else{
+            return ResultGenerator.genFailResult(ServiceResultEnum.ID_NOT_EXIST.getResult());
+        }
+    }
+
 
     /**
      * 登出

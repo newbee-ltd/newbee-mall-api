@@ -137,8 +137,20 @@ public class AdminUserServiceImpl implements AdminUserService {
         return true;
     }
 
+
+
     @Override
     public Boolean logout(Long adminUserId) {
         return newBeeAdminUserTokenMapper.deleteByPrimaryKey(adminUserId) > 0;
+    }
+
+    @Override
+    public Boolean deleteAdminUserById(Long adminUserId) {
+        AdminUser adminUser = adminUserMapper.selectByPrimaryKey(adminUserId);
+        if(ObjectUtils.isEmpty(adminUser)){
+            return false;
+        }
+        adminUserMapper.deleteAdminUserById(adminUserId);
+        return true;
     }
 }
