@@ -189,6 +189,8 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
             newBeeMallSearchGoodsVOS = BeanUtil.copyList(goodsList, NewBeeMallSearchGoodsVO.class);
             /**
              * 对每一个商品VO，如果字符串过长，则重新设置搜索VO中的商品名称和商品简介
+             * 麻了说白了这种活不该前端来做的吗？？？？？我有很多问号
+             * 像element-ui的table是有这种截断的功能的
              */
             for (NewBeeMallSearchGoodsVO newBeeMallSearchGoodsVO : newBeeMallSearchGoodsVOS) {
                 String goodsName = newBeeMallSearchGoodsVO.getGoodsName();
