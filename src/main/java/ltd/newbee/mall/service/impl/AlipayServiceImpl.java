@@ -224,7 +224,7 @@ public class AlipayServiceImpl implements AlipayService {
             if(lock.tryLock()){
                 try{
                     // 处理重复通知
-                    // 无论接口被调用多少次 一下业务只执行一次
+                    // 无论接口被调用多少次 以下业务只执行一次
                     // 接口调用的幂等性
                     Byte orderStatus = orderInfo.getOrderStatus();
                     if(!((orderStatus & 0xFF) == NewBeeMallOrderStatusEnum.ORDER_PRE_PAY.getOrderStatus())){

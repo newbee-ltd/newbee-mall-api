@@ -24,3 +24,4 @@
 /nbdist/
 application.properties
 sonar-project.properties
+alipay-sandbox.properties
