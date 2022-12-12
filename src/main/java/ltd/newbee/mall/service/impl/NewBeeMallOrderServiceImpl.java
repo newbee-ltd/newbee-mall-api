@@ -192,7 +192,8 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
                 return ServiceResultEnum.NO_PERMISSION_ERROR.getResult();
             }
             //订单状态判断 非出库状态下不进行修改操作
-            if (newBeeMallOrder.getOrderStatus().intValue() != NewBeeMallOrderStatusEnum.ORDER_EXPRESS.getOrderStatus()) {
+            //由于本次项目修正不涉及管理端 所以这个位置就判断是否付款就可以了
+            if (newBeeMallOrder.getOrderStatus().intValue() != NewBeeMallOrderStatusEnum.ORDER_PAID.getOrderStatus()) {
                 return ServiceResultEnum.ORDER_STATUS_ERROR.getResult();
             }
             newBeeMallOrder.setOrderStatus((byte) NewBeeMallOrderStatusEnum.ORDER_SUCCESS.getOrderStatus());
@@ -482,6 +483,22 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
             }
         }
         return null;
+    }
+
+    @Override
+    public void updatePayStatusByOrderNo(String orderNo, Byte payStatus, Byte orderStatus) {
+        NewBeeMallOrder order = newBeeMallOrderMapper.selectByOrderNo(orderNo);
+        if (order != null) {
+            order.setPayStatus(payStatus);
+            order.setOrderStatus(orderStatus);
+            order.setPayTime(new Date());
+            newBeeMallOrderMapper.updateByPrimaryKeySelective(order);
+        }
+    }
+
+    @Override
+    public NewBeeMallOrder getOrderByOrderNo(String orderNo) {
+        return newBeeMallOrderMapper.selectByOrderNo(orderNo);
     }
 
     /**

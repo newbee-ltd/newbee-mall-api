@@ -1,5 +1,7 @@
 package ltd.newbee.mall.service;
 
+import ltd.newbee.mall.entity.MallUser;
+
 import java.util.Map;
 
 /**

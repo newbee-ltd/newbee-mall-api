@@ -108,4 +108,8 @@ public interface NewBeeMallOrderService {
     String closeOrder(Long[] ids);
 
     List<NewBeeMallOrderItemVO> getOrderItems(Long orderId);
+
+    void updatePayStatusByOrderNo(String orderNo, Byte payStatus, Byte orderStatus);
+
+    NewBeeMallOrder getOrderByOrderNo(String orderNo);
 }
