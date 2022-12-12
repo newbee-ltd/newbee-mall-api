@@ -1,4 +1,4 @@
-package ltd.newbee.mall.ourController;
+package ltd.newbee.mall.api.mall;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -17,9 +17,8 @@ import java.util.Map;
  * @author : [wangminan]
  * @description : [支付宝控制类]
  */
-@CrossOrigin
 @RestController
-@RequestMapping("/api/ali-pay")
+@RequestMapping("/api/v1/ali-pay")
 @Api(tags = "网站支付宝支付")
 @Slf4j
 public class AlipayController {
