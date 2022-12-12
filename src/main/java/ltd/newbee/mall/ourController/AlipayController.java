@@ -3,6 +3,8 @@ package ltd.newbee.mall.ourController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import ltd.newbee.mall.config.annotation.TokenToMallUser;
+import ltd.newbee.mall.entity.MallUser;
 import ltd.newbee.mall.service.AlipayService;
 import ltd.newbee.mall.util.Result;
 import ltd.newbee.mall.util.ResultGenerator;
@@ -29,14 +31,15 @@ public class AlipayController {
      * 支付宝开放平台接收request对象后，会为开发者生成HTML形式的表单
      * 包含自动提交的脚本，开发者将表单内容直接返回给前端即可，之后前端可以调用自动提交脚本进行表单提交
      * 此时表单会自动提交到action属性指向的支付宝开放平台网关，从而为用户展示一个支付页面
-     * @param productId 产品id
+     * @param orderNo 订单编号
      * @return 表单
      */
     @ApiOperation("统一收单下单并支付页面接口")
-    @PostMapping("/trade/page/pay/{productId}")
-    public Result<String> tradePagePay(@PathVariable Long productId){
+    @PostMapping("/trade/page/pay/{orderNo}")
+    public Result<String> tradePagePay(@PathVariable String orderNo,
+                                       @TokenToMallUser MallUser loginMallUser){
         log.info("统一收单下单并支付页面接口");
-        String returnString = alipayService.tradeCreate(productId);
+        String returnString = alipayService.tradeCreate(orderNo, loginMallUser.getUserId());
         // 我现在自己写了才觉得ResultGenerator这个类是在脱裤子放屁 太烂了
         return ResultGenerator.genSuccessResult((Object) returnString);
     }

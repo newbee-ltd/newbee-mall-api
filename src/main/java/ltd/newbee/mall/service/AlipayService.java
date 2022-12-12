@@ -7,7 +7,7 @@ import java.util.Map;
  * @description 支付宝服务接口
  */
 public interface AlipayService {
-    String tradeCreate(Long productId);
+    String tradeCreate(String orderNo, Long userId);
 
     // 验签
     String checkSign(Map<String,String> notifyParams);
