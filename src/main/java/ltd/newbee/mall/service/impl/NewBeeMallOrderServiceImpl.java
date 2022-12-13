@@ -174,7 +174,10 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
                 return ServiceResultEnum.ORDER_STATUS_ERROR.getResult();
             }
             //修改订单状态&&恢复库存
-            if (newBeeMallOrderMapper.closeOrder(Collections.singletonList(newBeeMallOrder.getOrderId()), NewBeeMallOrderStatusEnum.ORDER_CLOSED_BY_MALLUSER.getOrderStatus()) > 0 && recoverStockNum(Collections.singletonList(newBeeMallOrder.getOrderId()))) {
+            if (newBeeMallOrderMapper.closeOrder(
+                        Collections.singletonList(newBeeMallOrder.getOrderId()),
+                        NewBeeMallOrderStatusEnum.ORDER_CLOSED_BY_MALLUSER.getOrderStatus()) > 0
+                    && recoverStockNum(Collections.singletonList(newBeeMallOrder.getOrderId()))) {
                 return ServiceResultEnum.SUCCESS.getResult();
             } else {
                 return ServiceResultEnum.DB_ERROR.getResult();
@@ -193,7 +196,8 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
             }
             //订单状态判断 非出库状态下不进行修改操作
             //由于本次项目修正不涉及管理端 所以这个位置就判断是否付款就可以了
-            if (newBeeMallOrder.getOrderStatus().intValue() != NewBeeMallOrderStatusEnum.ORDER_PAID.getOrderStatus()) {
+            if (newBeeMallOrder.getOrderStatus().intValue() !=
+                    NewBeeMallOrderStatusEnum.ORDER_PAID.getOrderStatus()) {
                 return ServiceResultEnum.ORDER_STATUS_ERROR.getResult();
             }
             newBeeMallOrder.setOrderStatus((byte) NewBeeMallOrderStatusEnum.ORDER_SUCCESS.getOrderStatus());
