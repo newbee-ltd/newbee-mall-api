@@ -1,11 +1,14 @@
 package ltd.newbee.mall.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.AlipayConstants;
 import com.alipay.api.internal.util.AlipaySignature;
+import com.alipay.api.request.AlipayTradeCloseRequest;
 import com.alipay.api.request.AlipayTradePagePayRequest;
+import com.alipay.api.response.AlipayTradeCloseResponse;
 import com.alipay.api.response.AlipayTradePagePayResponse;
 import lombok.extern.slf4j.Slf4j;
 import ltd.newbee.mall.api.mall.vo.NewBeeMallOrderDetailVO;
@@ -20,6 +23,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -235,7 +239,7 @@ public class AlipayServiceImpl implements AlipayService {
                     // 处理自身业务
                     log.info("处理订单");
                     // 修改订单状态
-                    orderService.updatePayStatusByOrderNo(outTradeNo,
+                    orderService.updatePayAndOrderStatusByOrderNo(outTradeNo,
                             (byte) PayStatusEnum.PAY_SUCCESS.getPayStatus(),
                             (byte) NewBeeMallOrderStatusEnum.ORDER_PAID.getOrderStatus());
                     // 记录支付日志
@@ -253,7 +257,15 @@ public class AlipayServiceImpl implements AlipayService {
 
     @Override
     public void cancelOrder(String orderNo) {
-
+        // 调用支付宝提供的统一收单交易关闭接口
+        this.closeOrder(orderNo);
+        // 更新用户的订单状态
+        orderService.updatePayAndOrderStatusByOrderNo(
+                orderNo,
+                (byte) PayStatusEnum.DEFAULT.getPayStatus(),
+                (byte) NewBeeMallOrderStatusEnum.ORDER_CLOSED_BY_MALLUSER.getOrderStatus()
+        );
+        log.info("订单号为：{}的订单已被取消", orderNo);
     }
 
     @Override
@@ -274,5 +286,44 @@ public class AlipayServiceImpl implements AlipayService {
     @Override
     public String queryRefund(String orderNo) {
         return null;
+    }
+
+    /**
+     * 关闭订单与核验订单状态接口调用
+     * @param orderNo 订单号
+     */
+    private void closeOrder(String orderNo){
+
+        AlipayTradeCloseRequest request = new AlipayTradeCloseRequest();
+        JSONObject bizContent = new JSONObject();
+        bizContent.put("out_trade_no", orderNo);
+
+        //// 返回参数选项，按需传入
+        //JSONArray queryOptions = new JSONArray();
+        //queryOptions.add("refund_detail_item_list");
+        //bizContent.put("query_options", queryOptions);
+
+        request.setBizContent(bizContent.toString());
+        AlipayTradeCloseResponse response = null;
+        try {
+            response = alipayClient.execute(request);
+        } catch (AlipayApiException e) {
+            e.printStackTrace();
+            throw new RuntimeException("关单接口调用失败");
+        }
+        if(response.isSuccess()){
+            log.info("调用成功,返回结果为==>" + response.getBody());
+        } else {
+            log.info("调用失败,返回结果为==> " + response.getCode() + " " + response.getMsg());
+            Map result = new HashMap<>();
+            result = JSON.parseObject(response.getBody(), result.getClass());
+            Map error = (Map) result.get("alipay_trade_close_response");
+            if (error.get("sub_code").equals("ACQ.TRADE_NOT_EXIST")) {
+                log.info("订单于远端不存在，无需关单，本地订单状态将被更新为已关闭，订单号：{}", orderNo);
+            } else {
+                log.error("关单接口调用失败");
+                throw new RuntimeException("关单接口调用失败,对方接口异常");
+            }
+        }
     }
 }

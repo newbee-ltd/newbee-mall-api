@@ -109,7 +109,7 @@ public interface NewBeeMallOrderService {
 
     List<NewBeeMallOrderItemVO> getOrderItems(Long orderId);
 
-    void updatePayStatusByOrderNo(String orderNo, Byte payStatus, Byte orderStatus);
+    void updatePayAndOrderStatusByOrderNo(String orderNo, Byte payStatus, Byte orderStatus);
 
     NewBeeMallOrder getOrderByOrderNo(String orderNo);
 }

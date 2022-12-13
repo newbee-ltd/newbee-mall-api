@@ -490,7 +490,7 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
     }
 
     @Override
-    public void updatePayStatusByOrderNo(String orderNo, Byte payStatus, Byte orderStatus) {
+    public void updatePayAndOrderStatusByOrderNo(String orderNo, Byte payStatus, Byte orderStatus) {
         NewBeeMallOrder order = newBeeMallOrderMapper.selectByOrderNo(orderNo);
         if (order != null) {
             order.setPayStatus(payStatus);
