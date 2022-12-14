@@ -372,7 +372,7 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
                     errorOrderNos.append(newBeeMallOrder.getOrderNo()).append(" ");
                 }
             }
-            if (StringUtils.isEmpty(errorOrderNos.toString())) {
+            if (StringUtils.hasLength(errorOrderNos.toString())) {
                 //订单状态正常 可以执行配货完成操作 修改订单状态和更新时间
                 if (newBeeMallOrderMapper.checkDone(Arrays.asList(ids)) > 0) {
                     return ServiceResultEnum.SUCCESS.getResult();
@@ -408,7 +408,7 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
                     errorOrderNos.append(newBeeMallOrder.getOrderNo()).append(" ");
                 }
             }
-            if (StringUtils.isEmpty(errorOrderNos.toString())) {
+            if (StringUtils.hasLength(errorOrderNos.toString())) {
                 //订单状态正常 可以执行出库操作 修改订单状态和更新时间
                 if (newBeeMallOrderMapper.checkOut(Arrays.asList(ids)) > 0) {
                     return ServiceResultEnum.SUCCESS.getResult();
