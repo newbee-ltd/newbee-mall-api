@@ -3,6 +3,7 @@ package ltd.newbee.mall.service.impl;
 import ltd.newbee.mall.common.MyIKAnalyzer;
 import ltd.newbee.mall.dao.GoodsDao;
 import ltd.newbee.mall.service.IndexService;
+import ltd.newbee.mall.util.LuceneUtil;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
@@ -23,8 +24,8 @@ public class IndexServiceImpl implements IndexService {
             GoodsDao dao = new GoodsDao();
             // 创建索引
             // 索引目录类,指定索引在硬盘中的位置，我的设置为E盘的indexDir文件夹
-            //TODO 注意改成自己的索引位置
-            Directory directory = FSDirectory.open(FileSystems.getDefault().getPath("E:\\Lucene\\indexDir"));
+            LuceneUtil luceneUtil = new LuceneUtil();
+            Directory directory = FSDirectory.open(FileSystems.getDefault().getPath(luceneUtil.getLucenePath()));
             // 引入IK分词器
             Analyzer analyzer = new MyIKAnalyzer();
             // 索引写出工具的配置对象，这个地方就是最上面报错的问题解决方案

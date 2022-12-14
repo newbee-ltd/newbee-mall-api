@@ -2,6 +2,7 @@ package ltd.newbee.mall.service.impl;
 
 import ltd.newbee.mall.common.MyIKAnalyzer;
 import ltd.newbee.mall.service.SearchService;
+import ltd.newbee.mall.util.LuceneUtil;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
@@ -27,8 +28,8 @@ public class SearchServiceImpl implements SearchService {
 // a) 指定索引库目录
             //创建搜索属性区间
             String[] str = {"goods_name", "goods_intro"};
-
-            Directory directory = FSDirectory.open(FileSystems.getDefault().getPath("E:\\Lucene\\indexDir"));
+            LuceneUtil luceneUtil = new LuceneUtil();
+            Directory directory = FSDirectory.open(FileSystems.getDefault().getPath(luceneUtil.getLucenePath()));
             // 索引读取工具
             IndexReader reader = DirectoryReader.open(directory);
             // 索引搜索工具
