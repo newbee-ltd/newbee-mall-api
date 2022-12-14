@@ -83,6 +83,7 @@ public class CreateIndex {
             document.add(new TextField("title", list1.get(i).getTitle(), Field.Store.YES));
             document.add(new TextField("price", list1.get(i).getPrice(), Field.Store.YES));
             document.add(new TextField("descs", list1.get(i).getDescs(), Field.Store.YES));
+            document.add(new TextField("descs", list1.get(i).getDescs(), Field.Store.YES));
             docs.add(document);
         }
 
