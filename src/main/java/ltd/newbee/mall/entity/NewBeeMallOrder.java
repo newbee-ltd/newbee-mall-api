@@ -23,9 +23,8 @@ import java.util.Date;
  * 这时候他倒记起来自己有lombok了
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
 @TableName("tb_newbee_mall_order")
-public class NewBeeMallOrder extends MallUser{
+public class NewBeeMallOrder{
 
     @TableId(value = "order_id", type = IdType.AUTO)
     private Long orderId;
