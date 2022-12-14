@@ -23,6 +23,8 @@ public enum NewBeeMallOrderStatusEnum {
     ORDER_PACKAGED(2, "配货完成"),
     ORDER_EXPRESS(3, "出库成功"),
     ORDER_SUCCESS(4, "交易成功"),
+
+    ORDER_REFUNDED(5,"已退款"),
     ORDER_CLOSED_BY_MALLUSER(-1, "手动关闭"),
     ORDER_CLOSED_BY_EXPIRED(-2, "超时关闭"),
     ORDER_CLOSED_BY_JUDGE(-3, "商家关闭");

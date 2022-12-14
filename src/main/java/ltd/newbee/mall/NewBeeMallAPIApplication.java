@@ -11,6 +11,8 @@ package ltd.newbee.mall;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * @author 13
@@ -20,6 +22,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @MapperScan("ltd.newbee.mall.dao")
 @SpringBootApplication
+@EnableScheduling
+@EnableTransactionManagement
 public class NewBeeMallAPIApplication {
 
     public static void main(String[] args) {

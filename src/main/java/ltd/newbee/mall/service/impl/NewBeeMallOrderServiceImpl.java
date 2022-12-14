@@ -8,6 +8,7 @@
  */
 package ltd.newbee.mall.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import ltd.newbee.mall.api.mall.vo.NewBeeMallOrderDetailVO;
 import ltd.newbee.mall.api.mall.vo.NewBeeMallOrderItemVO;
 import ltd.newbee.mall.api.mall.vo.NewBeeMallOrderListVO;
@@ -26,6 +27,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -337,23 +340,13 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
 
     /**
      * 更新订单信息
+     *
      * @param newBeeMallOrder 订单实体
-     * @return 更新结果
      */
     @Override
-    @Transactional
-    public String updateOrderInfo(NewBeeMallOrder newBeeMallOrder) {
-        NewBeeMallOrder temp = newBeeMallOrderMapper.selectByPrimaryKey(newBeeMallOrder.getOrderId());
-        //不为空且orderStatus>=0且状态为出库之前可以修改部分信息
-        if (temp != null && temp.getOrderStatus() >= 0 && temp.getOrderStatus() < 3) {
-            temp.setTotalPrice(newBeeMallOrder.getTotalPrice());
-            temp.setUpdateTime(new Date());
-            if (newBeeMallOrderMapper.updateByPrimaryKeySelective(temp) > 0) {
-                return ServiceResultEnum.SUCCESS.getResult();
-            }
-            return ServiceResultEnum.DB_ERROR.getResult();
-        }
-        return ServiceResultEnum.DATA_NOT_EXIST.getResult();
+    @Transactional(rollbackFor = Exception.class)
+    public void updateOrderInfo(NewBeeMallOrder newBeeMallOrder) {
+       newBeeMallOrderMapper.updateById(newBeeMallOrder);
     }
 
     @Override
@@ -503,6 +496,20 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
     @Override
     public NewBeeMallOrder getOrderByOrderNo(String orderNo) {
         return newBeeMallOrderMapper.selectByOrderNo(orderNo);
+    }
+
+    @Override
+    public List<NewBeeMallOrder> getNoPayOrderByDuration(int expireMinutes, int payType) {
+
+        Instant instant = Instant.now().minus(Duration.ofMinutes(expireMinutes));
+
+        QueryWrapper<NewBeeMallOrder> orderQueryWrapper = new QueryWrapper<>();
+        // 支付方式一致
+        orderQueryWrapper.eq("pay_type", (byte) payType);
+        orderQueryWrapper.le("create_time", instant);
+        // 订单未超时
+        orderQueryWrapper.eq("order_status", NewBeeMallOrderStatusEnum.ORDER_PRE_PAY.getOrderStatus());
+        return newBeeMallOrderMapper.selectList(orderQueryWrapper);
     }
 
     /**

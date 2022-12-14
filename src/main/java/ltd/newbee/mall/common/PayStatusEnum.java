@@ -16,9 +16,11 @@ package ltd.newbee.mall.common;
  */
 public enum PayStatusEnum {
 
+    PAY_ERROR(-2,"支付问题"),
     DEFAULT(-1, "支付失败"),
     PAY_ING(0, "支付中"),
-    PAY_SUCCESS(1, "支付成功");
+    PAY_SUCCESS(1, "支付成功"),
+    PAY_REFUNDED(2,"已退款");
 
     private int payStatus;
 

@@ -79,9 +79,8 @@ public interface NewBeeMallOrderService {
      * 订单信息修改
      *
      * @param newBeeMallOrder
-     * @return
      */
-    String updateOrderInfo(NewBeeMallOrder newBeeMallOrder);
+    void updateOrderInfo(NewBeeMallOrder newBeeMallOrder);
 
     /**
      * 配货
@@ -112,4 +111,6 @@ public interface NewBeeMallOrderService {
     void updatePayAndOrderStatusByOrderNo(String orderNo, Byte payStatus, Byte orderStatus);
 
     NewBeeMallOrder getOrderByOrderNo(String orderNo);
+
+    List<NewBeeMallOrder> getNoPayOrderByDuration(int expireTime, int payType);
 }

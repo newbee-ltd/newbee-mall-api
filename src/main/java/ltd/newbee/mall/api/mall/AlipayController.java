@@ -71,11 +71,11 @@ public class AlipayController {
     }
 
     /**
-     * 查询订单
+     * 查询订单，非前端调用接口
      * @param orderNo 订单号
      * @return 订单状态
      */
-    @ApiOperation("查询订单：测试订单状态用")
+    @ApiOperation("查询订单：测试订单状态用，非前端调用接口")
     @GetMapping("/trade/query/{orderNo}")
     public Result<String> queryOrder(@PathVariable String orderNo){
         log.info("查询订单");
