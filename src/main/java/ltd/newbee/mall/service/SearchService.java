@@ -1,7 +1,10 @@
-//package ltd.newbee.mall.service;
-//
-//
-//public interface SearchService {
-//
-//    String query(String indexName, String queryStr);
-//}
+package ltd.newbee.mall.service;
+
+
+public interface SearchService {
+
+    /**
+     * 具体查询
+     */
+    void searchDocumentByIndex();
+}

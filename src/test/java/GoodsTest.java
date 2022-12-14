@@ -56,7 +56,6 @@ public class GoodsTest {
             e.printStackTrace();
         }
     }
-
     @Test
     public void searchDocumentByIndex(){
         try {
@@ -73,7 +72,6 @@ public class GoodsTest {
             // 创建查询解析器,两个参数：默认要查询的字段的名称，分词器
             // 创建查询解析器,两个参数：默认要查询的字段的名称，分词器
             MultiFieldQueryParser parser = new MultiFieldQueryParser(str, new MyIKAnalyzer());
-
 // d) 通过IndexSearcher对象执行查询索引库，返回TopDocs对象
 // 第一个参数：查询对象
             Query query = parser.parse("ml");

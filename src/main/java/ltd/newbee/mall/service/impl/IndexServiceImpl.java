@@ -1,64 +1,48 @@
-//package ltd.newbee.mall.service.impl;
-//
-//import org.apache.lucene.analysis.Analyzer;
-//import org.apache.lucene.analysis.standard.StandardAnalyzer;
-//import org.apache.lucene.document.Document;
-//import org.apache.lucene.document.Field;
-//import org.apache.lucene.document.TextField;
-//import org.apache.lucene.index.IndexWriter;
-//import org.apache.lucene.index.IndexWriterConfig;
-//import org.apache.lucene.store.Directory;
-//import org.apache.lucene.store.FSDirectory;
-//import org.springframework.stereotype.Service;
-//
-//import java.io.IOException;
-//import java.nio.file.Paths;
-//import java.util.Set;
-//
-//@Service
-//public class IndexServiceImpl {
-//
-//
-//        /**
-//         * 创建索引
-//         *
-//         * @param indexName
-//         */
-//        public void createIndex(String indexName, String jsonDoc) {
-//            IndexWriter writer = null;
-//            try {
-//                //String indexDir = "D:\\Lucene\\indexDir\\" + indexName;
-//                String indexDir = "E:\\Lucene\\indexDir";
-//                //准备目录
-//                Directory directory = FSDirectory.open(Paths.get((indexDir)));
-//                //准备分词器
-//                Analyzer analyzer = new StandardAnalyzer();
-//                //准备config
-//                IndexWriterConfig iwConfig = new IndexWriterConfig(analyzer);
-//                //创建索引的实例
-//                writer = new IndexWriter(directory, iwConfig);
-//                //添加索引文档
-//                //Document doc = json2Doc(jsonDoc);
-//                Document doc = new Document();
-//                doc.add(new TextField("content", jsonDoc, Field.Store.YES));
-//                writer.addDocument(doc);
-//                System.out.println("indexed doc success...");
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            } finally {
-//                if (writer != null) {
-//                    try {
-//                        writer.close();
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }
-//
-//        }
-//
-//        public void deleteIndex() {
-//            throw new UnsupportedOperationException();
-//        }
-//    }
-//
+package ltd.newbee.mall.service.impl;
+
+import ltd.newbee.mall.common.MyIKAnalyzer;
+import ltd.newbee.mall.dao.GoodsDao;
+import ltd.newbee.mall.service.IndexService;
+import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.store.Directory;
+import org.apache.lucene.store.FSDirectory;
+import org.springframework.stereotype.Service;
+
+import java.nio.file.FileSystems;
+
+@Service
+public class IndexServiceImpl implements IndexService {
+    /**
+     * 创建索引
+     */
+    @Override
+    public void createIndex() {
+        try {
+            GoodsDao dao = new GoodsDao();
+            // 创建索引
+            // 索引目录类,指定索引在硬盘中的位置，我的设置为E盘的indexDir文件夹
+            //TODO 注意改成自己的索引位置
+            Directory directory = FSDirectory.open(FileSystems.getDefault().getPath("E:\\Lucene\\indexDir"));
+            // 引入IK分词器
+            Analyzer analyzer = new MyIKAnalyzer();
+            // 索引写出工具的配置对象，这个地方就是最上面报错的问题解决方案
+            IndexWriterConfig conf = new IndexWriterConfig(analyzer);
+            // 设置打开方式：OpenMode.APPEND 会在索引库的基础上追加新索引。OpenMode.CREATE会先清空原来数据，再提交新的索引
+            conf.setOpenMode(IndexWriterConfig.OpenMode.CREATE);
+            // 创建索引的写出工具类。参数：索引的目录和配置信息
+            IndexWriter indexWriter = new IndexWriter(directory, conf);
+            // 把文档集合交给IndexWriter
+            indexWriter.addDocuments(dao.getDocuments(dao.getAll()));
+            // 提交
+            indexWriter.commit();
+            // 关闭
+            indexWriter.close();
+            System.out.println("创建索引库成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+
