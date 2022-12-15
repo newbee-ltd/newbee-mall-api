@@ -17,7 +17,9 @@ import ltd.newbee.mall.config.annotation.TokenToMallUser;
 import ltd.newbee.mall.api.mall.vo.NewBeeMallGoodsDetailVO;
 import ltd.newbee.mall.entity.MallUser;
 import ltd.newbee.mall.entity.NewBeeMallGoods;
+import ltd.newbee.mall.service.IndexService;
 import ltd.newbee.mall.service.NewBeeMallGoodsService;
+import ltd.newbee.mall.service.SearchService;
 import ltd.newbee.mall.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,11 +46,15 @@ public class NewBeeMallGoodsAPI {
     @Resource
     private NewBeeMallGoodsService newBeeMallGoodsService;
 
+    @Resource
+    private IndexService indexService;
+
+    @Resource
+    private SearchService service;
+
     /**
      * 实现根据关键字和分类id进行搜索的商品搜索接口
      * @param keyword
-     * @param goodsCategoryId
-     * @param orderBy
      * @param pageNumber
      * @param loginMallUser
      * @return 商品搜索响应结果
@@ -56,16 +62,16 @@ public class NewBeeMallGoodsAPI {
     @GetMapping("/search")
     @ApiOperation(value = "商品搜索接口", notes = "根据关键字和分类id进行搜索")
     public Result<PageResult<List<NewBeeMallSearchGoodsVO>>> search(@RequestParam(required = false) @ApiParam(value = "搜索关键字") String keyword,
-                                                                    @RequestParam(required = false) @ApiParam(value = "分类id") Long goodsCategoryId,
-                                                                    @RequestParam(required = false) @ApiParam(value = "orderBy") String orderBy,
-                                                                    @RequestParam(required = false) @ApiParam(value = "页码") Integer pageNumber,
-                                                                    @TokenToMallUser MallUser loginMallUser) {
+                                                                    @RequestParam(required = false) @ApiParam(value = "页码") Integer pageNumber
+//                                                                    @TokenToMallUser MallUser loginMallUser
+                                                                    //TODO 等到和分支的时候要把这个user加回去，因为我们没有cookie，做测试会显示未登录
+    ) {
         
-        logger.info("goods search api,keyword={},goodsCategoryId={},orderBy={},pageNumber={},userId={}", keyword, goodsCategoryId, orderBy, pageNumber, loginMallUser.getUserId());
+        logger.info("goods search api,keyword={},pageNumber={},userId={}", keyword,pageNumber);
 
         Map params = new HashMap(8);
-        //两个搜索参数都为空，直接返回异常
-        if (goodsCategoryId == null && StringUtils.isEmpty(keyword)) {
+        //TODO 不输入搜索结果，返回全部商品
+        if (keyword.isEmpty()) {
             NewBeeMallException.fail("非法的搜索参数");
         }
         if (pageNumber == null || pageNumber < 1) {

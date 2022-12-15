@@ -22,7 +22,7 @@ public class SearchServiceImpl implements SearchService {
 
 
     @Override
-    public void searchDocumentByIndex() {
+    public void searchDocumentByIndex(String keyword) {
         try {
 // 2、 执行搜索
 // a) 指定索引库目录
@@ -39,7 +39,7 @@ public class SearchServiceImpl implements SearchService {
             MultiFieldQueryParser parser = new MultiFieldQueryParser(str, new MyIKAnalyzer());
 // d) 通过IndexSearcher对象执行查询索引库，返回TopDocs对象
 // 第一个参数：查询对象
-            Query query = parser.parse("ml");
+            Query query = parser.parse(keyword);
 // 第二个参数：最大的n条记录
 // 获取前n条记录
             TopDocs topDocs = searcher.search(query, 10);

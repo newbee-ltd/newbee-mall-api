@@ -3,6 +3,9 @@ package ltd.newbee.mall.common;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.Tokenizer;
 
+/**
+ * 自己写个优化版的分词器
+ */
 public class MyIKAnalyzer extends Analyzer {
 
     private boolean useSmart;

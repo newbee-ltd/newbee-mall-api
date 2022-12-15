@@ -5,6 +5,7 @@ public interface SearchService {
 
     /**
      * 具体查询
+     * @param keyword
      */
-    void searchDocumentByIndex();
+    void searchDocumentByIndex(String keyword);
 }
