@@ -181,7 +181,9 @@ public class MyCreate {
             // 索引搜索工具
             IndexSearcher searcher=new IndexSearcher(reader);
             // 创建查询解析器,两个参数：默认要查询的字段的名称，分词器
-            QueryParser parser=new QueryParser("goods_name",new MyIKAnalyzer());
+
+            String[] fields = {"goods_name", "goods_intro"};
+            MultiFieldQueryParser parser= new MultiFieldQueryParser(fields,new MyIKAnalyzer());
             // 创建查询对象
             Query query=parser.parse(text);
 
