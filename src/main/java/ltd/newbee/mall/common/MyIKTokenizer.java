@@ -9,10 +9,7 @@ import org.wltea.analyzer.core.Lexeme;
 
 import java.io.IOException;
 
-/**
- * TODO 记得把类的final改回来
- */
-public final class MyIKTokenizer extends Tokenizer {
+public class MyIKTokenizer extends Tokenizer {
 
     private IKSegmenter _IKImplement;
     private final CharTermAttribute termAtt = (CharTermAttribute)this.addAttribute(CharTermAttribute.class);

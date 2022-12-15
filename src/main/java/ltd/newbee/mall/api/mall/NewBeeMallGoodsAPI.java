@@ -22,21 +22,20 @@ import ltd.newbee.mall.entity.NewBeeMallGoods;
 import ltd.newbee.mall.service.IndexService;
 import ltd.newbee.mall.service.NewBeeMallGoodsService;
 import ltd.newbee.mall.service.SearchService;
-import ltd.newbee.mall.util.*;
+import ltd.newbee.mall.util.BeanUtil;
+import ltd.newbee.mall.util.PageResult;
+import ltd.newbee.mall.util.Result;
+import ltd.newbee.mall.util.ResultGenerator;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 该类为商城商品相关接口
@@ -69,12 +68,10 @@ public class NewBeeMallGoodsAPI {
     @GetMapping("/search")
     @ApiOperation(value = "商品搜索接口", notes = "根据关键字和分类id进行搜索")
     public Result<PageResult<List<NewBeeMallSearchGoodsVO>>> search(@RequestParam(required = false) @ApiParam(value = "搜索关键字") String keyword,
-                                                                    @RequestParam(required = false) @ApiParam(value = "页码") Integer pageNumber
-//                                                                    @TokenToMallUser MallUser loginMallUser
-                                                                    //TODO 等到和分支的时候要把这个user加回去，因为我们没有cookie，做测试会显示未登录
-    ) throws IOException,ParseException {
+                                                                    @RequestParam(required = false) @ApiParam(value = "页码") Integer pageNumber,
+                                                                    @TokenToMallUser MallUser loginMallUser) throws IOException,ParseException {
 
-        logger.info("goods search api,keyword={},pageNumber={},userId={}", keyword, pageNumber);
+        logger.info("goods search api,keyword={},pageNumber={},userId={}", keyword, pageNumber, loginMallUser.getUserId());
 
         //判定关键词是否为空，为空返回全部商品
         if (keyword.isEmpty()) {
@@ -85,16 +82,6 @@ public class NewBeeMallGoodsAPI {
         if (pageNumber == null || pageNumber < 1) {
             pageNumber = 1;
         }
-
-        Map params = new HashMap(8);
-
-        params.put("page", pageNumber);
-        params.put("limit", Constants.GOODS_SEARCH_PAGE_LIMIT);
-        params.put("goodsSellStatus", Constants.SELL_STATUS_UP);
-        if (!StringUtils.isEmpty(keyword)) {
-            params.put("keyword", keyword);
-        }
-        PageQueryUtil pageUtil = new PageQueryUtil(params);
 
         //创建索引库
         indexService.createIndex();

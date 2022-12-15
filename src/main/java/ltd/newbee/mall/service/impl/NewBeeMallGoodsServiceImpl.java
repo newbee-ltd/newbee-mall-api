@@ -168,43 +168,4 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
     public Boolean batchUpdateSellStatus(Long[] ids, int sellStatus) {
         return goodsMapper.batchUpdateSellStatus(ids, sellStatus) > 0;
     }
-
-    /**
-     * 商品搜索
-     *
-     * @param pageUtil
-     * @return
-     */
-    @Override
-    public PageResult searchNewBeeMallGoods(PageQueryUtil pageUtil) {
-        //根据分页查询参数获取商品列表
-        List<NewBeeMallGoods> goodsList = goodsMapper.findNewBeeMallGoodsListBySearch(pageUtil);
-        //获取搜索到的商品总数
-        int total = goodsMapper.getTotalNewBeeMallGoodsBySearch(pageUtil);
-        List<NewBeeMallSearchGoodsVO> newBeeMallSearchGoodsVOS = new ArrayList<>();
-        /**
-         * 如果商品列表不为空，进行类型转换为VO
-         */
-        if (!CollectionUtils.isEmpty(goodsList)) {
-            newBeeMallSearchGoodsVOS = BeanUtil.copyList(goodsList, NewBeeMallSearchGoodsVO.class);
-            /**
-             * 对每一个商品VO，如果字符串过长，则重新设置搜索VO中的商品名称和商品简介
-             */
-            for (NewBeeMallSearchGoodsVO newBeeMallSearchGoodsVO : newBeeMallSearchGoodsVOS) {
-                String goodsName = newBeeMallSearchGoodsVO.getGoodsName();
-                String goodsIntro = newBeeMallSearchGoodsVO.getGoodsIntro();
-                //字符串过长导致文字超出的问题
-                if (goodsName.length() > 28) {
-                    goodsName = goodsName.substring(0, 28) + "...";
-                    newBeeMallSearchGoodsVO.setGoodsName(goodsName);
-                }
-                if (goodsIntro.length() > 30) {
-                    goodsIntro = goodsIntro.substring(0, 30) + "...";
-                    newBeeMallSearchGoodsVO.setGoodsIntro(goodsIntro);
-                }
-            }
-        }
-        //设置分页结果并返回
-        return new PageResult(newBeeMallSearchGoodsVOS, total, pageUtil.getLimit(), pageUtil.getPage());
-    }
 }

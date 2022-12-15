@@ -68,11 +68,4 @@ public interface NewBeeMallGoodsService {
      */
     NewBeeMallGoods getNewBeeMallGoodsById(Long id);
 
-    /**
-     * 商品搜索
-     *
-     * @param pageUtil
-     * @return
-     */
-    PageResult searchNewBeeMallGoods(PageQueryUtil pageUtil);
 }
