@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.util.Map;
 
 @RestController
 @Api(value = "v1", tags = "2.新蜂商城用户操作相关接口")
@@ -34,6 +35,12 @@ public class NewBeeMallPersonalAPI {
 
     @Resource
     private NewBeeMallUserService newBeeMallUserService;
+
+//    @Resource
+//    private SearchService searchService;
+//
+//    @Resource
+//    private IndexService indexService;
 
     private static final Logger logger = LoggerFactory.getLogger(NewBeeMallPersonalAPI.class);
 
@@ -115,4 +122,19 @@ public class NewBeeMallPersonalAPI {
         BeanUtil.copyProperties(loginMallUser, mallUserVO);
         return ResultGenerator.genSuccessResult(mallUserVO);
     }
+
+//    @GetMapping(value = "/search")
+//    @ApiOperation(value = "全文搜索", notes = "")
+//    public String searchDocument(@RequestParam String index, @RequestParam String queryStr){
+//        String result = searchService.query(index, queryStr);
+//        return result;
+//    }
+//
+//    @PostMapping(value = "/createIndex")
+//    @ApiOperation(value = "创建数据库", notes = "")
+//    public String createIndex(@RequestBody Map<String, Object> params){
+//        indexService.createIndex("", params.get("content").toString());
+//        return "ok";
+//    }
+
 }

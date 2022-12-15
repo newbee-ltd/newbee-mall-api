@@ -8,26 +8,34 @@
  */
 package ltd.newbee.mall.api.mall;
 
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import ltd.newbee.mall.api.mall.vo.NewBeeMallGoodsDetailVO;
 import ltd.newbee.mall.api.mall.vo.NewBeeMallSearchGoodsVO;
 import ltd.newbee.mall.common.Constants;
 import ltd.newbee.mall.common.NewBeeMallException;
 import ltd.newbee.mall.common.ServiceResultEnum;
 import ltd.newbee.mall.config.annotation.TokenToMallUser;
-import ltd.newbee.mall.api.mall.vo.NewBeeMallGoodsDetailVO;
 import ltd.newbee.mall.entity.MallUser;
 import ltd.newbee.mall.entity.NewBeeMallGoods;
+import ltd.newbee.mall.service.IndexService;
 import ltd.newbee.mall.service.NewBeeMallGoodsService;
-import ltd.newbee.mall.util.*;
+import ltd.newbee.mall.service.SearchService;
+import ltd.newbee.mall.util.BeanUtil;
+import ltd.newbee.mall.util.PageResult;
+import ltd.newbee.mall.util.Result;
+import ltd.newbee.mall.util.ResultGenerator;
+import org.apache.lucene.queryparser.classic.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.StringUtils;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 该类为商城商品相关接口
@@ -44,48 +52,70 @@ public class NewBeeMallGoodsAPI {
     @Resource
     private NewBeeMallGoodsService newBeeMallGoodsService;
 
+    @Resource
+    private IndexService indexService;
+
+    @Resource
+    private SearchService searchService;
+
     /**
      * 实现根据关键字和分类id进行搜索的商品搜索接口
      * @param keyword
-     * @param goodsCategoryId
-     * @param orderBy
      * @param pageNumber
-     * @param loginMallUser
+    //* @param loginMallUser
      * @return 商品搜索响应结果
      */
     @GetMapping("/search")
     @ApiOperation(value = "商品搜索接口", notes = "根据关键字和分类id进行搜索")
     public Result<PageResult<List<NewBeeMallSearchGoodsVO>>> search(@RequestParam(required = false) @ApiParam(value = "搜索关键字") String keyword,
-                                                                    @RequestParam(required = false) @ApiParam(value = "分类id") Long goodsCategoryId,
-                                                                    @RequestParam(required = false) @ApiParam(value = "orderBy") String orderBy,
                                                                     @RequestParam(required = false) @ApiParam(value = "页码") Integer pageNumber,
-                                                                    @TokenToMallUser MallUser loginMallUser) {
-        
-        logger.info("goods search api,keyword={},goodsCategoryId={},orderBy={},pageNumber={},userId={}", keyword, goodsCategoryId, orderBy, pageNumber, loginMallUser.getUserId());
+                                                                    @TokenToMallUser MallUser loginMallUser) throws IOException,ParseException {
 
-        Map params = new HashMap(8);
-        //两个搜索参数都为空，直接返回异常
-        if (goodsCategoryId == null && StringUtils.isEmpty(keyword)) {
+        logger.info("goods search api,keyword={},pageNumber={},userId={}", keyword, pageNumber, loginMallUser.getUserId());
+
+        //判定关键词是否为空，为空返回全部商品
+        if (keyword.isEmpty()) {
             NewBeeMallException.fail("非法的搜索参数");
         }
+
+        //没有当前页码，当前页码默认为1
         if (pageNumber == null || pageNumber < 1) {
             pageNumber = 1;
         }
-        params.put("goodsCategoryId", goodsCategoryId);
-        params.put("page", pageNumber);
-        params.put("limit", Constants.GOODS_SEARCH_PAGE_LIMIT);
-        //对keyword做过滤 去掉空格
-        if (!StringUtils.isEmpty(keyword)) {
-            params.put("keyword", keyword);
+
+        //创建索引库
+        indexService.createIndex();
+        //通过索引查询结果
+        List<NewBeeMallGoods> list = searchService.search(keyword);
+        //创建视图对象集合用于返回
+        List<NewBeeMallSearchGoodsVO> newBeeMallSearchGoodsVOS = new ArrayList<>();
+
+        if (!CollectionUtils.isEmpty(list)) {
+            newBeeMallSearchGoodsVOS = BeanUtil.copyList(list, NewBeeMallSearchGoodsVO.class);
+            /**
+             * 对每一个商品VO，如果字符串过长，则重新设置搜索VO中的商品名称和商品简介
+             */
+            for (NewBeeMallSearchGoodsVO newBeeMallSearchGoodsVO : newBeeMallSearchGoodsVOS) {
+                String goodsName = newBeeMallSearchGoodsVO.getGoodsName();
+                String goodsIntro = newBeeMallSearchGoodsVO.getGoodsIntro();
+                //字符串过长导致文字超出的问题
+                if (goodsName.length() > 28) {
+                    goodsName = goodsName.substring(0, 28) + "...";
+                    newBeeMallSearchGoodsVO.setGoodsName(goodsName);
+                }
+                if (goodsIntro.length() > 30) {
+                    goodsIntro = goodsIntro.substring(0, 30) + "...";
+                    newBeeMallSearchGoodsVO.setGoodsIntro(goodsIntro);
+                }
+            }
         }
-        if (!StringUtils.isEmpty(orderBy)) {
-            params.put("orderBy", orderBy);
-        }
-        //搜索上架状态下的商品
-        params.put("goodsSellStatus", Constants.SELL_STATUS_UP);
-        //封装商品数据
-        PageQueryUtil pageUtil = new PageQueryUtil(params);
-        return ResultGenerator.genSuccessResult(newBeeMallGoodsService.searchNewBeeMallGoods(pageUtil));
+        //将视图表装进分页返回
+        PageResult pageResult = new PageResult(newBeeMallSearchGoodsVOS,
+                list.size(),
+                Constants.GOODS_SEARCH_PAGE_LIMIT,
+                pageNumber);
+
+        return ResultGenerator.genSuccessResult(pageResult);
     }
 
     /**
