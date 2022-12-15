@@ -181,16 +181,18 @@ public class MyCreate {
             // 索引搜索工具
             IndexSearcher searcher=new IndexSearcher(reader);
             // 创建查询解析器,两个参数：默认要查询的字段的名称，分词器
-            QueryParser parser=new QueryParser("goods_intro",new MyIKAnalyzer());
+            QueryParser parser=new QueryParser("goods_name",new MyIKAnalyzer());
             // 创建查询对象
-
             Query query=parser.parse(text);
+
             // 获取前n条记录
             TopDocs topDocs=searcher.search(query,50);
+
             // 获取总条数
             System.out.println("本次搜索共找到"+topDocs.totalHits+"条数据");
             // 获取得分文档对象（ScoreDoc）数组.SocreDoc中包含：文档的编号、文档的得分
             ScoreDoc[]scoreDocs=topDocs.scoreDocs;
+
             List<NewBeeMallGoods>list=new ArrayList<>();
             for(ScoreDoc scoreDoc:scoreDocs){
                 // 取出文档编号
@@ -227,6 +229,9 @@ public class MyCreate {
 
                 list.add(good);
             }
+
+
+
             return list;
 
 
