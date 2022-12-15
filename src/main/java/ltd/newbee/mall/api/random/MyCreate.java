@@ -28,9 +28,11 @@ import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Paths;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.*;
+import java.util.Date;
 
 import ltd.newbee.mall.entity.NewBeeMallGoods;
 @JsonIgnoreProperties(value = {"handler","hibernateLazyInitializer","fieldHandler"})
@@ -91,9 +93,9 @@ public class MyCreate {
             goods.setTag(resultSet.getString("tag"));
             goods.setGoodsSellStatus(resultSet.getByte("goods_sell_status"));
             goods.setCreateUser(resultSet.getInt("create_user"));
-            goods.setCreateTime(resultSet.getTime("create_time"));
+            goods.setCreateTime(resultSet.getTimestamp("create_time"));
             goods.setUpdateUser(resultSet.getInt("update_user"));
-            goods.setUpdateTime(resultSet.getTime("update_time"));
+            goods.setUpdateTime(resultSet.getTimestamp("update_time"));
 
 
             list.add(goods);
@@ -170,7 +172,7 @@ public class MyCreate {
 
     }
     @RequestMapping("/mysearch")
-    public Object searchDocumentByIndex(String text)throws IOException,ParseException{
+    public Object searchDocumentByIndex(String text) throws IOException, ParseException, java.text.ParseException {
 
 
             Directory directory=FSDirectory.open(FileSystems.getDefault().getPath("E:\\Lucene\\ind"));
@@ -179,16 +181,20 @@ public class MyCreate {
             // 索引搜索工具
             IndexSearcher searcher=new IndexSearcher(reader);
             // 创建查询解析器,两个参数：默认要查询的字段的名称，分词器
-            QueryParser parser=new QueryParser("goods_intro",new MyIKAnalyzer());
-            // 创建查询对象
 
+            String[] fields = {"goods_name", "goods_intro"};
+            MultiFieldQueryParser parser= new MultiFieldQueryParser(fields,new MyIKAnalyzer());
+            // 创建查询对象
             Query query=parser.parse(text);
+
             // 获取前n条记录
-            TopDocs topDocs=searcher.search(query,30);
+            TopDocs topDocs=searcher.search(query,50);
+
             // 获取总条数
             System.out.println("本次搜索共找到"+topDocs.totalHits+"条数据");
             // 获取得分文档对象（ScoreDoc）数组.SocreDoc中包含：文档的编号、文档的得分
             ScoreDoc[]scoreDocs=topDocs.scoreDocs;
+
             List<NewBeeMallGoods>list=new ArrayList<>();
             for(ScoreDoc scoreDoc:scoreDocs){
                 // 取出文档编号
@@ -201,8 +207,33 @@ public class MyCreate {
                 good.setGoodsId(Long.parseLong(doc.get("goods_id")));
                 good.setGoodsName(doc.get("goods_name"));
                 good.setGoodsIntro(doc.get("goods_intro"));
+                good.setGoodsCarousel(doc.get("goods_category_id"));
+                good.setGoodsCoverImg(doc.get("goods_cover_img"));
+                good.setGoodsCarousel(doc.get("goods_carousel"));
+                good.setGoodsDetailContent(doc.get("goods_detail_content"));
+                good.setOriginalPrice(Integer.valueOf(doc.get("original_price")));
+                good.setSellingPrice(Integer.valueOf(doc.get("selling_price")));
+                good.setStockNum(Integer.parseInt(doc.get("stock_num")));
+                good.setTag(doc.get("tag"));
+                good.setGoodsSellStatus(Byte.parseByte(doc.get("goods_sell_status")));
+                good.setCreateUser(Integer.parseInt(doc.get("create_user")));
+                SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                String time = doc.get("create_time");
+                Date date = ft.parse(time);
+                good.setCreateTime(date);
+                good.setUpdateUser(Integer.parseInt(doc.get("update_user")));
+                String time1 = doc.get("update_time");
+                Date date1 = ft.parse(time1);
+                good.setUpdateTime(date1);
+
+
+
+
                 list.add(good);
             }
+
+
+
             return list;
 
 
