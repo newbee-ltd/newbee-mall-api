@@ -24,21 +24,10 @@ public class LuceneGoodsServiceImpl implements LuceneGoodsService {
      * @return
      */
     @Override
-    public List<NewBeeMallGoods> getAll() {
+    public List<NewBeeMallGoods> getAllGoods() {
         QueryWrapper<NewBeeMallGoods> wrapper = new QueryWrapper<>();
         // 列表
-        List<NewBeeMallGoods> originalList = mapper.selectList(wrapper);
-        List<NewBeeMallGoods> list= new ArrayList<>();
-        for(NewBeeMallGoods originGoods:originalList){
-            NewBeeMallGoods goods = new NewBeeMallGoods();
-            goods.setGoodsId(originGoods.getGoodsId());
-            goods.setGoodsName(originGoods.getGoodsName());
-            goods.setGoodsIntro(originGoods.getGoodsIntro());
-            goods.setGoodsCoverImg(originGoods.getGoodsCoverImg());
-            goods.setSellingPrice(originGoods.getSellingPrice());
-            list.add(goods);
-        }
-        return list;
+        return mapper.selectList(wrapper);
     }
     /**
      * 将数据转化为Lucene文档

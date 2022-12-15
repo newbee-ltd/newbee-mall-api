@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface LuceneGoodsService {
 
-    List<NewBeeMallGoods> getAll();
+    List<NewBeeMallGoods> getAllGoods();
 
     List getDocuments(List<NewBeeMallGoods> goods);
 }
