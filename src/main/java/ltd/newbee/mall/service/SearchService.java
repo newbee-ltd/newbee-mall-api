@@ -13,16 +13,13 @@ import java.util.List;
 public interface SearchService {
 
     /**
+     * 建立索引
+     */
+
+    public void createIndex() throws ClassNotFoundException, SQLException, IOException;
+    /**
      * 具体查询
      * @param keyword
      */
-    void searchDocumentByIndex(String keyword);
-
-    public PageResult getNewBeeMallGoodsPage(PageQueryUtil pageUtil);
-
-    public List<NewBeeMallGoods> getNewBeeMallGoodsByPage(PageQueryUtil pageUtil);
-
-    public void createIndex() throws ClassNotFoundException, SQLException, IOException;
-
     public  List<NewBeeMallGoods> search(String keyword) throws IOException, ParseException, org.apache.lucene.queryparser.classic.ParseException;
 }

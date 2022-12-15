@@ -108,8 +108,6 @@ public class NewBeeMallGoodsAPI {
         }
         PageQueryUtil pageUtil = new PageQueryUtil(params);
 
-        List<NewBeeMallGoods> list = searchService.getNewBeeMallGoodsByPage(pageUtil);
-
         searchService.createIndex();
 
         List<NewBeeMallGoods>list1=new ArrayList<>();
