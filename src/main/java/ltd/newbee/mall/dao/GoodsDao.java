@@ -34,6 +34,7 @@ public class GoodsDao {
 // 加载数据库驱动
             Class.forName("com.mysql.cj.jdbc.Driver");
 // 连接数据库
+            //TODO 改成自己的数据库配置
             connection = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/newbee-mall-datasource", "root", "45403888");
 // SQL语句

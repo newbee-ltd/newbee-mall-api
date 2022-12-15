@@ -8,36 +8,22 @@
  */
 package ltd.newbee.mall.api.mall;
 
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import ltd.newbee.mall.api.mall.vo.NewBeeMallGoodsDetailVO;
 import ltd.newbee.mall.api.mall.vo.NewBeeMallSearchGoodsVO;
 import ltd.newbee.mall.common.Constants;
-import ltd.newbee.mall.common.MyIKAnalyzer;
 import ltd.newbee.mall.common.NewBeeMallException;
 import ltd.newbee.mall.common.ServiceResultEnum;
 import ltd.newbee.mall.config.annotation.TokenToMallUser;
-import ltd.newbee.mall.api.mall.vo.NewBeeMallGoodsDetailVO;
 import ltd.newbee.mall.entity.MallUser;
 import ltd.newbee.mall.entity.NewBeeMallGoods;
 import ltd.newbee.mall.service.IndexService;
 import ltd.newbee.mall.service.NewBeeMallGoodsService;
 import ltd.newbee.mall.service.SearchService;
 import ltd.newbee.mall.util.*;
-import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field;
-import org.apache.lucene.document.StringField;
-import org.apache.lucene.document.TextField;
-import org.apache.lucene.index.DirectoryReader;
-import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.index.IndexWriter;
-import org.apache.lucene.index.IndexWriterConfig;
-import org.apache.lucene.queryparser.classic.MultiFieldQueryParser;
-import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.Query;
-import org.apache.lucene.search.ScoreDoc;
-import org.apache.lucene.search.TopDocs;
-import org.apache.lucene.store.Directory;
-import org.apache.lucene.store.FSDirectory;
+import org.apache.lucene.queryparser.classic.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
@@ -46,12 +32,11 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.io.IOException;
-import java.nio.file.FileSystems;
-import java.sql.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.Date;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 该类为商城商品相关接口
@@ -87,13 +72,16 @@ public class NewBeeMallGoodsAPI {
                                                                     @RequestParam(required = false) @ApiParam(value = "页码") Integer pageNumber
 //                                                                    @TokenToMallUser MallUser loginMallUser
                                                                     //TODO 等到和分支的时候要把这个user加回去，因为我们没有cookie，做测试会显示未登录
-    ) throws SQLException, IOException, ClassNotFoundException, ParseException, org.apache.lucene.queryparser.classic.ParseException {
+    ) throws IOException,ParseException {
 
-        logger.info("goods search api,keyword={},pageNumber={},userId={}", keyword,pageNumber);
+        logger.info("goods search api,keyword={},pageNumber={},userId={}", keyword, pageNumber);
 
+        //判定关键词是否为空，为空返回全部商品
         if (keyword.isEmpty()) {
             NewBeeMallException.fail("非法的搜索参数");
         }
+
+        //没有当前页码，当前页码默认为1
         if (pageNumber == null || pageNumber < 1) {
             pageNumber = 1;
         }
@@ -108,18 +96,15 @@ public class NewBeeMallGoodsAPI {
         }
         PageQueryUtil pageUtil = new PageQueryUtil(params);
 
-        searchService.createIndex();
-
-        List<NewBeeMallGoods>list1=new ArrayList<>();
-
-        list1=searchService.search(keyword);
-
-        int total = list1.size();
-
+        //创建索引库
+        indexService.createIndex();
+        //通过索引查询结果
+        List<NewBeeMallGoods> list = searchService.search(keyword);
+        //创建视图对象集合用于返回
         List<NewBeeMallSearchGoodsVO> newBeeMallSearchGoodsVOS = new ArrayList<>();
 
-        if (!CollectionUtils.isEmpty(list1)) {
-            newBeeMallSearchGoodsVOS = BeanUtil.copyList(list1, NewBeeMallSearchGoodsVO.class);
+        if (!CollectionUtils.isEmpty(list)) {
+            newBeeMallSearchGoodsVOS = BeanUtil.copyList(list, NewBeeMallSearchGoodsVO.class);
             /**
              * 对每一个商品VO，如果字符串过长，则重新设置搜索VO中的商品名称和商品简介
              */
@@ -137,10 +122,11 @@ public class NewBeeMallGoodsAPI {
                 }
             }
         }
-
-        PageResult pageResult = new PageResult(newBeeMallSearchGoodsVOS,total,pageUtil.getLimit(),pageUtil.getPage());
-
-
+        //将视图表装进分页返回
+        PageResult pageResult = new PageResult(newBeeMallSearchGoodsVOS,
+                list.size(),
+                Constants.GOODS_SEARCH_PAGE_LIMIT,
+                pageNumber);
 
         return ResultGenerator.genSuccessResult(pageResult);
     }
