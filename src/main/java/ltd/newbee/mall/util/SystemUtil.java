@@ -1,5 +1,7 @@
 package ltd.newbee.mall.util;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.math.BigInteger;
 import java.security.MessageDigest;
 
@@ -9,6 +11,7 @@ import java.security.MessageDigest;
  * @email 2449207463@qq.com
  * @link https://github.com/newbee-ltd
  */
+@Slf4j
 public class SystemUtil {
 
     private SystemUtil() {
@@ -32,7 +35,7 @@ public class SystemUtil {
             if (result.length() == 31) {
                 result = result + "-";
             }
-            System.out.println(result);
+            log.info("生成token:{}",result);
             return result;
         } catch (Exception e) {
             return null;

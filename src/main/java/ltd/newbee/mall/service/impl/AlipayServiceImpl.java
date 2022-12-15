@@ -102,7 +102,6 @@ public class AlipayServiceImpl implements AlipayService {
             throw new RuntimeException("创建支付交易失败,连接异常");
         }
         if(response.isSuccess()){
-            System.out.println("调用成功");
             log.info("调用成功,返回结果为==>" + response.getBody());
         } else {
             log.info("调用失败,返回结果为==> " + response.getCode() + " " + response.getMsg());

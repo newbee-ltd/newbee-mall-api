@@ -1,9 +1,9 @@
 package ltd.newbee.mall.service.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import ltd.newbee.mall.common.MyIKAnalyzer;
 import ltd.newbee.mall.entity.NewBeeMallGoods;
 import ltd.newbee.mall.service.SearchService;
-import ltd.newbee.mall.util.LuceneUtil;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
@@ -15,26 +15,35 @@ import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
+@Slf4j
 public class SearchServiceImpl implements SearchService {
+
+    @Resource
+    private Environment config;
+
     /**
      * 搜索实现
-     * @param keyword
-     * @return
-     * @throws IOException
-     * @throws ParseException
+     * @param keyword 关键字
+     * @return 搜索结果
+     * @throws IOException IO异常
+     * @throws ParseException 解析异常
      */
     public List<NewBeeMallGoods> search(@Valid String keyword) throws IOException, ParseException {
-        LuceneUtil luceneUtil = new LuceneUtil();
-        Directory directory1=FSDirectory.open(FileSystems.getDefault().getPath(luceneUtil.getLucenePath()));
+        Directory directory1=FSDirectory.open(FileSystems.getDefault().getPath(
+                Objects.requireNonNull(config.getProperty("lucene.index.path"))
+        ));
         // 索引读取工具
         IndexReader reader = DirectoryReader.open(directory1);
         // 索引搜索工具
@@ -50,7 +59,7 @@ public class SearchServiceImpl implements SearchService {
         TopDocs topDocs=searcher.search(query,500);
 
         // 获取总条数
-        System.out.println("本次搜索共找到"+topDocs.totalHits+"条数据");
+        log.info("本次搜索共找到"+topDocs.totalHits+"条数据");
         // 获取得分文档对象（ScoreDoc）数组.SocreDoc中包含：文档的编号、文档的得分
         ScoreDoc[]scoreDocs=topDocs.scoreDocs;
 
