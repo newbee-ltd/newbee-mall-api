@@ -11,6 +11,7 @@ package ltd.newbee.mall.api.mall;
 import io.swagger.annotations.*;
 import ltd.newbee.mall.api.mall.vo.NewBeeMallSearchGoodsVO;
 import ltd.newbee.mall.common.Constants;
+import ltd.newbee.mall.common.MyIKAnalyzer;
 import ltd.newbee.mall.common.NewBeeMallException;
 import ltd.newbee.mall.common.ServiceResultEnum;
 import ltd.newbee.mall.config.annotation.TokenToMallUser;
@@ -21,15 +22,36 @@ import ltd.newbee.mall.service.IndexService;
 import ltd.newbee.mall.service.NewBeeMallGoodsService;
 import ltd.newbee.mall.service.SearchService;
 import ltd.newbee.mall.util.*;
+import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.document.Document;
+import org.apache.lucene.document.Field;
+import org.apache.lucene.document.StringField;
+import org.apache.lucene.document.TextField;
+import org.apache.lucene.index.DirectoryReader;
+import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.queryparser.classic.MultiFieldQueryParser;
+import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.search.Query;
+import org.apache.lucene.search.ScoreDoc;
+import org.apache.lucene.search.TopDocs;
+import org.apache.lucene.store.Directory;
+import org.apache.lucene.store.FSDirectory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.Date;
 
 /**
  * 该类为商城商品相关接口
@@ -50,13 +72,13 @@ public class NewBeeMallGoodsAPI {
     private IndexService indexService;
 
     @Resource
-    private SearchService service;
+    private SearchService searchService;
 
     /**
      * 实现根据关键字和分类id进行搜索的商品搜索接口
      * @param keyword
      * @param pageNumber
-     * @param loginMallUser
+    //* @param loginMallUser
      * @return 商品搜索响应结果
      */
     @GetMapping("/search")
@@ -65,33 +87,64 @@ public class NewBeeMallGoodsAPI {
                                                                     @RequestParam(required = false) @ApiParam(value = "页码") Integer pageNumber
 //                                                                    @TokenToMallUser MallUser loginMallUser
                                                                     //TODO 等到和分支的时候要把这个user加回去，因为我们没有cookie，做测试会显示未登录
-    ) {
-        
+    ) throws SQLException, IOException, ClassNotFoundException, ParseException, org.apache.lucene.queryparser.classic.ParseException {
+
         logger.info("goods search api,keyword={},pageNumber={},userId={}", keyword,pageNumber);
 
-        Map params = new HashMap(8);
-        //TODO 不输入搜索结果，返回全部商品
         if (keyword.isEmpty()) {
             NewBeeMallException.fail("非法的搜索参数");
         }
         if (pageNumber == null || pageNumber < 1) {
             pageNumber = 1;
         }
-        params.put("goodsCategoryId", goodsCategoryId);
+
+        Map params = new HashMap(8);
+
         params.put("page", pageNumber);
         params.put("limit", Constants.GOODS_SEARCH_PAGE_LIMIT);
-        //对keyword做过滤 去掉空格
+        params.put("goodsSellStatus", Constants.SELL_STATUS_UP);
         if (!StringUtils.isEmpty(keyword)) {
             params.put("keyword", keyword);
         }
-        if (!StringUtils.isEmpty(orderBy)) {
-            params.put("orderBy", orderBy);
-        }
-        //搜索上架状态下的商品
-        params.put("goodsSellStatus", Constants.SELL_STATUS_UP);
-        //封装商品数据
         PageQueryUtil pageUtil = new PageQueryUtil(params);
-        return ResultGenerator.genSuccessResult(newBeeMallGoodsService.searchNewBeeMallGoods(pageUtil));
+
+        List<NewBeeMallGoods> list = searchService.getNewBeeMallGoodsByPage(pageUtil);
+
+        searchService.createIndex();
+
+        List<NewBeeMallGoods>list1=new ArrayList<>();
+
+        list1=searchService.search(keyword);
+
+        int total = list1.size();
+
+        List<NewBeeMallSearchGoodsVO> newBeeMallSearchGoodsVOS = new ArrayList<>();
+
+        if (!CollectionUtils.isEmpty(list1)) {
+            newBeeMallSearchGoodsVOS = BeanUtil.copyList(list1, NewBeeMallSearchGoodsVO.class);
+            /**
+             * 对每一个商品VO，如果字符串过长，则重新设置搜索VO中的商品名称和商品简介
+             */
+            for (NewBeeMallSearchGoodsVO newBeeMallSearchGoodsVO : newBeeMallSearchGoodsVOS) {
+                String goodsName = newBeeMallSearchGoodsVO.getGoodsName();
+                String goodsIntro = newBeeMallSearchGoodsVO.getGoodsIntro();
+                //字符串过长导致文字超出的问题
+                if (goodsName.length() > 28) {
+                    goodsName = goodsName.substring(0, 28) + "...";
+                    newBeeMallSearchGoodsVO.setGoodsName(goodsName);
+                }
+                if (goodsIntro.length() > 30) {
+                    goodsIntro = goodsIntro.substring(0, 30) + "...";
+                    newBeeMallSearchGoodsVO.setGoodsIntro(goodsIntro);
+                }
+            }
+        }
+
+        PageResult pageResult = new PageResult(newBeeMallSearchGoodsVOS,total,pageUtil.getLimit(),pageUtil.getPage());
+
+
+
+        return ResultGenerator.genSuccessResult(pageResult);
     }
 
     /**
