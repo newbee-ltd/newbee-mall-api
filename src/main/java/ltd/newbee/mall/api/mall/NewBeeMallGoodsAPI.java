@@ -62,7 +62,7 @@ public class NewBeeMallGoodsAPI {
      * 实现根据关键字和分类id进行搜索的商品搜索接口
      * @param keyword
      * @param pageNumber
-    //* @param loginMallUser
+     * @param loginMallUser
      * @return 商品搜索响应结果
      */
     @GetMapping("/search")
@@ -133,7 +133,7 @@ public class NewBeeMallGoodsAPI {
         }
         //根据id获取商品详情
         NewBeeMallGoods goods = newBeeMallGoodsService.getNewBeeMallGoodsById(goodsId);
-        /**
+        /*
          * 如果商品状态为下架，则抛出异常
          */
         if (Constants.SELL_STATUS_UP != goods.getGoodsSellStatus()) {
