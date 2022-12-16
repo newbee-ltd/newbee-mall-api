@@ -71,7 +71,7 @@ public class NewBeeAdminManageUserAPI {
      */
     @GetMapping(value = "/adminUser/profile")
     public Result profile(@TokenToAdminUser AdminUserToken adminUser) {
-        logger.info(ADMIN_USER, adminUser.toString());
+        logger.info("{}", ADMIN_USER);
         AdminUser adminUserEntity = adminUserService.getUserDetailById(adminUser.getAdminUserId());
         if (adminUserEntity != null) {
             adminUserEntity.setLoginPassword("******");
@@ -90,7 +90,7 @@ public class NewBeeAdminManageUserAPI {
      */
     @PutMapping(value = "/adminUser/password")
     public Result passwordUpdate(@RequestBody @Valid UpdateAdminPasswordParam adminPasswordParam, @TokenToAdminUser AdminUserToken adminUser) {
-        logger.info(ADMIN_USER, adminUser.toString());
+        logger.info("{}", ADMIN_USER);
         if (adminUserService.updatePassword(adminUser.getAdminUserId(), adminPasswordParam.getOriginalPassword(), adminPasswordParam.getNewPassword())) {
             return ResultGenerator.genSuccessResult();
         } else {
@@ -106,7 +106,7 @@ public class NewBeeAdminManageUserAPI {
      */
     @PutMapping(value = "/adminUser/name")
     public Result nameUpdate(@RequestBody @Valid UpdateAdminNameParam adminNameParam, @TokenToAdminUser AdminUserToken adminUser) {
-        logger.info(ADMIN_USER, adminUser.toString());
+        logger.info("{}", ADMIN_USER);
         if (adminUserService.updateName(adminUser.getAdminUserId(), adminNameParam.getLoginUserName(), adminNameParam.getNickName())) {
             return ResultGenerator.genSuccessResult();
         } else {
@@ -122,7 +122,7 @@ public class NewBeeAdminManageUserAPI {
      */
     @DeleteMapping("/adminUser/deleteUser")
     public Result deleteUser(@Valid @RequestBody DeleteUserParam deleteUserParam, @TokenToAdminUser AdminUserToken adminUser) {
-        logger.info(ADMIN_USER, adminUser.toString());
+        logger.info("{}", ADMIN_USER);
         if(adminUserService.deleteById(deleteUserParam.getUserId())) {
             return ResultGenerator.genSuccessResult();
         } else {
@@ -137,7 +137,7 @@ public class NewBeeAdminManageUserAPI {
      */
     @DeleteMapping(value ="/adminUser/deleteAdminUser")
     public Result deleteAdminUser(@Valid @RequestBody DeleteAdminUserParam deleteAdminUserParam, @TokenToAdminUser AdminUserToken adminUser) {
-        logger.info(ADMIN_USER, adminUser.toString());
+        logger.info("{}", ADMIN_USER);
         if(adminUserService.deleteAdminUserById(deleteAdminUserParam.getAdminUserId())){
             return  ResultGenerator.genSuccessResult();
         }else{
@@ -153,7 +153,7 @@ public class NewBeeAdminManageUserAPI {
      */
     @DeleteMapping(value = "/logout")
     public Result logout(@TokenToAdminUser AdminUserToken adminUser) {
-        logger.info(ADMIN_USER, adminUser.toString());
+        logger.info("{}", ADMIN_USER);
         adminUserService.logout(adminUser.getAdminUserId());
         return ResultGenerator.genSuccessResult();
     }

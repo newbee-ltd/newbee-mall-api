@@ -64,7 +64,7 @@ public class NewBeeAdminCarouselAPI {
     public Result list(@RequestParam(required = false) @ApiParam(value = "页码") Integer pageNumber,
                        @RequestParam(required = false) @ApiParam(value = "每页条数") Integer pageSize, @TokenToAdminUser AdminUserToken adminUser) {
         //日志生成
-        logger.info(ADMIN_USER, adminUser.toString());
+        logger.info("{}", ADMIN_USER);
         //分页参数异常
         if (pageNumber == null || pageNumber < 1 || pageSize == null || pageSize < 10) {
             return ResultGenerator.genFailResult("分页参数异常！");
@@ -87,7 +87,7 @@ public class NewBeeAdminCarouselAPI {
     @ApiOperation(value = "新增轮播图", notes = "新增轮播图")
     public Result save(@RequestBody @Valid CarouselAddParam carouselAddParam, @TokenToAdminUser AdminUserToken adminUser) {
         //日志生成
-        logger.info(ADMIN_USER, adminUser.toString());
+        logger.info("{}", ADMIN_USER);
         Carousel carousel = new Carousel();
         //将轮播图添加参数对象转换为轮播图
         BeanUtil.copyProperties(carouselAddParam, carousel);
@@ -113,7 +113,7 @@ public class NewBeeAdminCarouselAPI {
     @PutMapping(value = "/carousels")
     @ApiOperation(value = "修改轮播图信息", notes = "修改轮播图信息")
     public Result update(@RequestBody CarouselEditParam carouselEditParam, @TokenToAdminUser AdminUserToken adminUser) {
-        logger.info(ADMIN_USER, adminUser.toString());
+        logger.info("{}", ADMIN_USER);
         Carousel carousel = new Carousel();
         //将轮播图修改信息参数对象转换为轮播图
         BeanUtil.copyProperties(carouselEditParam, carousel);
@@ -138,7 +138,7 @@ public class NewBeeAdminCarouselAPI {
     @GetMapping(value = "/carousels/{id}")
     @ApiOperation(value = "获取单条轮播图信息", notes = "根据id查询")
     public Result info(@PathVariable("id") Integer id, @TokenToAdminUser AdminUserToken adminUser) {
-        logger.info(ADMIN_USER, adminUser.toString());
+        logger.info("{}", ADMIN_USER);
         //根据id获取单条轮播图
         Carousel carousel = newBeeMallCarouselService.getCarouselById(id);
         /**
@@ -159,7 +159,7 @@ public class NewBeeAdminCarouselAPI {
     @DeleteMapping(value = "/carousels")
     @ApiOperation(value = "批量删除轮播图信息", notes = "批量删除轮播图信息")
     public Result delete(@RequestBody BatchIdParam batchIdParam, @TokenToAdminUser AdminUserToken adminUser) {
-        logger.info(ADMIN_USER, adminUser.toString());
+        logger.info("{}", ADMIN_USER);
         /**
          * 如果批量处理参数为空或数组长度小于1，返回参数异常失败响应
          */

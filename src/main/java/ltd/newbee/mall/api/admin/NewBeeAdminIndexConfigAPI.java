@@ -66,7 +66,7 @@ public class NewBeeAdminIndexConfigAPI {
     public Result list(@RequestParam(required = false) @ApiParam(value = "页码") Integer pageNumber,
                        @RequestParam(required = false) @ApiParam(value = "每页条数") Integer pageSize,
                        @RequestParam(required = false) @ApiParam(value = "1-搜索框热搜 2-搜索下拉框热搜 3-(首页)热销商品 4-(首页)新品上线 5-(首页)为你推荐") Integer configType, @TokenToAdminUser AdminUserToken adminUser) {
-        logger.info(ADMIN_USER, adminUser.toString());
+        logger.info("{}", ADMIN_USER);
         //分页参数异常
         if (pageNumber == null || pageNumber < 1 || pageSize == null || pageSize < 10) {
             return ResultGenerator.genFailResult("分页参数异常！");
@@ -96,7 +96,7 @@ public class NewBeeAdminIndexConfigAPI {
     @PostMapping(value = "/indexConfigs")
     @ApiOperation(value = "新增首页配置项", notes = "新增首页配置项")
     public Result save(@RequestBody @Valid IndexConfigAddParam indexConfigAddParam, @TokenToAdminUser AdminUserToken adminUser) {
-        logger.info(ADMIN_USER, adminUser.toString());
+        logger.info("{}", ADMIN_USER);
         IndexConfig indexConfig = new IndexConfig();
         //将首页配置项添加参数对象转换为首页配置项
         BeanUtil.copyProperties(indexConfigAddParam, indexConfig);
@@ -122,7 +122,7 @@ public class NewBeeAdminIndexConfigAPI {
     @RequestMapping(value = "/indexConfigs", method = RequestMethod.PUT)
     @ApiOperation(value = "修改首页配置项", notes = "修改首页配置项")
     public Result update(@RequestBody @Valid IndexConfigEditParam indexConfigEditParam, @TokenToAdminUser AdminUserToken adminUser) {
-        logger.info(ADMIN_USER, adminUser.toString());
+        logger.info("{}", ADMIN_USER);
         IndexConfig indexConfig = new IndexConfig();
         //将首页配置项信息修改参数对象转换为首页配置项
         BeanUtil.copyProperties(indexConfigEditParam, indexConfig);
@@ -147,7 +147,7 @@ public class NewBeeAdminIndexConfigAPI {
     @RequestMapping(value = "/indexConfigs/{id}", method = RequestMethod.GET)
     @ApiOperation(value = "获取单条首页配置项信息", notes = "根据id查询")
     public Result info(@PathVariable("id") Long id, @TokenToAdminUser AdminUserToken adminUser) {
-        logger.info(ADMIN_USER, adminUser.toString());
+        logger.info("{}", ADMIN_USER);
         //根据id获取配置项
         IndexConfig config = newBeeMallIndexConfigService.getIndexConfigById(id);
         /**
@@ -168,7 +168,7 @@ public class NewBeeAdminIndexConfigAPI {
     @RequestMapping(value = "/indexConfigs", method = RequestMethod.DELETE)
     @ApiOperation(value = "批量删除首页配置项信息", notes = "批量删除首页配置项信息")
     public Result delete(@RequestBody BatchIdParam batchIdParam, @TokenToAdminUser AdminUserToken adminUser) {
-        logger.info(ADMIN_USER, adminUser.toString());
+        logger.info("{}", ADMIN_USER);
         /**
          * 如果批量处理参数为空或数组长度小于1，返回参数异常失败响应
          */

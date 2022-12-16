@@ -58,7 +58,7 @@ public class NewBeeAdminOrderAPI {
                        @RequestParam(required = false) @ApiParam(value = "每页条数") Integer pageSize,
                        @RequestParam(required = false) @ApiParam(value = "订单号") String orderNo,
                        @RequestParam(required = false) @ApiParam(value = "订单状态") Integer orderStatus, @TokenToAdminUser AdminUserToken adminUser) {
-        logger.info(ADMIN_LOG, adminUser.toString());
+        logger.info("{}", ADMIN_LOG);
         if (pageNumber == null || pageNumber < 1 || pageSize == null || pageSize < 10) {
             return ResultGenerator.genFailResult("分页参数异常！");
         }
@@ -78,7 +78,7 @@ public class NewBeeAdminOrderAPI {
     @GetMapping("/orders/{orderId}")
     @ApiOperation(value = "订单详情接口", notes = "传参为订单号")
     public Result<NewBeeMallOrderDetailVO> orderDetailPage(@ApiParam(value = "订单号") @PathVariable("orderId") Long orderId, @TokenToAdminUser AdminUserToken adminUser) {
-        logger.info(ADMIN_LOG, adminUser.toString());
+        logger.info("{}", ADMIN_LOG);
         return ResultGenerator.genSuccessResult(newBeeMallOrderService.getOrderDetailByOrderId(orderId));
     }
 
@@ -88,7 +88,7 @@ public class NewBeeAdminOrderAPI {
     @PutMapping(value = "/orders/checkDone")
     @ApiOperation(value = "修改订单状态为配货成功", notes = "批量修改")
     public Result checkDone(@RequestBody BatchIdParam batchIdParam, @TokenToAdminUser AdminUserToken adminUser) {
-        logger.info(ADMIN_LOG, adminUser.toString());
+        logger.info("{}", ADMIN_LOG);
         if (batchIdParam==null||batchIdParam.getIds().length < 1) {
             return ResultGenerator.genFailResult(PARAM_ERROR);
         }
@@ -106,7 +106,7 @@ public class NewBeeAdminOrderAPI {
     @PutMapping(value = "/orders/checkOut")
     @ApiOperation(value = "修改订单状态为已出库", notes = "批量修改")
     public Result checkOut(@RequestBody BatchIdParam batchIdParam, @TokenToAdminUser AdminUserToken adminUser) {
-        logger.info(ADMIN_LOG, adminUser.toString());
+        logger.info("{}", ADMIN_LOG);
         if (batchIdParam==null||batchIdParam.getIds().length < 1) {
             return ResultGenerator.genFailResult(PARAM_ERROR);
         }
@@ -124,7 +124,7 @@ public class NewBeeAdminOrderAPI {
     @PutMapping(value = "/orders/close")
     @ApiOperation(value = "修改订单状态为商家关闭", notes = "批量修改")
     public Result closeOrder(@RequestBody BatchIdParam batchIdParam, @TokenToAdminUser AdminUserToken adminUser) {
-        logger.info(ADMIN_LOG, adminUser.toString());
+        logger.info("{}", ADMIN_LOG);
         if (batchIdParam==null||batchIdParam.getIds().length < 1) {
             return ResultGenerator.genFailResult(PARAM_ERROR);
         }
