@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class MyIKTokenizer extends Tokenizer {
 
-    private IKSegmenter _IKImplement;
+    private IKSegmenter ikImplement;
     private final CharTermAttribute termAtt = (CharTermAttribute)this.addAttribute(CharTermAttribute.class);
     private final OffsetAttribute offsetAtt = (OffsetAttribute)this.addAttribute(OffsetAttribute.class);
     private final TypeAttribute typeAtt = (TypeAttribute)this.addAttribute(TypeAttribute.class);
@@ -19,13 +19,13 @@ public class MyIKTokenizer extends Tokenizer {
 
     //useSmart：设置是否使用智能分词。默认为false，使用细粒度分词，这里如果更改为TRUE，那么搜索到的结果可能就少的很多
     public MyIKTokenizer(boolean useSmart) {
-        this._IKImplement = new IKSegmenter(this.input, useSmart);
+        this.ikImplement = new IKSegmenter(this.input, useSmart);
     }
 
     @Override
     public boolean incrementToken() throws IOException {
         this.clearAttributes();
-        Lexeme nextLexeme = this._IKImplement.next();
+        Lexeme nextLexeme = this.ikImplement.next();
         if (nextLexeme != null) {
             this.termAtt.append(nextLexeme.getLexemeText());
             this.termAtt.setLength(nextLexeme.getLength());
@@ -41,7 +41,7 @@ public class MyIKTokenizer extends Tokenizer {
     @Override
     public void reset() throws IOException {
         super.reset();
-        this._IKImplement.reset(this.input);
+        this.ikImplement.reset(this.input);
     }
 
     @Override

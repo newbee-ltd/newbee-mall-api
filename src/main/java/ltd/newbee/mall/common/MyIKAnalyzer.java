@@ -20,8 +20,8 @@ public class MyIKAnalyzer extends Analyzer {
 
     @Override
     protected TokenStreamComponents createComponents(String s) {
-        Tokenizer _MyIKTokenizer = new MyIKTokenizer(this.useSmart());
-        return new TokenStreamComponents(_MyIKTokenizer);
+        Tokenizer myIKTokenizer = new MyIKTokenizer(this.useSmart());
+        return new TokenStreamComponents(myIKTokenizer);
     }
 
     public boolean useSmart() {
