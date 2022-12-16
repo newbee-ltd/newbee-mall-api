@@ -50,7 +50,7 @@ public class NewBeeAdminRegisteUserAPI {
     public Result list(@RequestParam(required = false) @ApiParam(value = "页码") Integer pageNumber,
                        @RequestParam(required = false) @ApiParam(value = "每页条数") Integer pageSize,
                        @RequestParam(required = false) @ApiParam(value = "用户状态") Integer lockStatus, @TokenToAdminUser AdminUserToken adminUser) {
-        logger.info("adminUser:{}", adminUser.toString());
+        logger.info("adminUser:{}", adminUser);
         if (pageNumber == null || pageNumber < 1 || pageSize == null || pageSize < 10) {
             return ResultGenerator.genFailResult("参数异常！");
         }
@@ -70,7 +70,7 @@ public class NewBeeAdminRegisteUserAPI {
     @PutMapping(value = "/users/{lockStatus}")
     @ApiOperation(value = "修改用户状态", notes = "批量修改，用户禁用与解除禁用(0-未锁定 1-已锁定)")
     public Result lockUser(@RequestBody BatchIdParam batchIdParam, @PathVariable int lockStatus, @TokenToAdminUser AdminUserToken adminUser) {
-        logger.info("adminUser:{}", adminUser.toString());
+        logger.info("adminUser:{}", adminUser);
         if (batchIdParam==null||batchIdParam.getIds().length < 1) {
             return ResultGenerator.genFailResult("参数异常！");
         }

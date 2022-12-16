@@ -31,8 +31,7 @@ public class NewBeeMallUserAddressServiceImpl implements NewBeeMallUserAddressSe
     @Override
     public List<NewBeeMallUserAddressVO> getMyAddresses(Long userId) {
         List<MallUserAddress> myAddressList = userAddressMapper.findMyAddressList(userId);
-        List<NewBeeMallUserAddressVO> newBeeMallUserAddressVOS = BeanUtil.copyList(myAddressList, NewBeeMallUserAddressVO.class);
-        return newBeeMallUserAddressVOS;
+        return BeanUtil.copyList(myAddressList, NewBeeMallUserAddressVO.class);
     }
 
     @Override

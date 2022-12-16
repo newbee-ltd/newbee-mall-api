@@ -114,10 +114,7 @@ public class NewBeeMallUserServiceImpl implements NewBeeMallUserService {
             user.setPasswordMd5(mallUser.getPasswordMd5());
         }
         user.setIntroduceSign(mallUser.getIntroduceSign());
-        if (mallUserMapper.updateByPrimaryKeySelective(user) > 0) {
-            return true;
-        }
-        return false;
+        return mallUserMapper.updateByPrimaryKeySelective(user) > 0;
     }
 
     @Override
@@ -129,8 +126,7 @@ public class NewBeeMallUserServiceImpl implements NewBeeMallUserService {
     public PageResult getNewBeeMallUsersPage(PageQueryUtil pageUtil) {
         List<MallUser> mallUsers = mallUserMapper.findMallUserList(pageUtil);
         int total = mallUserMapper.getTotalMallUsers(pageUtil);
-        PageResult pageResult = new PageResult(mallUsers, total, pageUtil.getLimit(), pageUtil.getPage());
-        return pageResult;
+        return new PageResult(mallUsers, total, pageUtil.getLimit(), pageUtil.getPage());
     }
 
     @Override

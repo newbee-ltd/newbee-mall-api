@@ -17,7 +17,7 @@ import java.util.Date;
 
 /**
  * 该类为订单中的物品类
- * 一个订单有多个物品 TODO 这些对应关系要好好重新梳理一下
+ * 一个订单有多个物品
  */
 @Data
 @TableName("tb_newbee_mall_order_item")
@@ -28,7 +28,6 @@ public class NewBeeMallOrderItem {
 
     private Long orderId;
 
-    // TODO 既然都塞了3个goods的属性进来 不如直接塞一整个goods进来好了
     private Long goodsId;
 
     private String goodsName;

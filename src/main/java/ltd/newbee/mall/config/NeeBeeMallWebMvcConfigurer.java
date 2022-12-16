@@ -32,6 +32,7 @@ public class NeeBeeMallWebMvcConfigurer extends WebMvcConfigurationSupport {
      * @param argumentResolvers 参数解析器 用于将token转换为用户信息
      * @tip @TokenToMallUser @TokenToAdminUser 注解处理方法
      */
+    @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
         argumentResolvers.add(tokenToMallUserMethodArgumentResolver);
         argumentResolvers.add(tokenToAdminUserMethodArgumentResolver);
@@ -41,6 +42,7 @@ public class NeeBeeMallWebMvcConfigurer extends WebMvcConfigurationSupport {
      * 视图解析器
      * @param registry 资源处理器
      */
+    @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/upload/**").addResourceLocations("file:" + Constants.FILE_UPLOAD_DIC);
         registry.addResourceHandler("/goods-img/**").addResourceLocations("file:" + Constants.FILE_UPLOAD_DIC);

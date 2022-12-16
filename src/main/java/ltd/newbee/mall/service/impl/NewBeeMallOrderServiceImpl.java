@@ -63,7 +63,6 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
         List<NewBeeMallOrderItem> orderItems = newBeeMallOrderItemMapper.selectByOrderId(newBeeMallOrder.getOrderId());
         //获取订单项数据
         if (!CollectionUtils.isEmpty(orderItems)) {
-            // TODO 最后要把这玩意抽象一下
             List<NewBeeMallOrderItemVO> newBeeMallOrderItemVOS =
                     BeanUtil.copyList(orderItems, NewBeeMallOrderItemVO.class);
             NewBeeMallOrderDetailVO newBeeMallOrderDetailVO = new NewBeeMallOrderDetailVO();
@@ -216,7 +215,6 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
 
     /**
      * 支付状态的写入
-     * TODO 这玩意最后肯定要改成异步的 还要加事务(MybatisPlus的乐观锁)
      * @param orderNo 订单号
      * @param payType 支付方式
      * @return 支付结果
@@ -431,20 +429,20 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
     public String closeOrder(Long[] ids) {
         //查询所有的订单 判断状态 修改状态和更新时间
         List<NewBeeMallOrder> orders = newBeeMallOrderMapper.selectByPrimaryKeys(Arrays.asList(ids));
-        String errorOrderNos = "";
+        StringBuilder errorOrderNos = new StringBuilder();
         if (!CollectionUtils.isEmpty(orders)) {
             for (NewBeeMallOrder newBeeMallOrder : orders) {
                 // isDeleted=1 一定为已关闭订单
                 if (newBeeMallOrder.getIsDeleted() == 1) {
-                    errorOrderNos += newBeeMallOrder.getOrderNo() + " ";
+                    errorOrderNos.append(newBeeMallOrder.getOrderNo()).append(" ");
                     continue;
                 }
                 //已关闭或者已完成无法关闭订单
                 if (newBeeMallOrder.getOrderStatus() == 4 || newBeeMallOrder.getOrderStatus() < 0) {
-                    errorOrderNos += newBeeMallOrder.getOrderNo() + " ";
+                    errorOrderNos.append(newBeeMallOrder.getOrderNo()).append(" ");
                 }
             }
-            if (StringUtils.hasLength(errorOrderNos)) {
+            if (StringUtils.hasLength(errorOrderNos.toString())) {
                 //订单状态正常 可以执行关闭操作 修改订单状态和更新时间&&恢复库存
                 if (newBeeMallOrderMapper.closeOrder(Arrays.asList(ids), NewBeeMallOrderStatusEnum.ORDER_CLOSED_BY_JUDGE.getOrderStatus()) > 0 && recoverStockNum(Arrays.asList(ids))) {
                     return ServiceResultEnum.SUCCESS.getResult();

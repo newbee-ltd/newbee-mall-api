@@ -23,7 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.locks.ReentrantLock;
@@ -35,6 +34,12 @@ import java.util.concurrent.locks.ReentrantLock;
 @Service
 @Slf4j
 public class AlipayServiceImpl implements AlipayService {
+
+    private static final String OUT_TRADE_NUMBER = "out_trade_no";
+
+    private static final String CALL_SUCCESS = "调用成功,返回结果为==>";
+
+    private static final String CALL_FAILURE = "调用失败,返回结果为==>";
 
     @Resource
     private AlipayClient alipayClient;
@@ -62,7 +67,7 @@ public class AlipayServiceImpl implements AlipayService {
 
         JSONObject bizContent = new JSONObject();
         // 商户订单号
-        bizContent.put("out_trade_no", orderNo);
+        bizContent.put(OUT_TRADE_NUMBER, orderNo);
 
         NewBeeMallOrderDetailVO order = orderService.getOrderDetailByOrderNo(orderNo, userId);
 
@@ -100,13 +105,13 @@ public class AlipayServiceImpl implements AlipayService {
             log.error("创建支付交易失败");
             // try-catch与Transaction注解配合使用时需要手动抛出RuntimeException，否则事务不会回滚
             e.printStackTrace();
-            throw new RuntimeException("创建支付交易失败,连接异常");
+            throw new NewBeeMallException("创建支付交易失败,连接异常");
         }
         if(response.isSuccess()){
-            log.info("调用成功,返回结果为==>" + response.getBody());
+            log.info(CALL_SUCCESS + response.getBody());
         } else {
-            log.info("调用失败,返回结果为==> " + response.getCode() + " " + response.getMsg());
-            throw new RuntimeException("创建支付交易失败,对方接口异常");
+            log.info(CALL_FAILURE + response.getCode() + " " + response.getMsg());
+            throw new NewBeeMallException("创建支付交易失败,对方接口异常");
         }
         return response.getBody();
     }
@@ -175,7 +180,7 @@ public class AlipayServiceImpl implements AlipayService {
              */
 
             // out_trade_no
-            String outTradeNo = notifyParams.get("out_trade_no");
+            String outTradeNo = notifyParams.get(OUT_TRADE_NUMBER);
             // 获取订单对象
             NewBeeMallOrder orderInfo = orderService.getOrderByOrderNo(outTradeNo);
 
@@ -232,7 +237,7 @@ public class AlipayServiceImpl implements AlipayService {
                     // 无论接口被调用多少次 以下业务只执行一次
                     // 接口调用的幂等性
                     Byte orderStatus = orderInfo.getOrderStatus();
-                    if(!((orderStatus & 0xFF) == NewBeeMallOrderStatusEnum.ORDER_PRE_PAY.getOrderStatus())){
+                    if((orderStatus & 0xFF) != NewBeeMallOrderStatusEnum.ORDER_PRE_PAY.getOrderStatus()){
                         log.info("非未支付订单，订单状态将不会被更新，订单号：{}", outTradeNo);
                         // if外将重新发送success
                     }
@@ -275,20 +280,20 @@ public class AlipayServiceImpl implements AlipayService {
 
         AlipayTradeQueryRequest request = new AlipayTradeQueryRequest();
         JSONObject bizContent = new JSONObject();
-        bizContent.put("out_trade_no", orderNo);
+        bizContent.put(OUT_TRADE_NUMBER, orderNo);
         request.setBizContent(bizContent.toString());
         AlipayTradeQueryResponse response = null;
         try {
             response = alipayClient.execute(request);
         } catch (AlipayApiException e) {
             e.printStackTrace();
-            throw new RuntimeException("查单接口调用失败");
+            throw new NewBeeMallException("查单接口调用失败");
         }
         if(response.isSuccess()){
-            log.info("调用成功,返回结果为==>" + response.getBody());
+            log.info(CALL_SUCCESS + response.getBody());
             return response.getBody();
         } else {
-            log.info("调用失败,返回结果为==> " + response.getCode() + " " + response.getMsg());
+            log.info(CALL_FAILURE + response.getCode() + " " + response.getMsg());
             Map result = new HashMap<>();
             result = JSON.parseObject(response.getBody(), result.getClass());
             Map error = (Map) result.get("alipay_trade_query_response");
@@ -297,7 +302,7 @@ public class AlipayServiceImpl implements AlipayService {
                 return null;
             } else {
                 log.error("关单接口调用失败");
-                throw new RuntimeException("关单接口调用失败,对方接口异常");
+                throw new NewBeeMallException("关单接口调用失败,对方接口异常");
             }
         }
     }
@@ -356,10 +361,10 @@ public class AlipayServiceImpl implements AlipayService {
             //创建退款单
             NewBeeMallOrder order = orderService.getOrderByOrderNo(orderNo);
 
-            if(!(order.getOrderStatus() ==
-                    NewBeeMallOrderStatusEnum.ORDER_PAID.getOrderStatus()) &&
-                !(order.getOrderStatus() ==
-                            NewBeeMallOrderStatusEnum.ORDER_CLOSED_BY_EXPIRED.getOrderStatus())){
+            if(order.getOrderStatus() !=
+                    NewBeeMallOrderStatusEnum.ORDER_PAID.getOrderStatus() &&
+                order.getOrderStatus() !=
+                            NewBeeMallOrderStatusEnum.ORDER_CLOSED_BY_EXPIRED.getOrderStatus()){
                 log.error("订单{}不符合退款条件,该订单不属于正常已支付订单",orderNo);
                 throw new NewBeeMallException("非正常已支付订单无法退款");
             }
@@ -369,7 +374,7 @@ public class AlipayServiceImpl implements AlipayService {
 
             //组装当前业务方法的请求参数
             JSONObject bizContent = new JSONObject();
-            bizContent.put("out_trade_no", orderNo);//订单编号
+            bizContent.put(OUT_TRADE_NUMBER, orderNo);//订单编号
             BigDecimal refund = new BigDecimal(order.getTotalPrice().toString());
             //BigDecimal refund = new BigDecimal("2").divide(new BigDecimal("100"));
             bizContent.put("refund_amount", refund);//退款金额：不能大于支付金额
@@ -401,7 +406,7 @@ public class AlipayServiceImpl implements AlipayService {
             }
         } catch (AlipayApiException e) {
             e.printStackTrace();
-            throw new RuntimeException("创建退款申请失败");
+            throw new NewBeeMallException("创建退款申请失败");
         }
     }
 
@@ -412,7 +417,7 @@ public class AlipayServiceImpl implements AlipayService {
 
             AlipayTradeFastpayRefundQueryRequest request = new AlipayTradeFastpayRefundQueryRequest();
             JSONObject bizContent = new JSONObject();
-            bizContent.put("out_trade_no", orderNo);
+            bizContent.put(OUT_TRADE_NUMBER, orderNo);
             // 如果退款请求没有传退款单编号，执行全额退款，则直接填订单号即可
             bizContent.put("out_request_no", orderNo);
             request.setBizContent(bizContent.toString());
@@ -423,14 +428,14 @@ public class AlipayServiceImpl implements AlipayService {
                 return response.getBody();
             } else {
                 log.info("调用失败，返回码 ===> " + response.getCode() + ", 返回描述 ===> " + response.getMsg());
-                //throw new RuntimeException("查单接口的调用失败");
+                //throw new NewBeeMallException("查单接口的调用失败");
                 return null;//订单不存在
             }
 
         } catch (AlipayApiException e) {
             log.error("查单接口调用失败");
             e.printStackTrace();
-            throw new RuntimeException("查单接口调用失败");
+            throw new NewBeeMallException("查单接口调用失败");
         }
     }
 
@@ -442,7 +447,7 @@ public class AlipayServiceImpl implements AlipayService {
 
         AlipayTradeCloseRequest request = new AlipayTradeCloseRequest();
         JSONObject bizContent = new JSONObject();
-        bizContent.put("out_trade_no", orderNo);
+        bizContent.put(OUT_TRADE_NUMBER, orderNo);
 
         //// 返回参数选项，按需传入
         //JSONArray queryOptions = new JSONArray();
@@ -455,12 +460,12 @@ public class AlipayServiceImpl implements AlipayService {
             response = alipayClient.execute(request);
         } catch (AlipayApiException e) {
             e.printStackTrace();
-            throw new RuntimeException("关单接口调用失败");
+            throw new NewBeeMallException("关单接口调用失败");
         }
         if(response.isSuccess()){
-            log.info("调用成功,返回结果为==>" + response.getBody());
+            log.info(CALL_SUCCESS + response.getBody());
         } else {
-            log.info("调用失败,返回结果为==> " + response.getCode() + " " + response.getMsg());
+            log.info(CALL_FAILURE + response.getCode() + " " + response.getMsg());
             Map result = new HashMap<>();
             result = JSON.parseObject(response.getBody(), result.getClass());
             Map error = (Map) result.get("alipay_trade_close_response");
@@ -468,7 +473,7 @@ public class AlipayServiceImpl implements AlipayService {
                 log.info("订单于远端不存在，无需关单，本地订单状态将被更新为已关闭，订单号：{}", orderNo);
             } else {
                 log.error("关单接口调用失败");
-                throw new RuntimeException("关单接口调用失败,对方接口异常");
+                throw new NewBeeMallException("关单接口调用失败,对方接口异常");
             }
         }
     }

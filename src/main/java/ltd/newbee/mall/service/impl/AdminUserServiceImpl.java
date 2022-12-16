@@ -16,7 +16,6 @@ import ltd.newbee.mall.entity.AdminUser;
 import ltd.newbee.mall.entity.AdminUserToken;
 import ltd.newbee.mall.entity.MallUser;
 import ltd.newbee.mall.service.AdminUserService;
-import ltd.newbee.mall.util.MD5Util;
 import ltd.newbee.mall.util.NumberUtil;
 import ltd.newbee.mall.util.SystemUtil;
 import org.springframework.stereotype.Service;
@@ -102,10 +101,8 @@ public class AdminUserServiceImpl implements AdminUserService {
             if (originalPassword.equals(adminUser.getLoginPassword())) {
                 //设置新密码并修改
                 adminUser.setLoginPassword(newPassword);
-                if (adminUserMapper.updateByPrimaryKeySelective(adminUser) > 0 && newBeeAdminUserTokenMapper.deleteByPrimaryKey(loginUserId) > 0) {
-                    //修改成功且清空当前token则返回true
-                    return true;
-                }
+                //修改成功且清空当前token则返回true
+                return adminUserMapper.updateByPrimaryKeySelective(adminUser) > 0 && newBeeAdminUserTokenMapper.deleteByPrimaryKey(loginUserId) > 0;
             }
         }
         return false;

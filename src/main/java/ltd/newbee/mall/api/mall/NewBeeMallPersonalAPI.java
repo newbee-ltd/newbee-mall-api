@@ -105,12 +105,10 @@ public class NewBeeMallPersonalAPI {
         Boolean flag = newBeeMallUserService.updateUserInfo(mallUserUpdateParam, loginMallUser.getUserId());
         if (flag) {
             //返回成功
-            Result result = ResultGenerator.genSuccessResult();
-            return result;
+            return ResultGenerator.genSuccessResult();
         } else {
             //返回失败
-            Result result = ResultGenerator.genFailResult("修改失败");
-            return result;
+            return ResultGenerator.genFailResult("修改失败");
         }
     }
 

@@ -1,5 +1,7 @@
 package ltd.newbee.mall.util;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.security.MessageDigest;
 
 /**
@@ -9,12 +11,12 @@ import java.security.MessageDigest;
  * @email 2449207463@qq.com
  * @link https://github.com/newbee-ltd
  */
+@Slf4j
 public class MD5Util {
 
-    private static String byteArrayToHexString(byte b[]) {
-        StringBuffer resultSb = new StringBuffer();
-        for (int i = 0; i < b.length; i++)
-            resultSb.append(byteToHexString(b[i]));
+    private static String byteArrayToHexString(byte[] b) {
+        StringBuilder resultSb = new StringBuilder();
+        for (byte value : b) resultSb.append(byteToHexString(value));
 
         return resultSb.toString();
     }
@@ -31,7 +33,7 @@ public class MD5Util {
     public static String MD5Encode(String origin, String charsetname) {
         String resultString = null;
         try {
-            resultString = new String(origin);
+            resultString = origin;
             MessageDigest md = MessageDigest.getInstance("MD5");
             if (charsetname == null || "".equals(charsetname))
                 resultString = byteArrayToHexString(md.digest(resultString
@@ -40,10 +42,12 @@ public class MD5Util {
                 resultString = byteArrayToHexString(md.digest(resultString
                         .getBytes(charsetname)));
         } catch (Exception exception) {
+            log.error("MD5编码异常:{}",exception.getMessage());
+            exception.printStackTrace();
         }
         return resultString;
     }
 
-    private static final String hexDigits[] = {"0", "1", "2", "3", "4", "5",
+    private static final String[] hexDigits = {"0", "1", "2", "3", "4", "5",
             "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"};
 }

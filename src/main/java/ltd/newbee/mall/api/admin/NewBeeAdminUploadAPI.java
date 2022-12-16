@@ -49,7 +49,7 @@ public class NewBeeAdminUploadAPI {
 
     private static final Logger logger = LoggerFactory.getLogger(NewBeeAdminUploadAPI.class);
 
-    private Random r = SecureRandom.getInstanceStrong();;
+    private final Random r = SecureRandom.getInstanceStrong();
 
     @Autowired
     private StandardServletMultipartResolver standardServletMultipartResolver;
@@ -68,9 +68,9 @@ public class NewBeeAdminUploadAPI {
     @PostMapping(value = "/upload/file")
     @ApiOperation(value = "单图上传", notes = "file Name \"file\"")
     public Result upload(HttpServletRequest httpServletRequest, @RequestParam("file") MultipartFile file, @TokenToAdminUser AdminUserToken adminUser) throws URISyntaxException {
-        logger.info("adminUser:{}", adminUser.toString());
+        logger.info("adminUser:{}", adminUser);
         String fileName = file.getOriginalFilename();
-        String suffixName = fileName.substring(fileName.lastIndexOf("."));
+        String suffixName = fileName.substring(fileName.lastIndexOf('.'));
         //生成文件名称通用方法
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
         StringBuilder tempName = new StringBuilder();
@@ -105,7 +105,7 @@ public class NewBeeAdminUploadAPI {
     @PostMapping(value = "/upload/files")
     @ApiOperation(value = "多图上传", notes = "wangEditor图片上传")
     public Result uploadV2(HttpServletRequest httpServletRequest, @TokenToAdminUser AdminUserToken adminUser) throws URISyntaxException {
-        logger.info("adminUser:{}", adminUser.toString());
+        logger.info("adminUser:{}", adminUser);
         List<MultipartFile> multipartFiles = new ArrayList<>(8);
         if (standardServletMultipartResolver.isMultipart(httpServletRequest)) {
             MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) httpServletRequest;
@@ -129,7 +129,7 @@ public class NewBeeAdminUploadAPI {
         List<String> fileNames = new ArrayList(multipartFiles.size());
         for (int i = 0; i < multipartFiles.size(); i++) {
             String fileName = multipartFiles.get(i).getOriginalFilename();
-            String suffixName = fileName.substring(fileName.lastIndexOf("."));
+            String suffixName = fileName.substring(fileName.lastIndexOf('.'));
             //生成文件名称通用方法
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
             StringBuilder tempName = new StringBuilder();

@@ -40,13 +40,11 @@ public class TokenToMallUserMethodArgumentResolver implements HandlerMethodArgum
     private NewBeeMallUserTokenMapper newBeeMallUserTokenMapper;
 
     public TokenToMallUserMethodArgumentResolver() {
+        // 空参构造方法
     }
 
     public boolean supportsParameter(MethodParameter parameter) {
-        if (parameter.hasParameterAnnotation(TokenToMallUser.class)) {
-            return true;
-        }
-        return false;
+        return parameter.hasParameterAnnotation(TokenToMallUser.class);
     }
 
     /**
@@ -62,7 +60,7 @@ public class TokenToMallUserMethodArgumentResolver implements HandlerMethodArgum
      * @return the resolved argument value, or {@code null}
      */
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
-        if (parameter.getParameterAnnotation(TokenToMallUser.class) instanceof TokenToMallUser) {
+        if (parameter.getParameterAnnotation(TokenToMallUser.class) != null) {
             MallUser mallUser = null;
             String token = webRequest.getHeader("token");
             if (null != token && !"".equals(token) && token.length() == Constants.TOKEN_LENGTH) {
@@ -91,7 +89,7 @@ public class TokenToMallUserMethodArgumentResolver implements HandlerMethodArgum
         if (contentLength < 0) {
             return null;
         }
-        byte buffer[] = new byte[contentLength];
+        byte[] buffer = new byte[contentLength];
         for (int i = 0; i < contentLength; ) {
             int readlen = request.getInputStream().read(buffer, i,
                     contentLength - i);

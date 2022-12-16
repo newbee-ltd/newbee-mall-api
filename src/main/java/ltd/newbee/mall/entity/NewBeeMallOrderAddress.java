@@ -22,7 +22,6 @@ public class NewBeeMallOrderAddress {
     @TableId(value = "order_id")
     private Long orderId;
 
-    // TODO 其实也可以把User的对象放进来
     // user可以有除了username以外的多个Phone
     private String userName;
 

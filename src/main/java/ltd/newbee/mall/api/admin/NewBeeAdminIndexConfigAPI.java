@@ -112,14 +112,13 @@ public class NewBeeAdminIndexConfigAPI {
         }
     }
 
-
     /**
      * 修改首页配置项
      * @param indexConfigEditParam
      * @param adminUser
      * @return
      */
-    @RequestMapping(value = "/indexConfigs", method = RequestMethod.PUT)
+    @PutMapping(value = "/indexConfigs")
     @ApiOperation(value = "修改首页配置项", notes = "修改首页配置项")
     public Result update(@RequestBody @Valid IndexConfigEditParam indexConfigEditParam, @TokenToAdminUser AdminUserToken adminUser) {
         logger.info("{}", ADMIN_USER);
@@ -144,7 +143,7 @@ public class NewBeeAdminIndexConfigAPI {
      * @param adminUser
      * @return
      */
-    @RequestMapping(value = "/indexConfigs/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/indexConfigs/{id}")
     @ApiOperation(value = "获取单条首页配置项信息", notes = "根据id查询")
     public Result info(@PathVariable("id") Long id, @TokenToAdminUser AdminUserToken adminUser) {
         logger.info("{}", ADMIN_USER);
@@ -165,7 +164,7 @@ public class NewBeeAdminIndexConfigAPI {
      * @param adminUser
      * @return
      */
-    @RequestMapping(value = "/indexConfigs", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/indexConfigs")
     @ApiOperation(value = "批量删除首页配置项信息", notes = "批量删除首页配置项信息")
     public Result delete(@RequestBody BatchIdParam batchIdParam, @TokenToAdminUser AdminUserToken adminUser) {
         logger.info("{}", ADMIN_USER);

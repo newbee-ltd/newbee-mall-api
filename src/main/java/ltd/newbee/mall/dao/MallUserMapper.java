@@ -20,7 +20,6 @@ import java.util.List;
 public interface MallUserMapper extends BaseMapper<MallUser> {
     /**
      * 看起来是根据id删除用户
-     * TODO 可以后期加入管理员删除用户操作
      * @param userId
      * @return
      */
