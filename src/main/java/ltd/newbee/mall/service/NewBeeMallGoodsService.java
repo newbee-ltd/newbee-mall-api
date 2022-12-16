@@ -68,4 +68,5 @@ public interface NewBeeMallGoodsService {
      */
     NewBeeMallGoods getNewBeeMallGoodsById(Long id);
 
+    PageResult searchNewBeeMallGoods(PageQueryUtil pageUtil);
 }
