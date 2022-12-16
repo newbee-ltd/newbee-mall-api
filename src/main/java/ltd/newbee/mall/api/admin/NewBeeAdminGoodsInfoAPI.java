@@ -84,7 +84,7 @@ public class NewBeeAdminGoodsInfoAPI {
          */
         params.put("page", pageNumber);
         params.put("limit", pageSize);
-        if (!StringUtils.hasLength(goodsName)) {
+        if (StringUtils.hasLength(goodsName)) {
             params.put("goodsName", goodsName);
         }
         if (goodsSellStatus != null) {

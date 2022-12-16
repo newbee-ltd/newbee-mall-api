@@ -54,7 +54,7 @@ public class NewBeeAdminManageUserAPI {
         logger.info("manage login api,adminName={},loginResult={}", adminLoginParam.getUserName(), loginResult);
 
         //登录成功
-        if (!StringUtils.hasLength(loginResult) && loginResult.length() == Constants.TOKEN_LENGTH) {
+        if (StringUtils.hasLength(loginResult) && loginResult.length() == Constants.TOKEN_LENGTH) {
             Result result = ResultGenerator.genSuccessResult();
             result.setData(loginResult);
             return result;
