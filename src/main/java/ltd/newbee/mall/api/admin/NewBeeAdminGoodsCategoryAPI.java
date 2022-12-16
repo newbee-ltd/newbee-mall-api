@@ -65,7 +65,7 @@ public class NewBeeAdminGoodsCategoryAPI {
      * @param adminUser
      * @return
      */
-    @RequestMapping(value = "/categories", method = RequestMethod.GET)
+    @GetMapping(value = "/categories")
     @ApiOperation(value = "商品分类列表", notes = "根据级别和上级分类id查询")
     public Result list(@RequestParam(required = false) @ApiParam(value = "页码") Integer pageNumber,
                        @RequestParam(required = false) @ApiParam(value = "每页条数") Integer pageSize,
@@ -95,7 +95,7 @@ public class NewBeeAdminGoodsCategoryAPI {
      * @param adminUser
      * @return
      */
-    @RequestMapping(value = "/categories4Select", method = RequestMethod.GET)
+    @GetMapping(value = "/categories4Select")
     @ApiOperation(value = "商品分类列表", notes = "用于三级分类联动效果制作")
     public Result listForSelect(@RequestParam("categoryId") Long categoryId, @TokenToAdminUser AdminUserToken adminUser) {
         logger.info(ADMIN_USER, adminUser.toString());
@@ -133,7 +133,7 @@ public class NewBeeAdminGoodsCategoryAPI {
      * @param adminUser
      * @return
      */
-    @RequestMapping(value = "/categories", method = RequestMethod.POST)
+    @PostMapping(value = "/categories")
     @ApiOperation(value = "新增分类", notes = "新增分类")
     public Result save(@RequestBody @Valid GoodsCategoryAddParam goodsCategoryAddParam, @TokenToAdminUser AdminUserToken adminUser) {
         logger.info(ADMIN_USER, adminUser.toString());
@@ -159,7 +159,7 @@ public class NewBeeAdminGoodsCategoryAPI {
      * @param adminUser
      * @return
      */
-    @RequestMapping(value = "/categories", method = RequestMethod.PUT)
+    @PutMapping(value = "/categories")
     @ApiOperation(value = "修改分类信息", notes = "修改分类信息")
     public Result update(@RequestBody @Valid GoodsCategoryEditParam goodsCategoryEditParam, @TokenToAdminUser AdminUserToken adminUser) {
         logger.info(ADMIN_USER, adminUser.toString());
@@ -184,7 +184,7 @@ public class NewBeeAdminGoodsCategoryAPI {
      * @param adminUser
      * @return
      */
-    @RequestMapping(value = "/categories/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/categories/{id}")
     @ApiOperation(value = "获取单条分类信息", notes = "根据id查询")
     public Result info(@PathVariable("id") Long id, @TokenToAdminUser AdminUserToken adminUser) {
         logger.info(ADMIN_USER, adminUser.toString());
@@ -205,7 +205,7 @@ public class NewBeeAdminGoodsCategoryAPI {
      * @param adminUser
      * @return
      */
-    @RequestMapping(value = "/categories", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/categories")
     @ApiOperation(value = "批量删除分类信息", notes = "批量删除分类信息")
     public Result delete(@RequestBody BatchIdParam batchIdParam, @TokenToAdminUser AdminUserToken adminUser) {
         logger.info(ADMIN_USER, adminUser.toString());

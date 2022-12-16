@@ -55,6 +55,7 @@ public class IndexServiceImpl implements IndexService {
             log.info("创建索引库成功");
         } catch (Exception e) {
             e.printStackTrace();
+            log.error("创建文件索引库异常");
         }
     }
 }

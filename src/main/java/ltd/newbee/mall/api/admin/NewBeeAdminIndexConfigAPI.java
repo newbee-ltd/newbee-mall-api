@@ -61,7 +61,7 @@ public class NewBeeAdminIndexConfigAPI {
      * @param adminUser
      * @return
      */
-    @RequestMapping(value = "/indexConfigs", method = RequestMethod.GET)
+    @GetMapping(value = "/indexConfigs")
     @ApiOperation(value = "首页配置列表", notes = "首页配置列表")
     public Result list(@RequestParam(required = false) @ApiParam(value = "页码") Integer pageNumber,
                        @RequestParam(required = false) @ApiParam(value = "每页条数") Integer pageSize,
@@ -93,7 +93,7 @@ public class NewBeeAdminIndexConfigAPI {
      * @param adminUser
      * @return
      */
-    @RequestMapping(value = "/indexConfigs", method = RequestMethod.POST)
+    @PostMapping(value = "/indexConfigs")
     @ApiOperation(value = "新增首页配置项", notes = "新增首页配置项")
     public Result save(@RequestBody @Valid IndexConfigAddParam indexConfigAddParam, @TokenToAdminUser AdminUserToken adminUser) {
         logger.info(ADMIN_USER, adminUser.toString());

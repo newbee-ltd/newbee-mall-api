@@ -49,7 +49,7 @@ public class ResultGenerator {
     public static Result genFailResult(String message) {
         Result result = new Result();
         result.setResultCode(RESULT_CODE_SERVER_ERROR);
-        if (StringUtils.isEmpty(message)) {
+        if (StringUtils.hasLength(message)) {
             result.setMessage(DEFAULT_FAIL_MESSAGE);
         } else {
             result.setMessage(message);

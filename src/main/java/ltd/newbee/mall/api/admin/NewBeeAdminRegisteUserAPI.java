@@ -45,7 +45,7 @@ public class NewBeeAdminRegisteUserAPI {
     /**
      * 列表
      */
-    @RequestMapping(value = "/users", method = RequestMethod.GET)
+    @GetMapping(value = "/users")
     @ApiOperation(value = "商城注册用户列表", notes = "商城注册用户列表")
     public Result list(@RequestParam(required = false) @ApiParam(value = "页码") Integer pageNumber,
                        @RequestParam(required = false) @ApiParam(value = "每页条数") Integer pageSize,
@@ -67,7 +67,7 @@ public class NewBeeAdminRegisteUserAPI {
     /**
      * 用户禁用与解除禁用(0-未锁定 1-已锁定)
      */
-    @RequestMapping(value = "/users/{lockStatus}", method = RequestMethod.PUT)
+    @PutMapping(value = "/users/{lockStatus}")
     @ApiOperation(value = "修改用户状态", notes = "批量修改，用户禁用与解除禁用(0-未锁定 1-已锁定)")
     public Result lockUser(@RequestBody BatchIdParam batchIdParam, @PathVariable int lockStatus, @TokenToAdminUser AdminUserToken adminUser) {
         logger.info("adminUser:{}", adminUser.toString());

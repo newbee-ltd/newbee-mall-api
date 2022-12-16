@@ -48,13 +48,13 @@ public class NewBeeAdminManageUserAPI {
      * @param adminLoginParam
      * @return
      */
-    @RequestMapping(value = "/adminUser/login", method = RequestMethod.POST)
+    @PostMapping(value = "/adminUser/login")
     public Result<String> login(@RequestBody @Valid AdminLoginParam adminLoginParam) {
         String loginResult = adminUserService.login(adminLoginParam.getUserName(), adminLoginParam.getPasswordMd5());
         logger.info("manage login api,adminName={},loginResult={}", adminLoginParam.getUserName(), loginResult);
 
         //登录成功
-        if (!StringUtils.isEmpty(loginResult) && loginResult.length() == Constants.TOKEN_LENGTH) {
+        if (!StringUtils.hasLength(loginResult) && loginResult.length() == Constants.TOKEN_LENGTH) {
             Result result = ResultGenerator.genSuccessResult();
             result.setData(loginResult);
             return result;
@@ -69,7 +69,7 @@ public class NewBeeAdminManageUserAPI {
      * @param adminUser
      * @return
      */
-    @RequestMapping(value = "/adminUser/profile", method = RequestMethod.GET)
+    @GetMapping(value = "/adminUser/profile")
     public Result profile(@TokenToAdminUser AdminUserToken adminUser) {
         logger.info(ADMIN_USER, adminUser.toString());
         AdminUser adminUserEntity = adminUserService.getUserDetailById(adminUser.getAdminUserId());
@@ -88,7 +88,7 @@ public class NewBeeAdminManageUserAPI {
      * @param adminUser
      * @return
      */
-    @RequestMapping(value = "/adminUser/password", method = RequestMethod.PUT)
+    @PutMapping(value = "/adminUser/password")
     public Result passwordUpdate(@RequestBody @Valid UpdateAdminPasswordParam adminPasswordParam, @TokenToAdminUser AdminUserToken adminUser) {
         logger.info(ADMIN_USER, adminUser.toString());
         if (adminUserService.updatePassword(adminUser.getAdminUserId(), adminPasswordParam.getOriginalPassword(), adminPasswordParam.getNewPassword())) {
@@ -104,7 +104,7 @@ public class NewBeeAdminManageUserAPI {
      * @param adminUser
      * @return
      */
-    @RequestMapping(value = "/adminUser/name", method = RequestMethod.PUT)
+    @PutMapping(value = "/adminUser/name")
     public Result nameUpdate(@RequestBody @Valid UpdateAdminNameParam adminNameParam, @TokenToAdminUser AdminUserToken adminUser) {
         logger.info(ADMIN_USER, adminUser.toString());
         if (adminUserService.updateName(adminUser.getAdminUserId(), adminNameParam.getLoginUserName(), adminNameParam.getNickName())) {
@@ -135,7 +135,7 @@ public class NewBeeAdminManageUserAPI {
      * @param adminUser
      * @return
      */
-    @RequestMapping(value ="/adminUser/deleteAdminUser", method = RequestMethod.DELETE)
+    @DeleteMapping(value ="/adminUser/deleteAdminUser")
     public Result deleteAdminUser(@Valid @RequestBody DeleteAdminUserParam deleteAdminUserParam, @TokenToAdminUser AdminUserToken adminUser) {
         logger.info(ADMIN_USER, adminUser.toString());
         if(adminUserService.deleteAdminUserById(deleteAdminUserParam.getAdminUserId())){
@@ -151,7 +151,7 @@ public class NewBeeAdminManageUserAPI {
      * @param adminUser
      * @return
      */
-    @RequestMapping(value = "/logout", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/logout")
     public Result logout(@TokenToAdminUser AdminUserToken adminUser) {
         logger.info(ADMIN_USER, adminUser.toString());
         adminUserService.logout(adminUser.getAdminUserId());

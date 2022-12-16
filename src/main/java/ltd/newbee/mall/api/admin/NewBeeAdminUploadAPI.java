@@ -65,7 +65,7 @@ public class NewBeeAdminUploadAPI {
      * @return
      * @throws URISyntaxException
      */
-    @RequestMapping(value = "/upload/file", method = RequestMethod.POST)
+    @PostMapping(value = "/upload/file")
     @ApiOperation(value = "单图上传", notes = "file Name \"file\"")
     public Result upload(HttpServletRequest httpServletRequest, @RequestParam("file") MultipartFile file, @TokenToAdminUser AdminUserToken adminUser) throws URISyntaxException {
         logger.info("adminUser:{}", adminUser.toString());
@@ -102,7 +102,7 @@ public class NewBeeAdminUploadAPI {
      * @return
      * @throws URISyntaxException
      */
-    @RequestMapping(value = "/upload/files", method = RequestMethod.POST)
+    @PostMapping(value = "/upload/files")
     @ApiOperation(value = "多图上传", notes = "wangEditor图片上传")
     public Result uploadV2(HttpServletRequest httpServletRequest, @TokenToAdminUser AdminUserToken adminUser) throws URISyntaxException {
         logger.info("adminUser:{}", adminUser.toString());

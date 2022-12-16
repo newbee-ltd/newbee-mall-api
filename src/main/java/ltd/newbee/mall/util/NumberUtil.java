@@ -1,5 +1,6 @@
 package ltd.newbee.mall.util;
 
+import java.security.SecureRandom;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -10,6 +11,8 @@ import java.util.regex.Pattern;
  * @link https://github.com/newbee-ltd
  */
 public class NumberUtil {
+
+    private static final SecureRandom secureRandom = new SecureRandom();
 
     private NumberUtil() {
     }
@@ -35,7 +38,7 @@ public class NumberUtil {
      */
     public static int genRandomNum(int length) {
         int num = 1;
-        double random = Math.random();
+        double random = secureRandom.nextDouble();
         if (random < 0.1) {
             random = random + 0.1;
         }

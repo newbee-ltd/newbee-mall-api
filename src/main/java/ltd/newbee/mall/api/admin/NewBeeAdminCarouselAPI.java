@@ -59,7 +59,7 @@ public class NewBeeAdminCarouselAPI {
      * @param adminUser
      * @return
      */
-    @RequestMapping(value = "/carousels", method = RequestMethod.GET)
+    @GetMapping(value = "/carousels")
     @ApiOperation(value = "轮播图列表", notes = "轮播图列表")
     public Result list(@RequestParam(required = false) @ApiParam(value = "页码") Integer pageNumber,
                        @RequestParam(required = false) @ApiParam(value = "每页条数") Integer pageSize, @TokenToAdminUser AdminUserToken adminUser) {
@@ -83,7 +83,7 @@ public class NewBeeAdminCarouselAPI {
      * @param adminUser
      * @return
      */
-    @RequestMapping(value = "/carousels", method = RequestMethod.POST)
+    @PostMapping(value = "/carousels")
     @ApiOperation(value = "新增轮播图", notes = "新增轮播图")
     public Result save(@RequestBody @Valid CarouselAddParam carouselAddParam, @TokenToAdminUser AdminUserToken adminUser) {
         //日志生成
@@ -110,7 +110,7 @@ public class NewBeeAdminCarouselAPI {
      * @param adminUser
      * @return
      */
-    @RequestMapping(value = "/carousels", method = RequestMethod.PUT)
+    @PutMapping(value = "/carousels")
     @ApiOperation(value = "修改轮播图信息", notes = "修改轮播图信息")
     public Result update(@RequestBody CarouselEditParam carouselEditParam, @TokenToAdminUser AdminUserToken adminUser) {
         logger.info(ADMIN_USER, adminUser.toString());
@@ -135,7 +135,7 @@ public class NewBeeAdminCarouselAPI {
      * @param adminUser
      * @return
      */
-    @RequestMapping(value = "/carousels/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/carousels/{id}")
     @ApiOperation(value = "获取单条轮播图信息", notes = "根据id查询")
     public Result info(@PathVariable("id") Integer id, @TokenToAdminUser AdminUserToken adminUser) {
         logger.info(ADMIN_USER, adminUser.toString());
@@ -156,7 +156,7 @@ public class NewBeeAdminCarouselAPI {
      * @param adminUser
      * @return
      */
-    @RequestMapping(value = "/carousels", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/carousels")
     @ApiOperation(value = "批量删除轮播图信息", notes = "批量删除轮播图信息")
     public Result delete(@RequestBody BatchIdParam batchIdParam, @TokenToAdminUser AdminUserToken adminUser) {
         logger.info(ADMIN_USER, adminUser.toString());

@@ -67,7 +67,7 @@ public class NewBeeAdminGoodsInfoAPI {
      * @param adminUser
      * @return
      */
-    @RequestMapping(value = "/goods/list", method = RequestMethod.GET)
+    @GetMapping(value = "/goods/list")
     @ApiOperation(value = "商品列表", notes = "可根据名称和上架状态筛选")
     public Result list(@RequestParam(required = false) @ApiParam(value = "页码") Integer pageNumber,
                        @RequestParam(required = false) @ApiParam(value = "每页条数") Integer pageSize,
@@ -84,7 +84,7 @@ public class NewBeeAdminGoodsInfoAPI {
          */
         params.put("page", pageNumber);
         params.put("limit", pageSize);
-        if (!StringUtils.isEmpty(goodsName)) {
+        if (!StringUtils.hasLength(goodsName)) {
             params.put("goodsName", goodsName);
         }
         if (goodsSellStatus != null) {
@@ -100,7 +100,7 @@ public class NewBeeAdminGoodsInfoAPI {
      * @param adminUser
      * @return
      */
-    @RequestMapping(value = "/goods", method = RequestMethod.POST)
+    @PostMapping(value = "/goods")
     @ApiOperation(value = "新增商品信息", notes = "新增商品信息")
     public Result save(@RequestBody @Valid GoodsAddParam goodsAddParam, @TokenToAdminUser AdminUserToken adminUser) {
         logger.info(ADMIN_USER, adminUser.toString());
@@ -126,7 +126,7 @@ public class NewBeeAdminGoodsInfoAPI {
      * @param adminUser
      * @return
      */
-    @RequestMapping(value = "/goods", method = RequestMethod.PUT)
+    @PutMapping(value = "/goods")
     @ApiOperation(value = "修改商品信息", notes = "修改商品信息")
     public Result update(@RequestBody @Valid GoodsEditParam goodsEditParam, @TokenToAdminUser AdminUserToken adminUser) {
         logger.info(ADMIN_USER, adminUser.toString());
@@ -192,7 +192,7 @@ public class NewBeeAdminGoodsInfoAPI {
      * @param adminUser
      * @return
      */
-    @RequestMapping(value = "/goods/status/{sellStatus}", method = RequestMethod.PUT)
+    @PutMapping(value = "/goods/status/{sellStatus}")
     @ApiOperation(value = "批量修改销售状态", notes = "批量修改销售状态")
     public Result delete(@RequestBody BatchIdParam batchIdParam, @PathVariable("sellStatus") int sellStatus, @TokenToAdminUser AdminUserToken adminUser) {
         logger.info(ADMIN_USER, adminUser.toString());

@@ -30,7 +30,7 @@ public class NewBeeMallUtils {
     }
 
     public static String cleanString(String value) {
-        if (StringUtils.isEmpty(value)) {
+        if (StringUtils.hasLength(value)) {
             return "";
         }
         value = value.toLowerCase();

@@ -97,6 +97,7 @@ public class AlipayServiceImpl implements AlipayService {
         try {
             response = alipayClient.pageExecute(request);
         } catch (AlipayApiException e) {
+            log.error("创建支付交易失败");
             // try-catch与Transaction注解配合使用时需要手动抛出RuntimeException，否则事务不会回滚
             e.printStackTrace();
             throw new RuntimeException("创建支付交易失败,连接异常");
@@ -427,8 +428,9 @@ public class AlipayServiceImpl implements AlipayService {
             }
 
         } catch (AlipayApiException e) {
+            log.error("查单接口调用失败");
             e.printStackTrace();
-            throw new RuntimeException("查单接口的调用失败");
+            throw new RuntimeException("查单接口调用失败");
         }
     }
 
