@@ -19,6 +19,7 @@ package ltd.newbee.mall.common;
 public class NewBeeMallException extends RuntimeException {
 
     public NewBeeMallException() {
+        // 空参构造函数
     }
 
     public NewBeeMallException(String message) {

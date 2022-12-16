@@ -36,12 +36,6 @@ public class NewBeeMallPersonalAPI {
     @Resource
     private NewBeeMallUserService newBeeMallUserService;
 
-//    @Resource
-//    private SearchService searchService;
-//
-//    @Resource
-//    private IndexService indexService;
-
     private static final Logger logger = LoggerFactory.getLogger(NewBeeMallPersonalAPI.class);
 
     @PostMapping("/user/login")
@@ -120,19 +114,5 @@ public class NewBeeMallPersonalAPI {
         BeanUtil.copyProperties(loginMallUser, mallUserVO);
         return ResultGenerator.genSuccessResult(mallUserVO);
     }
-
-//    @GetMapping(value = "/search")
-//    @ApiOperation(value = "全文搜索", notes = "")
-//    public String searchDocument(@RequestParam String index, @RequestParam String queryStr){
-//        String result = searchService.query(index, queryStr);
-//        return result;
-//    }
-//
-//    @PostMapping(value = "/createIndex")
-//    @ApiOperation(value = "创建数据库", notes = "")
-//    public String createIndex(@RequestBody Map<String, Object> params){
-//        indexService.createIndex("", params.get("content").toString());
-//        return "ok";
-//    }
 
 }
