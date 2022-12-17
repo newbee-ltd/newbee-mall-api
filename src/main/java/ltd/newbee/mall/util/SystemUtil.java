@@ -22,7 +22,7 @@ public class SystemUtil {
      * 登录或注册成功后,生成保持用户登录状态会话token值
      *
      * @param src:为用户最新一次登录时的now()+user.id+random(4)
-     * @return
+     * @return token
      */
     public static String genToken(String src) {
         if (null == src || "".equals(src)) {

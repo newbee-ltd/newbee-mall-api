@@ -47,7 +47,7 @@ public class NewBeeMallGoodsCategoryAPI {
         //首页调用获取分类数据
         List<NewBeeMallIndexCategoryVO> categories = newBeeMallCategoryService.getCategoriesForIndex();
 
-        /**
+        /*
          * 判定如果获取到的分类数据为空，则抛出异常
          */
         if (CollectionUtils.isEmpty(categories)) {
