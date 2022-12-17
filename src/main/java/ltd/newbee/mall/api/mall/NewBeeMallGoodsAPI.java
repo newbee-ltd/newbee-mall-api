@@ -69,6 +69,7 @@ public class NewBeeMallGoodsAPI {
     @ApiOperation(value = "商品搜索接口", notes = "基于lucene的模糊搜索")
     public Result<PageResult<List<NewBeeMallSearchGoodsVO>>> search(
             @RequestParam(required = false) @ApiParam(value = "搜索关键字") String keyword,
+            @RequestParam(required = false) @ApiParam(value = "分类id") Long goodsCategoryId,
             @RequestParam(required = false) @ApiParam(value = "页码") Integer pageNumber,
             @TokenToMallUser MallUser loginMallUser) throws IOException,ParseException {
 
@@ -84,8 +85,15 @@ public class NewBeeMallGoodsAPI {
             pageNumber = 1;
         }
 
-        //创建索引库
-        indexService.createIndex();
+        // 如果categoryId为空
+        if (goodsCategoryId == null) {
+            // 创建索引库
+            indexService.createIndex(null);
+        } else {
+            // 创建索引库
+            indexService.createIndex(goodsCategoryId);
+        }
+
         //通过索引查询结果
         List<NewBeeMallGoods> list = searchService.search(keyword);
         //创建视图对象集合用于返回

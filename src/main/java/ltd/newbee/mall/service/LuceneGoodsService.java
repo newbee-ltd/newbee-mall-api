@@ -9,4 +9,6 @@ public interface LuceneGoodsService {
     List<NewBeeMallGoods> getAllGoods();
 
     List getDocuments(List<NewBeeMallGoods> goods);
+
+    List<NewBeeMallGoods> getGoodsByCategoryId(Long goodsCategoryId);
 }

@@ -31,7 +31,7 @@ public class IndexServiceImpl implements IndexService {
      * 创建索引
      */
     @Override
-    public void createIndex() {
+    public void createIndex(Long goodsCategoryId) {
         try {
             // 创建索引
             // 索引目录类,指定索引在硬盘中的位置，我的设置为E盘的indexDir文件夹
@@ -47,7 +47,12 @@ public class IndexServiceImpl implements IndexService {
             // 创建索引的写出工具类。参数：索引的目录和配置信息
             IndexWriter indexWriter = new IndexWriter(directory, conf);
             // 把文档集合交给IndexWriter
-            indexWriter.addDocuments(luceneGoodsService.getDocuments(luceneGoodsService.getAllGoods()));
+            if(goodsCategoryId == null){
+                indexWriter.addDocuments(luceneGoodsService.getDocuments(luceneGoodsService.getAllGoods()));
+            } else {
+                indexWriter.addDocuments(luceneGoodsService.getDocuments(
+                        luceneGoodsService.getGoodsByCategoryId(goodsCategoryId)));
+            }
             // 提交
             indexWriter.commit();
             // 关闭

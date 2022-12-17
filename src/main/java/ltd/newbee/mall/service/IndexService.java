@@ -4,5 +4,5 @@ public interface IndexService {
     /**
      * 创建索引
      */
-    void createIndex();
+    void createIndex(Long goodsCategoryId);
 }

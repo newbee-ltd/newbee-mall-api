@@ -20,8 +20,8 @@ public class LuceneGoodsServiceImpl implements LuceneGoodsService {
     private NewBeeMallGoodsMapper mapper;
 
     /**
-     * 采集数据
-     * @return
+     * 采集全局数据
+     * @return List<NewBeeMallGoods>
      */
     @Override
     public List<NewBeeMallGoods> getAllGoods() {
@@ -29,6 +29,19 @@ public class LuceneGoodsServiceImpl implements LuceneGoodsService {
         // 列表
         return mapper.selectList(wrapper);
     }
+
+    /**
+     * 根据分类id采集数据
+     * @param goodsCategoryId 分类id
+     * @return List<NewBeeMallGoods>
+     */
+    @Override
+    public List<NewBeeMallGoods> getGoodsByCategoryId(Long goodsCategoryId) {
+        QueryWrapper<NewBeeMallGoods> wrapper = new QueryWrapper<>();
+        wrapper.eq("goods_category_id", goodsCategoryId);
+        return mapper.selectList(wrapper);
+    }
+
     /**
      * 将数据转化为Lucene文档
      * @param goods
