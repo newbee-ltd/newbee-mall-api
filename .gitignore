@@ -22,6 +22,6 @@
 /nbbuild/
 /dist/
 /nbdist/
-application.properties
+# application.properties
 sonar-project.properties
-alipay-sandbox.properties
+# alipay-sandbox.properties
