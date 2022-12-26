@@ -61,7 +61,7 @@ public class NewBeeAdminOrderAPI {
         Map params = new HashMap(8);
         params.put("page", pageNumber);
         params.put("limit", pageSize);
-        if (!StringUtils.isEmpty(orderNo)) {
+        if (StringUtils.hasText(orderNo)) {
             params.put("orderNo", orderNo);
         }
         if (orderStatus != null) {
