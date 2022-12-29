@@ -20,16 +20,16 @@ Copyright (c) 2019-2021 十三 all rights reserved.
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.5</version>
+        <version>3.0.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
-        <mybatis-starter.version>2.2.2</mybatis-starter.version>
-        <lombok.version>1.18.16</lombok.version>
+        <java.version>17</java.version>
+        <mybatis-starter.version>3.0.1</mybatis-starter.version>
+        <lombok.version>1.18.24</lombok.version>
         <springfox.version>3.0.0</springfox.version>
     </properties>
 

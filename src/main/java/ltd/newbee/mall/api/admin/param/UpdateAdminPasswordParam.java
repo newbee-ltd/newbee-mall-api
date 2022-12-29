@@ -10,7 +10,7 @@ package ltd.newbee.mall.api.admin.param;
 
 import lombok.Data;
 
-import javax.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotEmpty;
 
 @Data
 public class UpdateAdminPasswordParam {
