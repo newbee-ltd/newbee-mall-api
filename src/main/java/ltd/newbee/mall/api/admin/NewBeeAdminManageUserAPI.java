@@ -8,7 +8,8 @@
  */
 package ltd.newbee.mall.api.admin;
 
-import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import ltd.newbee.mall.api.admin.param.AdminLoginParam;
 import ltd.newbee.mall.api.admin.param.UpdateAdminNameParam;
 import ltd.newbee.mall.api.admin.param.UpdateAdminPasswordParam;
@@ -38,7 +39,7 @@ import jakarta.validation.Valid;
  * @link https://github.com/newbee-ltd
  */
 @RestController
-@Api(value = "v1", tags = "8-0.后台管理系统管理员模块接口")
+@Tag(description = "v1", name = "后台管理系统管理员模块接口")
 @RequestMapping("/manage-api/v1")
 public class NewBeeAdminManageUserAPI {
 
@@ -63,7 +64,7 @@ public class NewBeeAdminManageUserAPI {
     }
 
     @RequestMapping(value = "/adminUser/profile", method = RequestMethod.GET)
-    public Result profile(@TokenToAdminUser AdminUserToken adminUser) {
+    public Result profile(@TokenToAdminUser @Parameter(hidden = true) AdminUserToken adminUser) {
         logger.info("adminUser:{}", adminUser.toString());
         AdminUser adminUserEntity = adminUserService.getUserDetailById(adminUser.getAdminUserId());
         if (adminUserEntity != null) {
@@ -76,7 +77,7 @@ public class NewBeeAdminManageUserAPI {
     }
 
     @RequestMapping(value = "/adminUser/password", method = RequestMethod.PUT)
-    public Result passwordUpdate(@RequestBody @Valid UpdateAdminPasswordParam adminPasswordParam, @TokenToAdminUser AdminUserToken adminUser) {
+    public Result passwordUpdate(@RequestBody @Valid UpdateAdminPasswordParam adminPasswordParam, @TokenToAdminUser @Parameter(hidden = true) AdminUserToken adminUser) {
         logger.info("adminUser:{}", adminUser.toString());
         if (adminUserService.updatePassword(adminUser.getAdminUserId(), adminPasswordParam.getOriginalPassword(), adminPasswordParam.getNewPassword())) {
             return ResultGenerator.genSuccessResult();
@@ -86,7 +87,7 @@ public class NewBeeAdminManageUserAPI {
     }
 
     @RequestMapping(value = "/adminUser/name", method = RequestMethod.PUT)
-    public Result nameUpdate(@RequestBody @Valid UpdateAdminNameParam adminNameParam, @TokenToAdminUser AdminUserToken adminUser) {
+    public Result nameUpdate(@RequestBody @Valid UpdateAdminNameParam adminNameParam, @TokenToAdminUser @Parameter(hidden = true) AdminUserToken adminUser) {
         logger.info("adminUser:{}", adminUser.toString());
         if (adminUserService.updateName(adminUser.getAdminUserId(), adminNameParam.getLoginUserName(), adminNameParam.getNickName())) {
             return ResultGenerator.genSuccessResult();
@@ -96,7 +97,7 @@ public class NewBeeAdminManageUserAPI {
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.DELETE)
-    public Result logout(@TokenToAdminUser AdminUserToken adminUser) {
+    public Result logout(@TokenToAdminUser @Parameter(hidden = true) AdminUserToken adminUser) {
         logger.info("adminUser:{}", adminUser.toString());
         adminUserService.logout(adminUser.getAdminUserId());
         return ResultGenerator.genSuccessResult();

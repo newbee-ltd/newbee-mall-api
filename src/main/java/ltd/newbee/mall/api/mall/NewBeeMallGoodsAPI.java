@@ -8,7 +8,9 @@
  */
 package ltd.newbee.mall.api.mall;
 
-import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import ltd.newbee.mall.api.mall.vo.NewBeeMallSearchGoodsVO;
 import ltd.newbee.mall.common.Constants;
 import ltd.newbee.mall.common.NewBeeMallException;
@@ -30,7 +32,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@Api(value = "v1", tags = "4.新蜂商城商品相关接口")
+@Tag(description = "v1", name = "新蜂商城商品相关接口")
 @RequestMapping("/api/v1")
 public class NewBeeMallGoodsAPI {
 
@@ -40,12 +42,12 @@ public class NewBeeMallGoodsAPI {
     private NewBeeMallGoodsService newBeeMallGoodsService;
 
     @GetMapping("/search")
-    @ApiOperation(value = "商品搜索接口", notes = "根据关键字和分类id进行搜索")
-    public Result<PageResult<List<NewBeeMallSearchGoodsVO>>> search(@RequestParam(required = false) @ApiParam(value = "搜索关键字") String keyword,
-                                                                    @RequestParam(required = false) @ApiParam(value = "分类id") Long goodsCategoryId,
-                                                                    @RequestParam(required = false) @ApiParam(value = "orderBy") String orderBy,
-                                                                    @RequestParam(required = false) @ApiParam(value = "页码") Integer pageNumber,
-                                                                    @TokenToMallUser MallUser loginMallUser) {
+    @Operation(summary = "商品搜索接口", description = "根据关键字和分类id进行搜索")
+    public Result<PageResult<List<NewBeeMallSearchGoodsVO>>> search(@RequestParam(required = false) @Parameter(description = "搜索关键字") String keyword,
+                                                                    @RequestParam(required = false) @Parameter(description = "分类id") Long goodsCategoryId,
+                                                                    @RequestParam(required = false) @Parameter(description = "orderBy") String orderBy,
+                                                                    @RequestParam(required = false) @Parameter(description = "页码") Integer pageNumber,
+                                                                    @TokenToMallUser @Parameter(hidden = true) MallUser loginMallUser) {
         
         logger.info("goods search api,keyword={},goodsCategoryId={},orderBy={},pageNumber={},userId={}", keyword, goodsCategoryId, orderBy, pageNumber, loginMallUser.getUserId());
 
@@ -75,8 +77,8 @@ public class NewBeeMallGoodsAPI {
     }
 
     @GetMapping("/goods/detail/{goodsId}")
-    @ApiOperation(value = "商品详情接口", notes = "传参为商品id")
-    public Result<NewBeeMallGoodsDetailVO> goodsDetail(@ApiParam(value = "商品id") @PathVariable("goodsId") Long goodsId, @TokenToMallUser MallUser loginMallUser) {
+    @Operation(summary = "商品详情接口", description = "传参为商品id")
+    public Result<NewBeeMallGoodsDetailVO> goodsDetail(@Parameter(description = "商品id") @PathVariable("goodsId") Long goodsId, @TokenToMallUser @Parameter(hidden = true) MallUser loginMallUser) {
         logger.info("goods detail api,goodsId={},userId={}", goodsId, loginMallUser.getUserId());
         if (goodsId < 1) {
             return ResultGenerator.genFailResult("参数异常");

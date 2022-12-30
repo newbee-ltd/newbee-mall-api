@@ -8,7 +8,7 @@
  */
 package ltd.newbee.mall.api.mall.vo;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -19,18 +19,18 @@ import java.io.Serializable;
 @Data
 public class NewBeeMallOrderItemVO implements Serializable {
 
-    @ApiModelProperty("商品id")
+    @Schema(title = "商品id")
     private Long goodsId;
 
-    @ApiModelProperty("商品数量")
+    @Schema(title = "商品数量")
     private Integer goodsCount;
 
-    @ApiModelProperty("商品名称")
+    @Schema(title = "商品名称")
     private String goodsName;
 
-    @ApiModelProperty("商品图片")
+    @Schema(title = "商品图片")
     private String goodsCoverImg;
 
-    @ApiModelProperty("商品价格")
+    @Schema(title = "商品价格")
     private Integer sellingPrice;
 }

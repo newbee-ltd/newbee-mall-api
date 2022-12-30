@@ -8,9 +8,9 @@
  */
 package ltd.newbee.mall.api.admin;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import ltd.newbee.mall.api.admin.param.BatchIdParam;
 import ltd.newbee.mall.config.annotation.TokenToAdminUser;
 import ltd.newbee.mall.entity.AdminUserToken;
@@ -33,7 +33,7 @@ import java.util.Map;
  * @link https://github.com/newbee-ltd
  */
 @RestController
-@Api(value = "v1", tags = "8-6.后台管理系统注册用户模块接口")
+@Tag(description = "v1", name = "后台管理系统注册用户模块接口")
 @RequestMapping("/manage-api/v1")
 public class NewBeeAdminRegisteUserAPI {
 
@@ -46,10 +46,10 @@ public class NewBeeAdminRegisteUserAPI {
      * 列表
      */
     @RequestMapping(value = "/users", method = RequestMethod.GET)
-    @ApiOperation(value = "商城注册用户列表", notes = "商城注册用户列表")
-    public Result list(@RequestParam(required = false) @ApiParam(value = "页码") Integer pageNumber,
-                       @RequestParam(required = false) @ApiParam(value = "每页条数") Integer pageSize,
-                       @RequestParam(required = false) @ApiParam(value = "用户状态") Integer lockStatus, @TokenToAdminUser AdminUserToken adminUser) {
+    @Operation(summary = "商城注册用户列表", description = "商城注册用户列表")
+    public Result list(@RequestParam(required = false) @Parameter(description = "页码") Integer pageNumber,
+                       @RequestParam(required = false) @Parameter(description = "每页条数") Integer pageSize,
+                       @RequestParam(required = false) @Parameter(description = "用户状态") Integer lockStatus, @TokenToAdminUser @Parameter(hidden = true) AdminUserToken adminUser) {
         logger.info("adminUser:{}", adminUser.toString());
         if (pageNumber == null || pageNumber < 1 || pageSize == null || pageSize < 10) {
             return ResultGenerator.genFailResult("参数异常！");
@@ -68,8 +68,8 @@ public class NewBeeAdminRegisteUserAPI {
      * 用户禁用与解除禁用(0-未锁定 1-已锁定)
      */
     @RequestMapping(value = "/users/{lockStatus}", method = RequestMethod.PUT)
-    @ApiOperation(value = "修改用户状态", notes = "批量修改，用户禁用与解除禁用(0-未锁定 1-已锁定)")
-    public Result lockUser(@RequestBody BatchIdParam batchIdParam, @PathVariable int lockStatus, @TokenToAdminUser AdminUserToken adminUser) {
+    @Operation(summary = "修改用户状态", description = "批量修改，用户禁用与解除禁用(0-未锁定 1-已锁定)")
+    public Result lockUser(@RequestBody BatchIdParam batchIdParam, @PathVariable int lockStatus, @TokenToAdminUser @Parameter(hidden = true) AdminUserToken adminUser) {
         logger.info("adminUser:{}", adminUser.toString());
         if (batchIdParam==null||batchIdParam.getIds().length < 1) {
             return ResultGenerator.genFailResult("参数异常！");

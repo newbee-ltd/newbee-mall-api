@@ -8,8 +8,9 @@
  */
 package ltd.newbee.mall.api.admin;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import ltd.newbee.mall.common.Constants;
 import ltd.newbee.mall.config.annotation.TokenToAdminUser;
 import ltd.newbee.mall.entity.AdminUserToken;
@@ -34,7 +35,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 @RestController
-@Api(value = "v1", tags = "8-7.后台管理系统文件上传接口")
+@Tag(description = "v1", name = "后台管理系统文件上传接口")
 @RequestMapping("/manage-api/v1")
 public class NewBeeAdminUploadAPI {
 
@@ -47,8 +48,8 @@ public class NewBeeAdminUploadAPI {
      * 图片上传
      */
     @RequestMapping(value = "/upload/file", method = RequestMethod.POST)
-    @ApiOperation(value = "单图上传", notes = "file Name \"file\"")
-    public Result upload(HttpServletRequest httpServletRequest, @RequestParam("file") MultipartFile file, @TokenToAdminUser AdminUserToken adminUser) throws URISyntaxException {
+    @Operation(summary = "单图上传", description = "file Name \"file\"")
+    public Result upload(HttpServletRequest httpServletRequest, @RequestParam("file") MultipartFile file, @TokenToAdminUser @Parameter(hidden = true) AdminUserToken adminUser) throws URISyntaxException {
         logger.info("adminUser:{}", adminUser.toString());
         String fileName = file.getOriginalFilename();
         String suffixName = fileName.substring(fileName.lastIndexOf("."));
@@ -81,8 +82,8 @@ public class NewBeeAdminUploadAPI {
      * 图片上传
      */
     @RequestMapping(value = "/upload/files", method = RequestMethod.POST)
-    @ApiOperation(value = "多图上传", notes = "wangEditor图片上传")
-    public Result uploadV2(HttpServletRequest httpServletRequest, @TokenToAdminUser AdminUserToken adminUser) throws URISyntaxException {
+    @Operation(summary = "多图上传", description = "wangEditor图片上传")
+    public Result uploadV2(HttpServletRequest httpServletRequest, @TokenToAdminUser @Parameter(hidden = true) AdminUserToken adminUser) throws URISyntaxException {
         logger.info("adminUser:{}", adminUser.toString());
         List<MultipartFile> multipartFiles = new ArrayList<>(8);
         if (standardServletMultipartResolver.isMultipart(httpServletRequest)) {

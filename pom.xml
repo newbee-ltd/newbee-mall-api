@@ -30,7 +30,7 @@ Copyright (c) 2019-2021 十三 all rights reserved.
         <java.version>17</java.version>
         <mybatis-starter.version>3.0.1</mybatis-starter.version>
         <lombok.version>1.18.24</lombok.version>
-        <springfox.version>3.0.0</springfox.version>
+        <springdoc.version>2.0.2</springdoc.version>
     </properties>
 
     <dependencies>
@@ -56,9 +56,9 @@ Copyright (c) 2019-2021 十三 all rights reserved.
         </dependency>
 
         <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-boot-starter</artifactId>
-            <version>${springfox.version}</version>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>${springdoc.version}</version>
         </dependency>
 
         <dependency>

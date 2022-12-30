@@ -8,9 +8,9 @@
  */
 package ltd.newbee.mall.api.admin;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import ltd.newbee.mall.api.admin.param.BatchIdParam;
 import ltd.newbee.mall.api.admin.param.GoodsAddParam;
 import ltd.newbee.mall.api.admin.param.GoodsEditParam;
@@ -43,7 +43,7 @@ import java.util.Map;
  * @link https://github.com/newbee-ltd
  */
 @RestController
-@Api(value = "v1", tags = "8-3.后台管理系统商品模块接口")
+@Tag(description = "v1", name = "后台管理系统商品模块接口")
 @RequestMapping("/manage-api/v1")
 public class NewBeeAdminGoodsInfoAPI {
 
@@ -58,11 +58,11 @@ public class NewBeeAdminGoodsInfoAPI {
      * 列表
      */
     @RequestMapping(value = "/goods/list", method = RequestMethod.GET)
-    @ApiOperation(value = "商品列表", notes = "可根据名称和上架状态筛选")
-    public Result list(@RequestParam(required = false) @ApiParam(value = "页码") Integer pageNumber,
-                       @RequestParam(required = false) @ApiParam(value = "每页条数") Integer pageSize,
-                       @RequestParam(required = false) @ApiParam(value = "商品名称") String goodsName,
-                       @RequestParam(required = false) @ApiParam(value = "上架状态 0-上架 1-下架") Integer goodsSellStatus, @TokenToAdminUser AdminUserToken adminUser) {
+    @Operation(summary = "商品列表", description = "可根据名称和上架状态筛选")
+    public Result list(@RequestParam(required = false) @Parameter(description = "页码") Integer pageNumber,
+                       @RequestParam(required = false) @Parameter(description = "每页条数") Integer pageSize,
+                       @RequestParam(required = false) @Parameter(description = "商品名称") String goodsName,
+                       @RequestParam(required = false) @Parameter(description = "上架状态 0-上架 1-下架") Integer goodsSellStatus, @TokenToAdminUser @Parameter(hidden = true) AdminUserToken adminUser) {
         logger.info("adminUser:{}", adminUser.toString());
         if (pageNumber == null || pageNumber < 1 || pageSize == null || pageSize < 10) {
             return ResultGenerator.genFailResult("分页参数异常！");
@@ -84,8 +84,8 @@ public class NewBeeAdminGoodsInfoAPI {
      * 添加
      */
     @RequestMapping(value = "/goods", method = RequestMethod.POST)
-    @ApiOperation(value = "新增商品信息", notes = "新增商品信息")
-    public Result save(@RequestBody @Valid GoodsAddParam goodsAddParam, @TokenToAdminUser AdminUserToken adminUser) {
+    @Operation(summary = "新增商品信息", description = "新增商品信息")
+    public Result save(@RequestBody @Valid GoodsAddParam goodsAddParam, @TokenToAdminUser @Parameter(hidden = true) AdminUserToken adminUser) {
         logger.info("adminUser:{}", adminUser.toString());
         NewBeeMallGoods newBeeMallGoods = new NewBeeMallGoods();
         BeanUtil.copyProperties(goodsAddParam, newBeeMallGoods);
@@ -102,8 +102,8 @@ public class NewBeeAdminGoodsInfoAPI {
      * 修改
      */
     @RequestMapping(value = "/goods", method = RequestMethod.PUT)
-    @ApiOperation(value = "修改商品信息", notes = "修改商品信息")
-    public Result update(@RequestBody @Valid GoodsEditParam goodsEditParam, @TokenToAdminUser AdminUserToken adminUser) {
+    @Operation(summary = "修改商品信息", description = "修改商品信息")
+    public Result update(@RequestBody @Valid GoodsEditParam goodsEditParam, @TokenToAdminUser @Parameter(hidden = true) AdminUserToken adminUser) {
         logger.info("adminUser:{}", adminUser.toString());
         NewBeeMallGoods newBeeMallGoods = new NewBeeMallGoods();
         BeanUtil.copyProperties(goodsEditParam, newBeeMallGoods);
@@ -119,8 +119,8 @@ public class NewBeeAdminGoodsInfoAPI {
      * 详情
      */
     @GetMapping("/goods/{id}")
-    @ApiOperation(value = "获取单条商品信息", notes = "根据id查询")
-    public Result info(@PathVariable("id") Long id, @TokenToAdminUser AdminUserToken adminUser) {
+    @Operation(summary = "获取单条商品信息", description = "根据id查询")
+    public Result info(@PathVariable("id") Long id, @TokenToAdminUser @Parameter(hidden = true) AdminUserToken adminUser) {
         logger.info("adminUser:{}", adminUser.toString());
         Map goodsInfo = new HashMap(8);
         NewBeeMallGoods goods = newBeeMallGoodsService.getNewBeeMallGoodsById(id);
@@ -150,8 +150,8 @@ public class NewBeeAdminGoodsInfoAPI {
      * 批量修改销售状态
      */
     @RequestMapping(value = "/goods/status/{sellStatus}", method = RequestMethod.PUT)
-    @ApiOperation(value = "批量修改销售状态", notes = "批量修改销售状态")
-    public Result delete(@RequestBody BatchIdParam batchIdParam, @PathVariable("sellStatus") int sellStatus, @TokenToAdminUser AdminUserToken adminUser) {
+    @Operation(summary = "批量修改销售状态", description = "批量修改销售状态")
+    public Result delete(@RequestBody BatchIdParam batchIdParam, @PathVariable("sellStatus") int sellStatus, @TokenToAdminUser @Parameter(hidden = true) AdminUserToken adminUser) {
         logger.info("adminUser:{}", adminUser.toString());
         if (batchIdParam == null || batchIdParam.getIds().length < 1) {
             return ResultGenerator.genFailResult("参数异常！");

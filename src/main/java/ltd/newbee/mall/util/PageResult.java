@@ -1,6 +1,6 @@
 package ltd.newbee.mall.util;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.io.Serializable;
 import java.util.List;
@@ -15,19 +15,19 @@ import java.util.List;
  */
 public class PageResult<T> implements Serializable {
 
-    @ApiModelProperty("总记录数")
+    @Schema(title = "总记录数")
     private int totalCount;
 
-    @ApiModelProperty("每页记录数")
+    @Schema(title = "每页记录数")
     private int pageSize;
 
-    @ApiModelProperty("总页数")
+    @Schema(title = "总页数")
     private int totalPage;
 
-    @ApiModelProperty("当前页数")
+    @Schema(title = "当前页数")
     private int currPage;
 
-    @ApiModelProperty("列表数据")
+    @Schema(title = "列表数据")
     private List<T> list;
 
     /**

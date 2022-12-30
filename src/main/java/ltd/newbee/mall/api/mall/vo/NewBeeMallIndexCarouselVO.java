@@ -8,7 +8,7 @@
  */
 package ltd.newbee.mall.api.mall.vo;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -19,9 +19,9 @@ import java.io.Serializable;
 @Data
 public class NewBeeMallIndexCarouselVO implements Serializable {
 
-    @ApiModelProperty("轮播图图片地址")
+    @Schema(title = "轮播图图片地址")
     private String carouselUrl;
 
-    @ApiModelProperty("轮播图点击后的跳转路径")
+    @Schema(title = "轮播图点击后的跳转路径")
     private String redirectUrl;
 }

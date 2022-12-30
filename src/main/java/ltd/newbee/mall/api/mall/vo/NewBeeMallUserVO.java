@@ -8,7 +8,7 @@
  */
 package ltd.newbee.mall.api.mall.vo;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -16,12 +16,12 @@ import java.io.Serializable;
 @Data
 public class NewBeeMallUserVO implements Serializable {
 
-    @ApiModelProperty("用户昵称")
+    @Schema(title = "用户昵称")
     private String nickName;
 
-    @ApiModelProperty("用户登录名")
+    @Schema(title = "用户登录名")
     private String loginName;
 
-    @ApiModelProperty("个性签名")
+    @Schema(title = "个性签名")
     private String introduceSign;
 }

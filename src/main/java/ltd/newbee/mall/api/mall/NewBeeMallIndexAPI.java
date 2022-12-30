@@ -8,8 +8,8 @@
  */
 package ltd.newbee.mall.api.mall;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import ltd.newbee.mall.common.Constants;
 import ltd.newbee.mall.common.IndexConfigTypeEnum;
 import ltd.newbee.mall.api.mall.vo.IndexInfoVO;
@@ -27,7 +27,7 @@ import jakarta.annotation.Resource;
 import java.util.List;
 
 @RestController
-@Api(value = "v1", tags = "1.新蜂商城首页接口")
+@Tag(description = "v1", name = "新蜂商城首页接口")
 @RequestMapping("/api/v1")
 public class NewBeeMallIndexAPI {
 
@@ -38,7 +38,7 @@ public class NewBeeMallIndexAPI {
     private NewBeeMallIndexConfigService newBeeMallIndexConfigService;
 
     @GetMapping("/index-infos")
-    @ApiOperation(value = "获取首页数据", notes = "轮播图、新品、推荐等")
+    @Operation(summary = "获取首页数据", description = "轮播图、新品、推荐等")
     public Result<IndexInfoVO> indexInfo() {
         IndexInfoVO indexInfoVO = new IndexInfoVO();
         List<NewBeeMallIndexCarouselVO> carousels = newBeeMallCarouselService.getCarouselsForIndex(Constants.INDEX_CAROUSEL_NUMBER);

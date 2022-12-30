@@ -8,27 +8,31 @@
  */
 package ltd.newbee.mall.api.mall;
 
-import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.annotation.Resource;
+import jakarta.validation.Valid;
 import ltd.newbee.mall.api.mall.param.MallUserLoginParam;
 import ltd.newbee.mall.api.mall.param.MallUserRegisterParam;
 import ltd.newbee.mall.api.mall.param.MallUserUpdateParam;
+import ltd.newbee.mall.api.mall.vo.NewBeeMallUserVO;
 import ltd.newbee.mall.common.Constants;
 import ltd.newbee.mall.common.ServiceResultEnum;
 import ltd.newbee.mall.config.annotation.TokenToMallUser;
-import ltd.newbee.mall.api.mall.vo.NewBeeMallUserVO;
 import ltd.newbee.mall.entity.MallUser;
 import ltd.newbee.mall.service.NewBeeMallUserService;
-import ltd.newbee.mall.util.*;
+import ltd.newbee.mall.util.BeanUtil;
+import ltd.newbee.mall.util.NumberUtil;
+import ltd.newbee.mall.util.Result;
+import ltd.newbee.mall.util.ResultGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.annotation.Resource;
-import jakarta.validation.Valid;
-
 @RestController
-@Api(value = "v1", tags = "2.新蜂商城用户操作相关接口")
+@Tag(description = "v1", name = "新蜂商城用户操作相关接口")
 @RequestMapping("/api/v1")
 public class NewBeeMallPersonalAPI {
 
@@ -38,7 +42,7 @@ public class NewBeeMallPersonalAPI {
     private static final Logger logger = LoggerFactory.getLogger(NewBeeMallPersonalAPI.class);
 
     @PostMapping("/user/login")
-    @ApiOperation(value = "登录接口", notes = "返回token")
+    @Operation(summary = "登录接口", description = "返回token")
     public Result<String> login(@RequestBody @Valid MallUserLoginParam mallUserLoginParam) {
         if (!NumberUtil.isPhone(mallUserLoginParam.getLoginName())){
             return ResultGenerator.genFailResult(ServiceResultEnum.LOGIN_NAME_IS_NOT_PHONE.getResult());
@@ -59,8 +63,8 @@ public class NewBeeMallPersonalAPI {
 
 
     @PostMapping("/user/logout")
-    @ApiOperation(value = "登出接口", notes = "清除token")
-    public Result<String> logout(@TokenToMallUser MallUser loginMallUser) {
+    @Operation(summary = "登出接口", description = "清除token")
+    public Result<String> logout(@TokenToMallUser @Parameter(hidden = true) MallUser loginMallUser) {
         Boolean logoutResult = newBeeMallUserService.logout(loginMallUser.getUserId());
 
         logger.info("logout api,loginMallUser={}", loginMallUser.getUserId());
@@ -75,7 +79,7 @@ public class NewBeeMallPersonalAPI {
 
 
     @PostMapping("/user/register")
-    @ApiOperation(value = "用户注册", notes = "")
+    @Operation(summary = "用户注册", description = "")
     public Result register(@RequestBody @Valid MallUserRegisterParam mallUserRegisterParam) {
         if (!NumberUtil.isPhone(mallUserRegisterParam.getLoginName())){
             return ResultGenerator.genFailResult(ServiceResultEnum.LOGIN_NAME_IS_NOT_PHONE.getResult());
@@ -93,8 +97,8 @@ public class NewBeeMallPersonalAPI {
     }
 
     @PutMapping("/user/info")
-    @ApiOperation(value = "修改用户信息", notes = "")
-    public Result updateInfo(@RequestBody @ApiParam("用户信息") MallUserUpdateParam mallUserUpdateParam, @TokenToMallUser MallUser loginMallUser) {
+    @Operation(summary = "修改用户信息", description = "")
+    public Result updateInfo(@RequestBody @Parameter(description = "用户信息") MallUserUpdateParam mallUserUpdateParam, @TokenToMallUser @Parameter(hidden = true) MallUser loginMallUser) {
         Boolean flag = newBeeMallUserService.updateUserInfo(mallUserUpdateParam, loginMallUser.getUserId());
         if (flag) {
             //返回成功
@@ -108,8 +112,8 @@ public class NewBeeMallPersonalAPI {
     }
 
     @GetMapping("/user/info")
-    @ApiOperation(value = "获取用户信息", notes = "")
-    public Result<NewBeeMallUserVO> getUserDetail(@TokenToMallUser MallUser loginMallUser) {
+    @Operation(summary = "获取用户信息", description = "")
+    public Result<NewBeeMallUserVO> getUserDetail(@TokenToMallUser @Parameter(hidden = true) MallUser loginMallUser) {
         //已登录则直接返回
         NewBeeMallUserVO mallUserVO = new NewBeeMallUserVO();
         BeanUtil.copyProperties(loginMallUser, mallUserVO);

@@ -8,9 +8,9 @@
  */
 package ltd.newbee.mall.api.mall;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import ltd.newbee.mall.api.mall.param.SaveOrderParam;
 import ltd.newbee.mall.api.mall.vo.NewBeeMallOrderDetailVO;
 import ltd.newbee.mall.api.mall.vo.NewBeeMallOrderListVO;
@@ -38,7 +38,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@Api(value = "v1", tags = "7.新蜂商城订单操作相关接口")
+@Tag(description = "v1", name = "新蜂商城订单操作相关接口")
 @RequestMapping("/api/v1")
 public class NewBeeMallOrderAPI {
 
@@ -50,8 +50,8 @@ public class NewBeeMallOrderAPI {
     private NewBeeMallUserAddressService newBeeMallUserAddressService;
 
     @PostMapping("/saveOrder")
-    @ApiOperation(value = "生成订单接口", notes = "传参为地址id和待结算的购物项id数组")
-    public Result<String> saveOrder(@ApiParam(value = "订单参数") @RequestBody SaveOrderParam saveOrderParam, @TokenToMallUser MallUser loginMallUser) {
+    @Operation(summary = "生成订单接口", description = "传参为地址id和待结算的购物项id数组")
+    public Result<String> saveOrder(@Parameter(description = "订单参数") @RequestBody SaveOrderParam saveOrderParam, @TokenToMallUser @Parameter(hidden = true) MallUser loginMallUser) {
         int priceTotal = 0;
         if (saveOrderParam == null || saveOrderParam.getCartItemIds() == null || saveOrderParam.getAddressId() == null) {
             NewBeeMallException.fail(ServiceResultEnum.PARAM_ERROR.getResult());
@@ -85,16 +85,16 @@ public class NewBeeMallOrderAPI {
     }
 
     @GetMapping("/order/{orderNo}")
-    @ApiOperation(value = "订单详情接口", notes = "传参为订单号")
-    public Result<NewBeeMallOrderDetailVO> orderDetailPage(@ApiParam(value = "订单号") @PathVariable("orderNo") String orderNo, @TokenToMallUser MallUser loginMallUser) {
+    @Operation(summary = "订单详情接口", description = "传参为订单号")
+    public Result<NewBeeMallOrderDetailVO> orderDetailPage(@Parameter(description = "订单号") @PathVariable("orderNo") String orderNo, @TokenToMallUser @Parameter(hidden = true) MallUser loginMallUser) {
         return ResultGenerator.genSuccessResult(newBeeMallOrderService.getOrderDetailByOrderNo(orderNo, loginMallUser.getUserId()));
     }
 
     @GetMapping("/order")
-    @ApiOperation(value = "订单列表接口", notes = "传参为页码")
-    public Result<PageResult<List<NewBeeMallOrderListVO>>> orderList(@ApiParam(value = "页码") @RequestParam(required = false) Integer pageNumber,
-                            @ApiParam(value = "订单状态:0.待支付 1.待确认 2.待发货 3:已发货 4.交易成功") @RequestParam(required = false) Integer status,
-                            @TokenToMallUser MallUser loginMallUser) {
+    @Operation(summary = "订单列表接口", description = "传参为页码")
+    public Result<PageResult<List<NewBeeMallOrderListVO>>> orderList(@Parameter(description = "页码") @RequestParam(required = false) Integer pageNumber,
+                            @Parameter(description = "订单状态:0.待支付 1.待确认 2.待发货 3:已发货 4.交易成功") @RequestParam(required = false) Integer status,
+                            @TokenToMallUser @Parameter(hidden = true) MallUser loginMallUser) {
         Map params = new HashMap(8);
         if (pageNumber == null || pageNumber < 1) {
             pageNumber = 1;
@@ -109,8 +109,8 @@ public class NewBeeMallOrderAPI {
     }
 
     @PutMapping("/order/{orderNo}/cancel")
-    @ApiOperation(value = "订单取消接口", notes = "传参为订单号")
-    public Result cancelOrder(@ApiParam(value = "订单号") @PathVariable("orderNo") String orderNo, @TokenToMallUser MallUser loginMallUser) {
+    @Operation(summary = "订单取消接口", description = "传参为订单号")
+    public Result cancelOrder(@Parameter(description = "订单号") @PathVariable("orderNo") String orderNo, @TokenToMallUser @Parameter(hidden = true) MallUser loginMallUser) {
         String cancelOrderResult = newBeeMallOrderService.cancelOrder(orderNo, loginMallUser.getUserId());
         if (ServiceResultEnum.SUCCESS.getResult().equals(cancelOrderResult)) {
             return ResultGenerator.genSuccessResult();
@@ -120,8 +120,8 @@ public class NewBeeMallOrderAPI {
     }
 
     @PutMapping("/order/{orderNo}/finish")
-    @ApiOperation(value = "确认收货接口", notes = "传参为订单号")
-    public Result finishOrder(@ApiParam(value = "订单号") @PathVariable("orderNo") String orderNo, @TokenToMallUser MallUser loginMallUser) {
+    @Operation(summary = "确认收货接口", description = "传参为订单号")
+    public Result finishOrder(@Parameter(description = "订单号") @PathVariable("orderNo") String orderNo, @TokenToMallUser @Parameter(hidden = true) MallUser loginMallUser) {
         String finishOrderResult = newBeeMallOrderService.finishOrder(orderNo, loginMallUser.getUserId());
         if (ServiceResultEnum.SUCCESS.getResult().equals(finishOrderResult)) {
             return ResultGenerator.genSuccessResult();
@@ -131,8 +131,8 @@ public class NewBeeMallOrderAPI {
     }
 
     @GetMapping("/paySuccess")
-    @ApiOperation(value = "模拟支付成功回调的接口", notes = "传参为订单号和支付方式")
-    public Result paySuccess(@ApiParam(value = "订单号") @RequestParam("orderNo") String orderNo, @ApiParam(value = "支付方式") @RequestParam("payType") int payType) {
+    @Operation(summary = "模拟支付成功回调的接口", description = "传参为订单号和支付方式")
+    public Result paySuccess(@Parameter(description = "订单号") @RequestParam("orderNo") String orderNo, @Parameter(description = "支付方式") @RequestParam("payType") int payType) {
         String payResult = newBeeMallOrderService.paySuccess(orderNo, payType);
         if (ServiceResultEnum.SUCCESS.getResult().equals(payResult)) {
             return ResultGenerator.genSuccessResult();

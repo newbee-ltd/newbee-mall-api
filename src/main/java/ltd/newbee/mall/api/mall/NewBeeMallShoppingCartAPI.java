@@ -8,8 +8,9 @@
  */
 package ltd.newbee.mall.api.mall;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import ltd.newbee.mall.api.mall.param.SaveCartItemParam;
 import ltd.newbee.mall.api.mall.param.UpdateCartItemParam;
 import ltd.newbee.mall.common.Constants;
@@ -34,7 +35,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@Api(value = "v1", tags = "5.新蜂商城购物车相关接口")
+@Tag(description = "v1", name = "新蜂商城购物车相关接口")
 @RequestMapping("/api/v1")
 public class NewBeeMallShoppingCartAPI {
 
@@ -42,8 +43,8 @@ public class NewBeeMallShoppingCartAPI {
     private NewBeeMallShoppingCartService newBeeMallShoppingCartService;
 
     @GetMapping("/shop-cart/page")
-    @ApiOperation(value = "购物车列表(每页默认5条)", notes = "传参为页码")
-    public Result<PageResult<List<NewBeeMallShoppingCartItemVO>>> cartItemPageList(Integer pageNumber, @TokenToMallUser MallUser loginMallUser) {
+    @Operation(summary = "购物车列表(每页默认5条)", description = "传参为页码")
+    public Result<PageResult<List<NewBeeMallShoppingCartItemVO>>> cartItemPageList(Integer pageNumber, @TokenToMallUser @Parameter(hidden = true) MallUser loginMallUser) {
         Map params = new HashMap(8);
         if (pageNumber == null || pageNumber < 1) {
             pageNumber = 1;
@@ -57,15 +58,15 @@ public class NewBeeMallShoppingCartAPI {
     }
 
     @GetMapping("/shop-cart")
-    @ApiOperation(value = "购物车列表(网页移动端不分页)", notes = "")
-    public Result<List<NewBeeMallShoppingCartItemVO>> cartItemList(@TokenToMallUser MallUser loginMallUser) {
+    @Operation(summary = "购物车列表(网页移动端不分页)", description = "")
+    public Result<List<NewBeeMallShoppingCartItemVO>> cartItemList(@TokenToMallUser @Parameter(hidden = true) MallUser loginMallUser) {
         return ResultGenerator.genSuccessResult(newBeeMallShoppingCartService.getMyShoppingCartItems(loginMallUser.getUserId()));
     }
 
     @PostMapping("/shop-cart")
-    @ApiOperation(value = "添加商品到购物车接口", notes = "传参为商品id、数量")
+    @Operation(summary = "添加商品到购物车接口", description = "传参为商品id、数量")
     public Result saveNewBeeMallShoppingCartItem(@RequestBody SaveCartItemParam saveCartItemParam,
-                                                 @TokenToMallUser MallUser loginMallUser) {
+                                                 @TokenToMallUser @Parameter(hidden = true) MallUser loginMallUser) {
         String saveResult = newBeeMallShoppingCartService.saveNewBeeMallCartItem(saveCartItemParam, loginMallUser.getUserId());
         //添加成功
         if (ServiceResultEnum.SUCCESS.getResult().equals(saveResult)) {
@@ -76,9 +77,9 @@ public class NewBeeMallShoppingCartAPI {
     }
 
     @PutMapping("/shop-cart")
-    @ApiOperation(value = "修改购物项数据", notes = "传参为购物项id、数量")
+    @Operation(summary = "修改购物项数据", description = "传参为购物项id、数量")
     public Result updateNewBeeMallShoppingCartItem(@RequestBody UpdateCartItemParam updateCartItemParam,
-                                                   @TokenToMallUser MallUser loginMallUser) {
+                                                   @TokenToMallUser @Parameter(hidden = true) MallUser loginMallUser) {
         String updateResult = newBeeMallShoppingCartService.updateNewBeeMallCartItem(updateCartItemParam, loginMallUser.getUserId());
         //修改成功
         if (ServiceResultEnum.SUCCESS.getResult().equals(updateResult)) {
@@ -89,9 +90,9 @@ public class NewBeeMallShoppingCartAPI {
     }
 
     @DeleteMapping("/shop-cart/{newBeeMallShoppingCartItemId}")
-    @ApiOperation(value = "删除购物项", notes = "传参为购物项id")
+    @Operation(summary = "删除购物项", description = "传参为购物项id")
     public Result updateNewBeeMallShoppingCartItem(@PathVariable("newBeeMallShoppingCartItemId") Long newBeeMallShoppingCartItemId,
-                                                   @TokenToMallUser MallUser loginMallUser) {
+                                                   @TokenToMallUser @Parameter(hidden = true) MallUser loginMallUser) {
         NewBeeMallShoppingCartItem newBeeMallCartItemById = newBeeMallShoppingCartService.getNewBeeMallCartItemById(newBeeMallShoppingCartItemId);
         if (!loginMallUser.getUserId().equals(newBeeMallCartItemById.getUserId())) {
             return ResultGenerator.genFailResult(ServiceResultEnum.REQUEST_FORBIDEN_ERROR.getResult());
@@ -106,8 +107,8 @@ public class NewBeeMallShoppingCartAPI {
     }
 
     @GetMapping("/shop-cart/settle")
-    @ApiOperation(value = "根据购物项id数组查询购物项明细", notes = "确认订单页面使用")
-    public Result<List<NewBeeMallShoppingCartItemVO>> toSettle(Long[] cartItemIds, @TokenToMallUser MallUser loginMallUser) {
+    @Operation(summary = "根据购物项id数组查询购物项明细", description = "确认订单页面使用")
+    public Result<List<NewBeeMallShoppingCartItemVO>> toSettle(Long[] cartItemIds, @TokenToMallUser @Parameter(hidden = true) MallUser loginMallUser) {
         if (cartItemIds.length < 1) {
             NewBeeMallException.fail("参数异常");
         }

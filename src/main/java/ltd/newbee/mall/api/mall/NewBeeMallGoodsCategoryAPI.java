@@ -8,8 +8,8 @@
  */
 package ltd.newbee.mall.api.mall;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import ltd.newbee.mall.common.NewBeeMallException;
 import ltd.newbee.mall.common.ServiceResultEnum;
 import ltd.newbee.mall.api.mall.vo.NewBeeMallIndexCategoryVO;
@@ -25,7 +25,7 @@ import jakarta.annotation.Resource;
 import java.util.List;
 
 @RestController
-@Api(value = "v1", tags = "3.新蜂商城分类页面接口")
+@Tag(description = "v1", name = "新蜂商城分类页面接口")
 @RequestMapping("/api/v1")
 public class NewBeeMallGoodsCategoryAPI {
 
@@ -33,7 +33,7 @@ public class NewBeeMallGoodsCategoryAPI {
     private NewBeeMallCategoryService newBeeMallCategoryService;
 
     @GetMapping("/categories")
-    @ApiOperation(value = "获取分类数据", notes = "分类页面使用")
+    @Operation(summary = "获取分类数据", description = "分类页面使用")
     public Result<List<NewBeeMallIndexCategoryVO>> getCategories() {
         List<NewBeeMallIndexCategoryVO> categories = newBeeMallCategoryService.getCategoriesForIndex();
         if (CollectionUtils.isEmpty(categories)) {

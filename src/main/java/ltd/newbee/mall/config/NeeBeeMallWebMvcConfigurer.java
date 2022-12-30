@@ -41,10 +41,8 @@ public class NeeBeeMallWebMvcConfigurer extends WebMvcConfigurationSupport {
         registry.addResourceHandler("/upload/**").addResourceLocations("file:" + Constants.FILE_UPLOAD_DIC);
         registry.addResourceHandler("/goods-img/**").addResourceLocations("file:" + Constants.FILE_UPLOAD_DIC);
 
-        registry.
-                addResourceHandler("/swagger-ui/**")
-                .addResourceLocations("classpath:/META-INF/resources/webjars/springfox-swagger-ui/")
-                .resourceChain(false);
+        registry.addResourceHandler("/swagger-ui/**")
+                .addResourceLocations("classpath:/META-INF/resources/webjars/swagger-ui/4.15.5/");
     }
 
     /**
