@@ -21,7 +21,7 @@ newbee-mall 项目是一套电商系统，基于 Spring Boot 和 Vue 以及相�
 
 ## newbee-mall （新蜂商城）系列项目概览
 
-![newbee-mall-course-2022](https://github.com/newbee-ltd/newbee-mall-cloud/raw/main/static-files/newbee-mall-course-2022.png)
+![newbee-mall-course-2022](https://github.com/newbee-ltd/newbee-mall-cloud/raw/main/static-files/newbee-mall-course-2023.png)
 
 | 项目名称             | 仓库地址                                                     | 备注                                                         |
 | :------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
@@ -85,10 +85,11 @@ newbee-mall 项目是一套电商系统，基于 Spring Boot 和 Vue 以及相�
 - [pm2 实现一键部署云端服务器](https://juejin.cn/book/6933939264455442444)
 - [常见问题汇总讲解](https://juejin.cn/book/6933939264455442444)
 
-#### Vue 2.6 + Spring Boot 版本
+#### Vue3 + Spring Boot 商城升级版本
 
-- [向“全栈”进发！大型线上商城实战项目，Spring Boot + Vue 前后端分离版本的商城来了！](https://juejin.im/book/6844733826191589390)
+- [开篇词：手把手带你搭建Vue3+Spring Boot大型前后端分离项目](https://juejin.im/book/6844733826191589390)
 - [项目须知和课程约定](https://juejin.im/book/6844733826191589390)
+- [2023年2月小册全新优化升级](https://juejin.im/book/6844733826191589390)
 - [全栈开发！你必须要知道的“前后端分离”](https://juejin.im/book/6844733826191589390)
 - [前端模块化的发展历史](https://juejin.im/book/6844733826191589390)
 - [传统页面和单页面的权衡与抉择](https://juejin.im/book/6844733826191589390)
@@ -99,11 +100,11 @@ newbee-mall 项目是一套电商系统，基于 Spring Boot 和 Vue 以及相�
 - [商城后端项目启动和运行注意事项](https://juejin.im/book/6844733826191589390)
 - [VSCode 的相关配置及插件介绍](https://juejin.im/book/6844733826191589390)
 - [基础篇：Vue 指令](https://juejin.im/book/6844733826191589390)
-- [基础篇：Vue全局API及生命周期介绍](https://juejin.im/book/6844733826191589390)
+- [Vue3 新特性介绍](https://juejin.im/book/6844733826191589390)
 - [基础篇: CSS 预处理工具Less的介绍及使用](https://juejin.im/book/6844733826191589390)
-- [Vue 脚手架工具 Vue-Cli 配置介绍](https://juejin.im/book/6844733826191589390)
+- [脚手架工具 Vite](https://juejin.im/book/6844733826191589390)
 - [Vue-Router 浅析原理及使用](https://juejin.im/book/6844733826191589390)
-- [全局状态管理插件 Vuex 介绍及使用](https://juejin.im/book/6844733826191589390)
+- [全局状态管理插件 Pinia 简介及使用](https://juejin.im/book/6844733826191589390)
 - [商城前端 H5 开发环境搭建及项目启动](https://juejin.im/book/6844733826191589390)
 - [前后端交互文档利器！Spring Boot 整合 Swagger](https://juejin.im/book/6844733826191589390)
 - [接口参数处理和统一响应结果](https://juejin.im/book/6844733826191589390)
@@ -117,16 +118,17 @@ newbee-mall 项目是一套电商系统，基于 Spring Boot 和 Vue 以及相�
 - [商城开发实战-个人信息及收货地址接口开发](https://juejin.im/book/6844733826191589390)
 - [商城开发实战-下单流程接口开发](https://juejin.im/book/6844733826191589390)
 - [商城开发实战-订单处理流程详解](https://juejin.im/book/6844733826191589390)
+- [商城移动端开发实战-新蜂商城底部导航(抽离公共组件)](https://juejin.im/book/6844733826191589390)
 - [商城移动端开发实战-新蜂商城登录注册页(前端鉴权)](https://juejin.im/book/6844733826191589390)
 - [商城移动端开发实战-商城首页制作(轮播图、首页商品列表)](https://juejin.im/book/6844733826191589390)
 - [商城移动端开发实战-商品分类页面制作(better-scrol的介绍及使用)](https://juejin.im/book/6844733826191589390)
 - [商城移动端开发实战-商品列表页面制作(无限滚动加载)](https://juejin.im/book/6844733826191589390)
-- [商城移动端开发实战-商品详情页面制作(Vuex 购物车数量全局管理)](https://juejin.im/book/6844733826191589390)
+- [商城移动端开发实战-商品详情页面制作(Pinia 购物车数量全局管理)](https://juejin.im/book/6844733826191589390)
 - [商城移动端开发实战-商城购物车页面制作(购物车页)](https://juejin.im/book/6844733826191589390)
-- [商城移动端开发实战-地址管理页面及生成订单页面制作](https://juejin.im/book/6844733826191589390)
+- [商城移动端开发实战-确认订单页面制作](https://juejin.im/book/6844733826191589390)
+- [商城移动端开发实战-地址栏管理页面制作](https://juejin.im/book/6844733826191589390)
 - [商城移动端开发实战-我的订单页面制作](https://juejin.im/book/6844733826191589390)
-- [商城 pm2 一键部署云服务器](https://juejin.im/book/6844733826191589390)
-- [课程总结](https://juejin.im/book/6844733826191589390)
+- [常见问题汇总讲解](https://juejin.im/book/6844733826191589390)
 
 ## 联系作者
 
