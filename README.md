@@ -13,7 +13,7 @@ newbee-mall 项目是一套电商系统，基于 Spring Boot 和 Vue 以及相�
 | [spring-boot-2.3.7](https://github.com/newbee-ltd/newbee-mall-api/tree/spring-boot-2.3.7) | 2.3.7-RELEASE       |
 | [spring-boot-2.6.x](https://github.com/newbee-ltd/newbee-mall-api/tree/spring-boot-2.6.x) | 2.6.3               |
 | [main](https://github.com/newbee-ltd/nnewbee-mall-api)            | 2.7.5               |
-| [spring-boot-3.x](https://github.com/newbee-ltd/newbee-mall-api/tree/spring-boot-3.x) | 3.0.1               |
+| [spring-boot-3.x](https://github.com/newbee-ltd/newbee-mall-api/tree/spring-boot-3.x) | 3.1.0               |
 
 **坚持不易，如果觉得项目还不错的话可以给项目一个 Star 吧，也是对我一直更新代码的一种鼓励啦，谢谢各位的支持。**
 
