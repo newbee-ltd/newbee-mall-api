@@ -45,20 +45,20 @@ Copyright (c) 2019-2021 十三 all rights reserved.
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
-            <version>${mybatis-starter.version}</version>
+            <version>3.0.0</version>
         </dependency>
 
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
+            <version>1.18.16</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-boot-starter</artifactId>
-            <version>${springfox.version}</version>
+            <version>3.0.0</version>
         </dependency>
 
         <dependency>
